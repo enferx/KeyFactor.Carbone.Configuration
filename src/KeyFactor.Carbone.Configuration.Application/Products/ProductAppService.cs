@@ -89,16 +89,21 @@ namespace KeyFactor.Carbone.Configuration.Products
             {
                 await _manager.ChangeNumberAsync(product, input.Number);
             }
+            product.ConvertToCustomerAsset = input.ConvertToCustomerAsset;
             product.CurrentCost = input.CurrentCost;
             product.DecimalPlaces = input.DecimalPlaces;
             product.Description = input.Description;
             product.FieldServiceProductType = input.FieldServiceProductType;
             product.IsStockItem = input.IsStockItem;
             product.Name = input.Name;
+            product.ProductStructure = input.ProductStructure;
             product.PurchaseName = input.PurchaseName;
+            product.QuantityOnHand = input.QuantityOnHand;
             product.StandardCost = input.StandardCost;
             product.Taxable = input.Taxable;
-
+            product.ValidFromDate = input.ValidFromDate;
+            product.ValidToDate = input.ValidToDate;
+            
             await _repository.UpdateAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
