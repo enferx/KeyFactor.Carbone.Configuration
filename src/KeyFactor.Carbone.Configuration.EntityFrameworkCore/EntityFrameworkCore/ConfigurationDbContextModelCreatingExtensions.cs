@@ -1,0 +1,55 @@
+﻿using System;
+using KeyFactor.Carbone.Configuration.Products;
+using Microsoft.EntityFrameworkCore;
+using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
+
+namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
+{
+    public static class ConfigurationDbContextModelCreatingExtensions
+    {
+        public static void ConfigureConfiguration(
+            this ModelBuilder builder,
+            Action<ConfigurationModelBuilderConfigurationOptions> optionsAction = null)
+        {
+            Check.NotNull(builder, nameof(builder));
+
+            var options = new ConfigurationModelBuilderConfigurationOptions(
+                ConfigurationDbProperties.DbTablePrefix,
+                ConfigurationDbProperties.DbSchema
+            );
+
+            optionsAction?.Invoke(options);
+
+            builder.Entity<Product>((Action<Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Product>>)(b =>
+            {
+                b.ToTable("Products", ConfigurationDbProperties.DbSchema);
+                b.ConfigureByConvention(); //auto configure for the base class props
+                b.Property((System.Linq.Expressions.Expression<Func<Product, string>>)(x => (string)x.Number)).IsRequired().HasMaxLength(ProductConsts.MaxNameLength);
+                b.Property((System.Linq.Expressions.Expression<Func<Product, string>>)(x => (string)x.Number)).IsRequired().HasMaxLength(ProductConsts.MaxNumberLength);
+                b.HasIndex((System.Linq.Expressions.Expression<Func<Product, object>>)(x => (object)x.Number)).IsUnique();
+                
+            }));
+
+            /* Configure all entities here. Example:
+
+            builder.Entity<Question>(b =>
+            {
+                //Configure table & schema name
+                b.ToTable(options.TablePrefix + "Questions", options.Schema);
+            
+                b.ConfigureByConvention();
+            
+                //Properties
+                b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
+                
+                //Relations
+                b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
+
+                //Indexes
+                b.HasIndex(q => q.CreationTime);
+            });
+            */
+        }
+    }
+}

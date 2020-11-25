@@ -1,0 +1,105 @@
+﻿@page
+@using KeyFactor.Carbone.Configuration.Localization
+@using Microsoft.Extensions.Localization
+@model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductModel
+@inject IStringLocalizer<ConfigurationResource> L
+@section scripts{
+<script type="text/javascript" src="~/libs/jquery-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="~/Pages/Configuration/Products/ProductEvents.js"></script>
+}
+<form method="post" id="form">
+    <abp-card>
+        <abp-card-header>
+            <abp-row>
+                <abp-column size-md="_12">
+                    <abp-card-title>@L["Products"]</abp-card-title>
+                </abp-column>
+            </abp-row>
+        </abp-card-header>
+        <abp-card-body>
+            <abp-row>
+                <abp-column size-md="_12">
+                    <abp-tabs>
+                        <abp-tab title="Details">
+                            <abp-row>
+                                <abp-column size-md="_6">
+                                    <abp-input asp-for="@Model.Product.Name" />
+                                </abp-column>
+                                <abp-column>
+                                    <abp-input asp-for="@Model.Product.Number" />
+                                </abp-column>
+                            </abp-row>
+                            <abp-row>
+                                <abp-column size-md="_6">
+                                    <abp-input asp-for="@Model.Product.ValidFromDate" />
+                                </abp-column>
+                                <abp-column size-md="_6">
+                                    <abp-input asp-for="@Model.Product.ValidToDate" />
+                                </abp-column>
+                            </abp-row>
+                            <abp-row>
+                                <abp-column size-md="_6">
+                                    <abp-input asp-for="@Model.Product.DecimalPlaces" />
+                                </abp-column>
+                            </abp-row>
+                            <abp-row>
+                                <abp-column size-md="_12">
+                                    <div class="form-group">
+                                        <label>@L["Product_Description"].Value</label>
+                                        <textarea asp-for="@Model.Product.Description" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </abp-column>
+                            </abp-row>
+                        </abp-tab>
+                        <abp-tab title="Field Service">
+                            <abp-row>
+                                <abp-column size-md="_6">
+                                    <abp-card>
+                                        <abp-card-header>
+                                            General
+                                        </abp-card-header>
+                                        <abp-card-body>
+                                            <abp-row>
+                                                <abp-column size-md="_12">
+                                                    <abp-select asp-for="@Model.Product.FieldServiceProductType" />
+                                                </abp-column>
+                                            </abp-row>
+                                            <abp-row>
+                                                <abp-column size-md="_12">
+                                                    <abp-input asp-for="@Model.Product.ConvertToCustomerAsset" />
+                                                </abp-column>
+                                            </abp-row>
+                                        </abp-card-body>
+                                    </abp-card>
+                                </abp-column>
+                                <abp-column size-md="_6">
+                                    <abp-card>
+                                        <abp-card-header>Accounting</abp-card-header>
+                                        <abp-card-body>
+                                            <abp-row>
+                                                <abp-column size-md="_12">
+                                                    <abp-input asp-for="@Model.Product.Taxable" />
+                                                </abp-column>
+                                            </abp-row>
+                                            <abp-row>
+                                                <abp-column size-md="_12">
+                                                    <abp-input asp-for="@Model.Product.CurrentCost" />
+                                                </abp-column>
+                                            </abp-row>
+                                            <abp-row>
+                                                <abp-column size-md="_12">
+                                                    <abp-input asp-for="@Model.Product.StandardCost" />
+                                                </abp-column>
+                                            </abp-row>
+                                        </abp-card-body>
+                                    </abp-card>
+                                </abp-column>
+                            </abp-row>
+                        </abp-tab>
+                    </abp-tabs>
+                </abp-column>
+            </abp-row>
+        </abp-card-body>
+    </abp-card>
+    <abp-button button-type="Primary" type="submit">Save</abp-button>
+</form>

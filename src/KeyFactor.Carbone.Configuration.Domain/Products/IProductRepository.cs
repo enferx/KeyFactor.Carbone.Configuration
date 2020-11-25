@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Volo.Abp.Domain.Repositories;
+
+namespace KeyFactor.Carbone.Configuration.Products
+{
+    public interface IProductRepository : IRepository<Product, Guid>
+    {
+        Task<Product> FindByNumberAsync(string name);
+
+        Task<List<Product>> GetListAsync(
+           int skipCount,
+           int maxResultCount,
+           string sorting,
+           string filter = null
+       );
+    }
+}

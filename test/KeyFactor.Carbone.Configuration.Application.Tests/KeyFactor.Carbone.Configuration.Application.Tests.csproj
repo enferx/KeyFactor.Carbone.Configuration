@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>KeyFactor.Carbone.Configuration</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\KeyFactor.Carbone.Configuration.Application\KeyFactor.Carbone.Configuration.Application.csproj" />
+    <ProjectReference Include="..\KeyFactor.Carbone.Configuration.Domain.Tests\KeyFactor.Carbone.Configuration.Domain.Tests.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+  </ItemGroup>
+
+</Project>

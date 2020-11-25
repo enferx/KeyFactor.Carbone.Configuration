@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>KeyFactor.Carbone.Configuration</RootNamespace>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>KeyFactor.Carbone.Configuration-c2d31439-b723-48e2-b061-5ebd7aeb6010</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="IdentityModel" Version="4.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\KeyFactor.Carbone.Configuration.HttpApi\KeyFactor.Carbone.Configuration.HttpApi.csproj" />
+    <ProjectReference Include="..\..\src\KeyFactor.Carbone.Configuration.Application\KeyFactor.Carbone.Configuration.Application.csproj" />
+    <ProjectReference Include="..\..\src\KeyFactor.Carbone.Configuration.EntityFrameworkCore\KeyFactor.Carbone.Configuration.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\KeyFactor.Carbone.Configuration.Host.Shared\KeyFactor.Carbone.Configuration.Host.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Logs\**" />
+    <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20201008034837_Created_Product_Entity_Added_Concurrency.cs" />
+    <Compile Remove="Migrations\20201008034837_Created_Product_Entity_Added_Concurrency.Designer.cs" />
+    <Compile Remove="Migrations\20201014040121_Created_Product_Added_RowVersion.cs" />
+    <Compile Remove="Migrations\20201014040121_Created_Product_Added_RowVersion.Designer.cs" />
+    <Compile Remove="Migrations\20201014040443_Created_Product_Removed_RowVersion.cs" />
+    <Compile Remove="Migrations\20201014040443_Created_Product_Removed_RowVersion.Designer.cs" />
+    <Compile Remove="Migrations\20201014040920_Created_Product_Added_RowVersion.cs" />
+    <Compile Remove="Migrations\20201014040920_Created_Product_Added_RowVersion.Designer.cs" />
+    <Compile Remove="Migrations\20201014221004_Created_Product_Entity.cs" />
+    <Compile Remove="Migrations\20201014221004_Created_Product_Entity.Designer.cs" />
+  </ItemGroup>
+
+</Project>

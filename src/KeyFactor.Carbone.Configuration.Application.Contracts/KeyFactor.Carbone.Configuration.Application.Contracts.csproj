@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>KeyFactor.Carbone.Configuration</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="3.2.0" />
+    <ProjectReference Include="..\KeyFactor.Carbone.Configuration.Domain.Shared\KeyFactor.Carbone.Configuration.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
