@@ -4,13 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Data;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public class ProductRepository : EfCoreRepository<ConfigurationDbContext, Product, Guid>,
+    public class ProductRepository : CarboneRepository<ConfigurationDbContext, Product, Guid>,
         IProductRepository
     {
         public ProductRepository(

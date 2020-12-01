@@ -31,24 +31,32 @@
     <EmbeddedResource Include="Components\**\*.js" />
     <EmbeddedResource Include="Components\**\*.css" />
     <EmbeddedResource Include="wwwroot\**\*.*" />
+    <Compile Remove="Pages\Configuration\**" />
     <Content Remove="Pages\**\*.css" />
     <Content Remove="Pages\**\*.js" />
     <Content Remove="Components\**\*.js" />
     <Content Remove="Components\**\*.css" />
+    <Content Remove="Pages\Configuration\**" />
     <Content Remove="wwwroot\**\*.*" />
+    <EmbeddedResource Remove="Pages\Configuration\**" />
+    <None Remove="Pages\Configuration\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Configuration\Products\_ManageProduct.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Pages\Configuration\Products\Index.js" />
+    <None Remove="Pages\Products\EditProduct.js" />
+    <None Remove="Pages\Products\Index.js" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Products\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

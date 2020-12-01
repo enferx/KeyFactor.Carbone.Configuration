@@ -21,15 +21,15 @@ namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
-            builder.Entity<Product>((Action<Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Product>>)(b =>
+            builder.Entity<Product>(b =>
             {
                 b.ToTable("Products", ConfigurationDbProperties.DbSchema);
                 b.ConfigureByConvention(); //auto configure for the base class props
-                b.Property((System.Linq.Expressions.Expression<Func<Product, string>>)(x => (string)x.Number)).IsRequired().HasMaxLength(ProductConsts.MaxNameLength);
-                b.Property((System.Linq.Expressions.Expression<Func<Product, string>>)(x => (string)x.Number)).IsRequired().HasMaxLength(ProductConsts.MaxNumberLength);
-                b.HasIndex((System.Linq.Expressions.Expression<Func<Product, object>>)(x => (object)x.Number)).IsUnique();
-                
-            }));
+                b.Property(x => x.Name).IsRequired().HasMaxLength(ProductConsts.MaxNameLength);
+                b.Property(x => x.Number).IsRequired().HasMaxLength(ProductConsts.MaxNumberLength);
+                b.HasIndex(x => x.Number).IsUnique();
+                b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
+            });
 
             /* Configure all entities here. Example:
 

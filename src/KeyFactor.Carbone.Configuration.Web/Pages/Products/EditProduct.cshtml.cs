@@ -1,18 +1,8 @@
+using KeyFactor.Carbone.Configuration.Products;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using KeyFactor.Carbone.Configuration.Products;
-using KeyFactor.Carbone.Configuration.Shared;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Volo.Abp;
-using Volo.Abp.AspNetCore.Mvc.ExceptionHandling;
-using Volo.Abp.Http.Client;
-using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 {
@@ -27,26 +17,28 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 
         private readonly IProductAppService _productAppService;
 
-        public EditProductModel(IProductAppService productAppService) : base("Product.")
+        public EditProductModel(IProductAppService productAppService) : base("")
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
 
         protected override async Task OnGetAsync()
         {
+            ViewData["Title"] = "Products";
             var bookDto = await _productAppService.GetAsync(Id);
             Product = ObjectMapper.Map<ProductDto, UpdateProductDto>(bookDto);
         }
 
         protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync()
         {
+            ViewData["Title"] = "Products";
             return await ValidateUpdate(Id, Product, _productAppService);
         }
 
         protected override async Task<IActionResult> OnUpdateAsync()
         {
-            await _productAppService.UpdateAsync(Id, Product);    
-            return NoContent();
+            await _productAppService.UpdateAsync(Id, Product);
+            return this.RedirectToPage("/Products/Index");
         }
     }
 }

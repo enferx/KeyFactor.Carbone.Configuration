@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Uow;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -60,7 +62,6 @@ namespace KeyFactor.Carbone.Configuration.Products
         {
             var product = await _manager.CreateAsync
             (
-                id: Guid.NewGuid(),
                 number: input.Number,
                 name: input.Name,
                 fieldServiceProductType: input.FieldServiceProductType,
@@ -89,6 +90,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             {
                 await _manager.ChangeNumberAsync(product, input.Number);
             }
+            product.ConcurrencyStamp = input.ConcurrencyStamp;
             product.ConvertToCustomerAsset = input.ConvertToCustomerAsset;
             product.CurrentCost = input.CurrentCost;
             product.DecimalPlaces = input.DecimalPlaces;
@@ -103,7 +105,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.Taxable = input.Taxable;
             product.ValidFromDate = input.ValidFromDate;
             product.ValidToDate = input.ValidToDate;
-            
+
             await _repository.UpdateAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }

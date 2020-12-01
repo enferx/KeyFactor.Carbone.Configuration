@@ -38,5 +38,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public DateTime? ValidFromDate { get; set; }
 
         public DateTime? ValidToDate { get; set; }
+
+        public string ConcurrencyStamp { get; set; }
     }
 }

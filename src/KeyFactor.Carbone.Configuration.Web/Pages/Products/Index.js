@@ -18,7 +18,7 @@
                                     text: l('Edit'),
                                     visible: abp.auth.isGranted('Configuration.Products.Edit'),
                                     action: function (data) {
-                                        window.location.href = '/Configuration/Products/EditProduct?Id=' + data.record.id
+                                        window.location.href = '/Products/EditProduct?Id=' + data.record.id
                                     }
                                 },
                                 {

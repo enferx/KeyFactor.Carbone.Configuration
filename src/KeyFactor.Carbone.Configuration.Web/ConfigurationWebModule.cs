@@ -1,21 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.DependencyInjection;
-using KeyFactor.Carbone.Configuration.Localization;
+﻿using KeyFactor.Carbone.Configuration.Localization;
+using KeyFactor.Carbone.Configuration.Permissions;
+using KeyFactor.Carbone.Configuration.Web.Infrastructure;
 using KeyFactor.Carbone.Configuration.Web.Menus;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
-using KeyFactor.Carbone.Configuration.Permissions;
-using Volo.Abp.AspNetCore.ExceptionHandling;
-using KeyFactor.Carbone.Configuration.Web.Infrastructure;
-using Volo.Abp;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Volo.Abp.Localization.ExceptionHandling;
 
 namespace KeyFactor.Carbone.Configuration.Web
 {
@@ -60,9 +56,9 @@ namespace KeyFactor.Carbone.Configuration.Web
 
             Configure<RazorPagesOptions>(options =>
             {
-                options.Conventions.AuthorizePage("/Configuration/Products/Index", ConfigurationPermissions.Products.Default);
-                options.Conventions.AuthorizePage("/Configuration/Products/CreateProduct", ConfigurationPermissions.Products.Create);
-                options.Conventions.AuthorizePage("/Configuration/Products/EditProduct", ConfigurationPermissions.Products.Update);
+                options.Conventions.AuthorizePage("/Products/Index", ConfigurationPermissions.Products.Default);
+                options.Conventions.AuthorizePage("/Products/CreateProduct", ConfigurationPermissions.Products.Create);
+                options.Conventions.AuthorizePage("/Products/EditProduct", ConfigurationPermissions.Products.Update);
 
             });
             Configure<AbpExceptionLocalizationOptions>(options =>

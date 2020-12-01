@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Application.Dtos;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -43,5 +44,8 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         [DataType(DataType.Date)]
         public DateTime? ValidToDate { get; set; }
+
+        public string ConcurrencyStamp { get; set; }
+
     }
 }

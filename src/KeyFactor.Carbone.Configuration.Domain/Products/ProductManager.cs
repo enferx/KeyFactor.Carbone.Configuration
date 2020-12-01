@@ -22,7 +22,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             _repository = repository;
         }
 
-        public async Task<Product> CreateAsync(Guid id,
+        public async Task<Product> CreateAsync(
             [NotNull] string number,
             [NotNull] string name,
             FieldServiceProductType fieldServiceProductType,
@@ -42,14 +42,14 @@ namespace KeyFactor.Carbone.Configuration.Products
             Check.NotNullOrWhiteSpace(number, nameof(number));
 
             var existingProduct = await _repository.FindByNumberAsync(number);
-            if(existingProduct != null)
+            if (existingProduct != null)
             {
                 throw new ProductNumberAlreadyExistsException(number);
             }
 
             return new Product
             (
-                id: id,
+                id: GuidGenerator.Create(),
                 number: number,
                 name: name,
                 fieldServiceProductType: fieldServiceProductType,

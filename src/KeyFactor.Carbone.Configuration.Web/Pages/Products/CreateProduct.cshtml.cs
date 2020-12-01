@@ -1,6 +1,5 @@
 using KeyFactor.Carbone.Configuration.Products;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,6 +25,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 
         protected override Task OnGetAsync()
         {
+            ViewData["Title"] = "Products";
             Product = new CreateProductDto();
             return Task.CompletedTask;
         }
@@ -33,7 +33,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         protected override async Task<IActionResult> OnCreateAsync()
         {
             await _productAppService.CreateAsync(Product);
-            return NoContent();
+            return RedirectToPage("/Products/Index");
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Volo.Abp.Http.Client;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -52,6 +53,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
@@ -59,7 +61,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     var errors = await OnValidateAsync();
                     if (ModelState.IsValid)
                     {
-                        await OnUpdateAsync();
+                        result = await OnUpdateAsync();
                     }
                 }
                 catch (AbpRemoteCallException ex)
@@ -73,7 +75,8 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     }
                 }
             }
-            return Page();
+
+            return ModelState.IsValid ? result : Page();
         }
 
         protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync();

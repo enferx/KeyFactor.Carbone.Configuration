@@ -1,0 +1,71 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@using KeyFactor.Carbone.Configuration.Localization
+@using Microsoft.Extensions.Localization
+@inject IThemeManager ThemeManager
+@inject IStringLocalizer<ConfigurationResource> L
+
+@{
+    Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Application);
+}
+@section scripts
+{
+    @RenderSection("scripts", false)
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@L[@ViewData["Title"].ToString()]</title>
+</head>
+<body>
+    @*<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </nav><br />*@
+    <abp-card>
+        <abp-card-header>
+            <abp-row>
+                <abp-column size-md="_6">
+                    <abp-card-title>@L[@ViewData["Title"].ToString()]</abp-card-title>
+                </abp-column>
+                <abp-column size-md="_6" class="text-right">
+                    <abp-button id="NewProductButton"
+                                text="@L["NewProduct"]"
+                                icon="arrow-circle-left"
+                                button-type="Dark"
+                                onclick="window.location.href='/Products/CreateProduct'" />
+                    <abp-button id="NewProductButton"
+                                text="@L["NewProduct"]"
+                                icon="plus"
+                                button-type="Dark"
+                                onclick="window.location.href='/Products/CreateProduct'" />
+                    <abp-button id="NewProductButton"
+                                text="@L["NewProduct"]"
+                                icon="save"
+                                button-type="Dark"
+                                onclick="window.location.href='/Products/CreateProduct'" />
+
+                </abp-column>
+            </abp-row>
+        </abp-card-header>
+        @RenderBody()
+    </abp-card>
+</body>
+</html>

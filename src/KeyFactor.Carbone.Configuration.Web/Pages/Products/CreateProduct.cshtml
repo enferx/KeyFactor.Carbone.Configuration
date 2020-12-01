@@ -3,7 +3,13 @@
 @using Microsoft.Extensions.Localization
 @model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductModel
 @inject IStringLocalizer<ConfigurationResource> L
-
+@{ 
+    Layout = "_Layout";
+}
+@section Scripts
+{
+    <script type="text/javascript" src="~/Pages/Products/EditProduct.js"></script>
+}
 <form method="post" id="form">
     @await Html.PartialAsync("_Product", Model.Product);
     <abp-button button-type="Primary" type="submit">Save</abp-button>

@@ -36,6 +36,8 @@ using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.AspNetCore.Mvc;
 using KeyFactor.Carbone.Configuration.Infrastructure;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.Localization.ExceptionHandling;
+using KeyFactor.Carbone.Configuration.Localization;
 
 namespace KeyFactor.Carbone.Configuration
 {
@@ -160,7 +162,20 @@ namespace KeyFactor.Carbone.Configuration
             {
                 options.ConventionalControllers.Create(typeof(ConfigurationApplicationModule).Assembly);
             });
+            Configure<AbpExceptionLocalizationOptions>(options =>
+            {
+                options.MapCodeNamespace("Configuration", typeof(ConfigurationResource));
+            });
 
+            Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = true;
+            });
+
+            context.Services.AddMvc(options =>
+            {
+                options.Filters.AddService(typeof(CarboneExceptionFilter), order: 1);
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

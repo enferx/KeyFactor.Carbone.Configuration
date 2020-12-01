@@ -27,7 +27,6 @@ namespace KeyFactor.Carbone.Configuration.Domain
                 await _productRepository.InsertAsync(
                    await _productManager.CreateAsync
                     (
-                        id: new Guid(),
                         number: "PROD-100",
                         name: "PROD-100",
                         fieldServiceProductType: FieldServiceProductType.Inventory,

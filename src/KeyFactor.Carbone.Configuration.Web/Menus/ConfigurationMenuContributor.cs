@@ -26,7 +26,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Menus
                         new ApplicationMenuItem(
                             "Configuration.Products",
                             l["Menu:Products"],
-                            url: "/Configuration/Products"
+                            url: "/Products"
                         )
                     )
                 );

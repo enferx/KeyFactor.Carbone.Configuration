@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -39,7 +40,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public DateTime? ValidToDate { get; set; }
 
-        private Product() { }
+        private Product() {}
 
         internal Product(Guid id,
             [NotNull] string number,
@@ -95,6 +96,11 @@ namespace KeyFactor.Carbone.Configuration.Products
         private void SetNumber([NotNull] string number)
         {
             Number = Check.NotNullOrWhiteSpace(number, nameof(Number), maxLength: ProductConsts.MaxNumberLength);
+        }
+
+        public static implicit operator Task<object>(Product v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

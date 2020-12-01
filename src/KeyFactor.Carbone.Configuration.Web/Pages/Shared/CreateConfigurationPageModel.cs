@@ -53,6 +53,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
@@ -60,7 +61,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     var errors = await OnValidateAsync();
                     if (ModelState.IsValid)
                     {
-                        await OnCreateAsync();
+                        result = await OnCreateAsync();
                     }
                 }
                 catch (AbpRemoteCallException ex)
@@ -74,7 +75,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     }
                 }
             }
-            return Page();
+            return result ?? Page();
         }
 
         protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync();
