@@ -5,6 +5,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -12,11 +13,25 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
      */
     public abstract class ConfigurationPageModel: AbpPageModel
     {
-        protected ConfigurationPageModel()
+        protected string EntityPath { get; private set; }
+
+        protected Dictionary<string, string> Settings { get; private set; }
+
+        protected ConfigurationPageModel(string entityPath = "")
         {
             LocalizationResourceType = typeof(ConfigurationResource);
             ObjectMapperContext = typeof(ConfigurationWebModule);
+            EntityPath = entityPath;
         }
 
+        public void SetEntityPath(string entityPath)
+        {
+            EntityPath = entityPath;
+        }
+
+        protected virtual void ConfigureViewData()
+        {
+
+        }
     }
 }

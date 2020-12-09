@@ -19,26 +19,6 @@
     <title>@L[@ViewData["Title"].ToString()]</title>
 </head>
 <body>
-    @*<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-            </div>
-        </nav><br />*@
     <abp-card>
         <abp-card-header>
             <abp-row>
@@ -46,22 +26,15 @@
                     <abp-card-title>@L[@ViewData["Title"].ToString()]</abp-card-title>
                 </abp-column>
                 <abp-column size-md="_6" class="text-right">
-                    <abp-button id="NewProductButton"
-                                text="@L["NewProduct"]"
+                    <abp-button id="GoBackButton"
                                 icon="arrow-circle-left"
-                                button-type="Dark"
-                                onclick="window.location.href='/Products/CreateProduct'" />
+                                onclick="window.location.href='@ViewData["GoBackUrl"]'" />
                     <abp-button id="NewProductButton"
-                                text="@L["NewProduct"]"
                                 icon="plus"
-                                button-type="Dark"
-                                onclick="window.location.href='/Products/CreateProduct'" />
-                    <abp-button id="NewProductButton"
-                                text="@L["NewProduct"]"
+                                onclick="window.location.href='@ViewData["AddNewUrl"]'" />
+                    <abp-button id="SaveProductButton"
                                 icon="save"
-                                button-type="Dark"
-                                onclick="window.location.href='/Products/CreateProduct'" />
-
+                                onclick="$('#mainForm').submit();" />
                 </abp-column>
             </abp-row>
         </abp-card-header>

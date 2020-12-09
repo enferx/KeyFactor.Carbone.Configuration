@@ -12,53 +12,48 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
     /* Inherit your PageModel classes from this class.
      */
-    public abstract class CreateConfigurationPageModel<T1, T2> : ConfigurationPageModel where T2: IValidateCreate<T1>
+    public abstract class CreateConfigurationPageModel<T1> :
+        ConfigurationPageModel, IValidateCreate<T1>
     {
-        private string EntityPath { get; set; } = string.Empty;
+        [BindProperty]
+        public T1 Input { get; set; }
 
-        public CreateConfigurationPageModel(string entityPath)
+        public CreateConfigurationPageModel(string entityPath, T1 input) : base(entityPath)
         {
-            EntityPath = entityPath;
+            Input = input;
         }
 
-        public void SetEntityPath(string entityPath)
+        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(T1 input)
         {
-            EntityPath = entityPath;
-        }
-
-        public async Task<IReadOnlyList<ValidationError>> ValidateCreate(T1 input, T2 service) 
-        {
-            if (ModelState.IsValid)
+            var results = await OnValidateAsync(input);
+            if (results.Any())
             {
-                var results = await service.ValidateCreateAsync(input);
-                if (results.Any())
+                foreach (var error in results)
                 {
-                    foreach (var error in results)
+                    foreach (var member in error.MemberNames)
                     {
-                        foreach (var member in error.MemberNames)
-                        {
-                            ModelState.AddModelError(EntityPath + member, error.Message);
-                        }
+                        ModelState.AddModelError(EntityPath + member, error.Message);
                     }
                 }
-                return results;
             }
-            return new List<ValidationError>();
+            return results;
         }
 
         public async Task OnGet()
         {
+            ConfigureViewData();
             await OnGetAsync();
         }
 
         public async Task<IActionResult> OnPost()
         {
+            ConfigureViewData();
             IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var errors = await OnValidateAsync();
+                    var errors = await ValidateCreateAsync(Input);
                     if (ModelState.IsValid)
                     {
                         result = await OnCreateAsync();
@@ -70,7 +65,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     {
                         foreach (var member in error.Members)
                         {
-                            ModelState.AddModelError(member, error.Message);
+                            ModelState.AddModelError(member, ex.Message);
                         }
                     }
                 }
@@ -78,7 +73,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             return result ?? Page();
         }
 
-        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync();
+        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 input);
 
         protected abstract Task OnGetAsync();
 

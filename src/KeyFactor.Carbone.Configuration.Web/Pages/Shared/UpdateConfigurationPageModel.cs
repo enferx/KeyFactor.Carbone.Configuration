@@ -12,53 +12,51 @@ using System.Data;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
-    public abstract class UpdateConfigurationPageModel<T1, T2, T3> : ConfigurationPageModel where T3: IValidateUpdate<T1, T2>
+    public abstract class UpdateConfigurationPageModel<T1, T2> : ConfigurationPageModel,
+        IValidateUpdate<T1, T2>
     {
-        private string EntityPath { get; set; } = string.Empty;
+        [HiddenInput]
+        [BindProperty(SupportsGet = true)]
+        public T1 Id { get; set; }
 
-        public UpdateConfigurationPageModel(string entityPath)
+        [BindProperty]
+        public T2 Input { get; set; }
+
+        public UpdateConfigurationPageModel(string entityPath) : base(entityPath)
         {
-            EntityPath = entityPath;    
-        }
-        
-        public void SetEntityPath(string entityPath)
-        {
-            EntityPath = entityPath;
         }
 
-        protected async Task<IReadOnlyList<ValidationError>> ValidateUpdate(T1 id, T2 input, T3 service) 
+        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(T1 id, T2 input)
         {
-            if (ModelState.IsValid)
+            var results = await OnValidateAsync(Id, Input);
+            if (results.Any())
             {
-                var results = await service.ValidateUpdateAsync(id, input);
-                if (results.Any())
+                foreach (var error in results)
                 {
-                    foreach (var error in results)
+                    foreach (var member in error.MemberNames)
                     {
-                        foreach (var member in error.MemberNames)
-                        {
-                            ModelState.AddModelError(EntityPath + member, error.Message);
-                        }
+                        ModelState.AddModelError(EntityPath + member, error.Message);
                     }
                 }
-                return results;
             }
-            return new List<ValidationError>();
+            return results;
         }
 
         public async Task OnGet()
         {
+            ConfigureViewData();
             await OnGetAsync();
         }
 
         public async Task<IActionResult> OnPost()
         {
+            ConfigureViewData();
             IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var errors = await OnValidateAsync();
+                    var errors = await ValidateUpdateAsync(Id, Input);
                     if (ModelState.IsValid)
                     {
                         result = await OnUpdateAsync();
@@ -70,19 +68,19 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     {
                         foreach (var member in error.Members)
                         {
-                            ModelState.AddModelError(member, error.Message);
+                            ModelState.AddModelError(member, ex.Message);
                         }
                     }
                 }
             }
-
             return ModelState.IsValid ? result : Page();
         }
 
-        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync();
+        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 id, T2 input);
        
         protected abstract Task OnGetAsync();
 
         protected abstract Task<IActionResult> OnUpdateAsync();
+
     }
 }

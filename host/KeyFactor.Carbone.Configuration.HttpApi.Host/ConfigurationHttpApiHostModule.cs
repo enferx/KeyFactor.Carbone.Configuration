@@ -104,12 +104,6 @@ namespace KeyFactor.Carbone.Configuration
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            //Updates AbpClaimTypes to be compatible with identity server claims.
-            //AbpClaimTypes.UserId = JwtClaimTypes.Subject;
-            //AbpClaimTypes.UserName = JwtClaimTypes.Name;
-            //AbpClaimTypes.Role = JwtClaimTypes.Role;
-            //AbpClaimTypes.Email = JwtClaimTypes.Email;
-
             context.Services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
@@ -117,14 +111,6 @@ namespace KeyFactor.Carbone.Configuration
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "Configuration";
                 });
-
-            //context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.Authority = configuration["AuthServer:Authority"];
-            //        options.RequireHttpsMetadata = false;
-            //        options.Audience = "Configuration";
-            //    });
 
             Configure<AbpDistributedCacheOptions>(options =>
             {
@@ -165,11 +151,6 @@ namespace KeyFactor.Carbone.Configuration
             Configure<AbpExceptionLocalizationOptions>(options =>
             {
                 options.MapCodeNamespace("Configuration", typeof(ConfigurationResource));
-            });
-
-            Configure<AbpExceptionHandlingOptions>(options =>
-            {
-                options.SendExceptionsDetailsToClients = true;
             });
 
             context.Services.AddMvc(options =>

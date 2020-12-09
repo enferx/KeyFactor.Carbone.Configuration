@@ -6,33 +6,36 @@ using System.Threading.Tasks;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 {
-    public class CreateProductModel : CreateConfigurationPageModel<CreateProductDto, IProductAppService>
+    public class CreateProductModel : CreateConfigurationPageModel<CreateProductDto>
     {
-        [BindProperty]
-        public CreateProductDto Product { get; set; }
-
         private readonly IProductAppService _productAppService;
 
-        public CreateProductModel(IProductAppService productAppService) : base("Product.")
+        public CreateProductModel(IProductAppService productAppService) : base("", new CreateProductDto()) 
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync()
+        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductDto productDto)
         {
-            return await ValidateCreate(Product, _productAppService);
+            return await _productAppService.ValidateCreateAsync(productDto);
+        }
+
+        protected override void ConfigureViewData()
+        {
+            ViewData["Title"] = "Products";
+            ViewData["GoBackUrl"] = "/Products";
+            ViewData["AddNewUrl"] = "/Products/CreateProduct";
+            ViewData["SaveUrl"] = "/Products/EditProduct";
         }
 
         protected override Task OnGetAsync()
         {
-            ViewData["Title"] = "Products";
-            Product = new CreateProductDto();
             return Task.CompletedTask;
         }
 
         protected override async Task<IActionResult> OnCreateAsync()
         {
-            await _productAppService.CreateAsync(Product);
+            await _productAppService.CreateAsync(Input);
             return RedirectToPage("/Products/Index");
         }
     }

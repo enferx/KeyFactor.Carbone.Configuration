@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 {
-    public class EditProductModel : UpdateConfigurationPageModel<Guid, UpdateProductDto, IProductAppService>
+    public class EditProductModel : UpdateConfigurationPageModel<Guid, UpdateProductDto>
     {
-        [HiddenInput]
-        [BindProperty(SupportsGet = true)]
-        public Guid Id { get; set; }
-
-        [BindProperty]
-        public UpdateProductDto Product { get; set; }
-
+        
         private readonly IProductAppService _productAppService;
 
         public EditProductModel(IProductAppService productAppService) : base("")
@@ -22,22 +16,28 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
 
-        protected override async Task OnGetAsync()
+        protected override void ConfigureViewData()
         {
             ViewData["Title"] = "Products";
-            var bookDto = await _productAppService.GetAsync(Id);
-            Product = ObjectMapper.Map<ProductDto, UpdateProductDto>(bookDto);
+            ViewData["GoBackUrl"] = "/Products";
+            ViewData["AddNewUrl"] = "/Products/CreateProduct";
+            ViewData["SaveUrl"] = "/Products/EditProduct";
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync()
+        protected override async Task OnGetAsync()
         {
-            ViewData["Title"] = "Products";
-            return await ValidateUpdate(Id, Product, _productAppService);
+            var bookDto = await _productAppService.GetAsync(Id);
+            Input = ObjectMapper.Map<ProductDto, UpdateProductDto>(bookDto);
+        }
+
+        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, UpdateProductDto productDto)
+        {
+            return await _productAppService.ValidateUpdateAsync(Id, productDto);
         }
 
         protected override async Task<IActionResult> OnUpdateAsync()
         {
-            await _productAppService.UpdateAsync(Id, Product);
+            await _productAppService.UpdateAsync(Id, Input);
             return this.RedirectToPage("/Products/Index");
         }
     }
