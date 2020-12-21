@@ -9,9 +9,12 @@
 }
 @section scripts
 {
-    <script type="text/javascript" src="~/Pages/Products/EditProduct.js"></script>
+    <script type="text/javascript" src="~/Pages/Products/FormProduct.js"></script>
 }
 <form method="post" id="mainForm">
     <input type="hidden" asp-for="@Model.Id" />
     @await Html.PartialAsync("_Product", Model.Input);
+    <abp-input asp-for="@Model.ValidFromDateHidden" />
+    <abp-input asp-for="@Model.ValidToDateHidden" />
+
 </form>

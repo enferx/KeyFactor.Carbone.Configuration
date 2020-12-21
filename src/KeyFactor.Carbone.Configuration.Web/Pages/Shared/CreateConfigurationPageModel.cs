@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Volo.Abp.Http.Client;
+using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -66,6 +67,16 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                         foreach (var member in error.Members)
                         {
                             ModelState.AddModelError(member, ex.Message);
+                        }
+                    }
+                }
+                catch (AbpValidationException ex)
+                {
+                    foreach (var error in ex.ValidationErrors)
+                    {
+                        foreach (var member in error.MemberNames)
+                        {
+                            ModelState.AddModelError(member, error.ErrorMessage);
                         }
                     }
                 }

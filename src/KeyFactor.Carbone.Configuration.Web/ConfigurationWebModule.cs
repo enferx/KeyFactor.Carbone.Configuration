@@ -49,6 +49,7 @@ namespace KeyFactor.Carbone.Configuration.Web
             });
 
             context.Services.AddAutoMapperObjectMapper<ConfigurationWebModule>();
+
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<ConfigurationWebModule>(validate: true);
@@ -73,7 +74,7 @@ namespace KeyFactor.Carbone.Configuration.Web
 
             context.Services.AddMvc(options =>
             {
-                options.Filters.AddService(typeof(CarboneExceptionFilter), order: 1);
+                options.Filters.AddService(typeof(CarboneExceptionFilter), order: 1); 
             });
         }
 

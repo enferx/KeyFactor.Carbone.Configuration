@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using Volo.Abp.Http.Client;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using KeyFactor.Carbone.Configuration.Products;
+using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -51,6 +53,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         public async Task<IActionResult> OnPost()
         {
             ConfigureViewData();
+            OnBeforePost();
             IActionResult result = null;
             if (ModelState.IsValid)
             {
@@ -72,8 +75,22 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                         }
                     }
                 }
+                catch (AbpValidationException ex)
+                {
+                    foreach (var error in ex.ValidationErrors)
+                    {
+                        foreach (var member in error.MemberNames)
+                        {
+                            ModelState.AddModelError(member, error.ErrorMessage);
+                        }
+                    }
+                }
             }
             return ModelState.IsValid ? result : Page();
+        }
+
+        protected virtual void OnBeforePost()
+        {
         }
 
         protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 id, T2 input);

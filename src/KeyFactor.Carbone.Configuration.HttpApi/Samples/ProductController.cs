@@ -40,6 +40,13 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet]
+        [Route("{number}")]
+        public Task<ProductDto> FindByNumber(string number)
+        {
+            return _productAppService.FindByNumber(number);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public Task<ProductDto> GetAsync(Guid id)
         {

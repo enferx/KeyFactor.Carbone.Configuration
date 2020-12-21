@@ -2,6 +2,7 @@ using KeyFactor.Carbone.Configuration.Products;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
@@ -10,6 +11,16 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
     {
         
         private readonly IProductAppService _productAppService;
+
+        [BindProperty]
+        [HiddenInput]
+        [DataType(DataType.Date)]
+        public DateTime? ValidFromDateHidden { get; set; }
+
+        [BindProperty]
+        [HiddenInput]
+        [DataType(DataType.Date)]
+        public DateTime? ValidToDateHidden { get; set; }
 
         public EditProductModel(IProductAppService productAppService) : base("")
         {
@@ -28,6 +39,10 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
         {
             var bookDto = await _productAppService.GetAsync(Id);
             Input = ObjectMapper.Map<ProductDto, UpdateProductDto>(bookDto);
+        }
+
+        protected override void OnBeforePost()
+        {
         }
 
         protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, UpdateProductDto productDto)

@@ -21,22 +21,20 @@ namespace KeyFactor.Carbone.Configuration.Domain
         }
         public async Task SeedAsync(DataSeedContext context)
         {
-            if (await _productRepository.GetCountAsync() <= 0)
-            {
-
-                await _productRepository.InsertAsync(
-                   await _productManager.CreateAsync
-                    (
-                        number: "PROD-100",
-                        name: "PROD-100",
-                        fieldServiceProductType: FieldServiceProductType.Inventory,
-                        productStructure: ProductStructure.Product,
-                        decimalPlaces: 2
-                    ),
-                    autoSave: true
-                );
-            }
-
+            //if (await _productRepository.GetCountAsync() <= 0)
+            //{
+            //    await _productRepository.InsertAsync(
+            //       await _productManager.CreateAsync
+            //        (
+            //            number: "PROD-100",
+            //            name: "PROD-100",
+            //            fieldServiceProductType: FieldServiceProductType.Inventory,
+            //            productStructure: ProductStructure.Product,
+            //            decimalPlaces: 2
+            //        ),
+            //        autoSave: true
+            //    );
+            //}
         }
     }
 }

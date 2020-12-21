@@ -1,6 +1,8 @@
-﻿using System;
+﻿using KeyFactor.Carbone.Configuration.Shared.Validators;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Application.Dtos;
+using System.Linq;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -37,15 +39,16 @@ namespace KeyFactor.Carbone.Configuration.Products
         public ProductStructure ProductStructure { get; set; } = ProductStructure.Product;
 
         [Required]
+        [Range(0,9)]
         public int DecimalPlaces { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? ValidFromDate { get; set; }
 
+        [GreaterThan(property: nameof(ValidToDate), propertyToCompare: nameof(ValidFromDate))]
         [DataType(DataType.Date)]
         public DateTime? ValidToDate { get; set; }
 
         public string ConcurrencyStamp { get; set; }
-
     }
 }

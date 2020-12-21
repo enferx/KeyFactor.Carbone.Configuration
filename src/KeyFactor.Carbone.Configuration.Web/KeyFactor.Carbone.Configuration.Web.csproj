@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Products\EditProduct.js" />
+    <None Remove="Pages\Products\FormProduct.js" />
     <None Remove="Pages\Products\Index.js" />
   </ItemGroup>
 

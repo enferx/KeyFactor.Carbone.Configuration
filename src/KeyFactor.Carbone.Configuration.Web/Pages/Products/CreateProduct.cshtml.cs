@@ -2,6 +2,7 @@ using KeyFactor.Carbone.Configuration.Products;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
@@ -9,6 +10,16 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
     public class CreateProductModel : CreateConfigurationPageModel<CreateProductDto>
     {
         private readonly IProductAppService _productAppService;
+
+        [BindProperty]
+        [HiddenInput]
+        [DataType(DataType.Date)]
+        public DateTime? ValidFromDateHidden { get; set; }
+
+        [BindProperty]
+        [HiddenInput]
+        [DataType(DataType.Date)]
+        public DateTime? ValidToDateHidden { get; set; }
 
         public CreateProductModel(IProductAppService productAppService) : base("", new CreateProductDto()) 
         {

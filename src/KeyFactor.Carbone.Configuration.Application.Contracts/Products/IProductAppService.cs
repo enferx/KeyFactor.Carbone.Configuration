@@ -14,6 +14,8 @@ namespace KeyFactor.Carbone.Configuration.Products
     {
         Task<ProductDto> GetAsync(Guid id);
 
+        Task<ProductDto> FindByNumber(string number);
+
         Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input);
 
         Task<ProductDto> CreateAsync(CreateProductDto input);

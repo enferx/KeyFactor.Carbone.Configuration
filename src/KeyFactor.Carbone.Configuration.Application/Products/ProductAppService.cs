@@ -30,6 +30,12 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
 
+        public async Task<ProductDto> FindByNumber(string number)
+        {
+            var product = await _repository.FindByNumberAsync(number);
+            return ObjectMapper.Map<Product, ProductDto>(product);
+        }
+
         public async Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input)
         {
             if (input.Sorting.IsNullOrWhiteSpace())

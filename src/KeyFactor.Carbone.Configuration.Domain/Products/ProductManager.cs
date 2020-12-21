@@ -40,7 +40,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
             Check.NotNullOrWhiteSpace(number, nameof(number));
-
+            
             var existingProduct = await _repository.FindByNumberAsync(number);
             if (existingProduct != null)
             {
