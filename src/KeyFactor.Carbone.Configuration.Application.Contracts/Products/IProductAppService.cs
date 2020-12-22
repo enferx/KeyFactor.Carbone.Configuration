@@ -23,6 +23,5 @@ namespace KeyFactor.Carbone.Configuration.Products
         Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input);
 
         Task DeleteAsync(Guid id);
-        
     }
 }

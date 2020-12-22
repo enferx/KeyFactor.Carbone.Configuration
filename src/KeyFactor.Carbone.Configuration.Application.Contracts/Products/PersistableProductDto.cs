@@ -48,7 +48,5 @@ namespace KeyFactor.Carbone.Configuration.Products
         [GreaterThan(property: nameof(ValidToDate), propertyToCompare: nameof(ValidFromDate))]
         [DataType(DataType.Date)]
         public DateTime? ValidToDate { get; set; }
-
-        public string ConcurrencyStamp { get; set; }
     }
 }

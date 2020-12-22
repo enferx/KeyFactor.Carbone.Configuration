@@ -45,6 +45,7 @@
   <ItemGroup>
     <None Remove="Pages\Products\FormProduct.js" />
     <None Remove="Pages\Products\Index.js" />
+    <None Remove="Pages\Units\Index.js" />
   </ItemGroup>
 
   <ItemGroup>

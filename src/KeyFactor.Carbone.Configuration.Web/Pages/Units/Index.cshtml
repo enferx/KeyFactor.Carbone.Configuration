@@ -1,0 +1,35 @@
+﻿@page
+@using KeyFactor.Carbone.Configuration.Localization
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Authorization
+@using KeyFactor.Carbone.Configuration.Permissions;
+@model KeyFactor.Carbone.Configuration.Web.Pages.Units.IndexModel
+@inject IStringLocalizer<ConfigurationResource> L
+@inject IAuthorizationService AuthorizationService
+@section scripts
+{
+    <script type="text/javascript" src="~/Pages/Units/Index.js"></script>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Units"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                @if (await AuthorizationService.IsGrantedAsync(ConfigurationPermissions.Units.Create))
+                {
+                    <abp-button id="NewUnitButton"
+                                text="@L["NewUnit"].Value"
+                                icon="plus"
+                                button-type="Primary"
+                                onclick="window.location.href='/Units/CreateUnit'" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="UnitsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

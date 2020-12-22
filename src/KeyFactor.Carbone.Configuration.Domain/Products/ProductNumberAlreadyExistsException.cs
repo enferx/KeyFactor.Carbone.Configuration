@@ -18,7 +18,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public IList<ValidationResult> ValidationErrors => new List<ValidationResult>() 
         {
-            new ValidationResult(this.Code, new List<string>() { "Number" })
+            new ValidationResult(Code, new List<string>() { "Number" })
         };
         
     }

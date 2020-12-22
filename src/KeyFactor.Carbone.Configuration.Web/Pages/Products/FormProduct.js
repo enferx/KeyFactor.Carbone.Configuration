@@ -8,8 +8,6 @@
     }
 
     $('#mainForm').submit(function (event) {
-
-        //event.preventDefault(); //this will prevent the default submit
         $("#ValidFromDateHidden").val($("#ValidFromDate").val());
         $("#ValidToDateHidden").val($("#ValidToDate").val());
         

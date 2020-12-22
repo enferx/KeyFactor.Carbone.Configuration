@@ -31,6 +31,22 @@ namespace KeyFactor.Carbone.Configuration.Web.Menus
                     )
                 );
             }
+            if (await context.IsGrantedAsync(ConfigurationPermissions.Units.Default))
+            {
+                context.Menu.Items.Add(
+                    new ApplicationMenuItem(
+                        "Configuration",
+                        l["Menu:Configuration"],
+                        icon: "fa fa-book"
+                    ).AddItem(
+                        new ApplicationMenuItem(
+                            "Configuration.Units",
+                            l["Menu:Units"],
+                            url: "/Units"
+                        )
+                    )
+                );
+            }
         }
 
         private Task ConfigureMainMenu(MenuConfigurationContext context)

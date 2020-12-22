@@ -1,16 +1,9 @@
-﻿using KeyFactor.Carbone.Configuration.Permissions;
-using KeyFactor.Carbone.Configuration.Shared;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Authorization.Permissions;
-using Volo.Abp.PermissionManagement;
-using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -21,6 +14,7 @@ namespace KeyFactor.Carbone.Configuration.Products
     public class ProductController : ConfigurationController, IProductAppService
     {
         private readonly IProductAppService _productAppService;
+
         public ProductController(IProductAppService productAppService)
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");

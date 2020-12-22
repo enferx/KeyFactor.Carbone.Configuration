@@ -1,5 +1,6 @@
 ﻿using System;
 using KeyFactor.Carbone.Configuration.Products;
+using KeyFactor.Carbone.Configuration.Units;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -28,6 +29,15 @@ namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
                 b.Property(x => x.Name).IsRequired().HasMaxLength(ProductConsts.MaxNameLength);
                 b.Property(x => x.Number).IsRequired().HasMaxLength(ProductConsts.MaxNumberLength);
                 b.HasIndex(x => x.Number).IsUnique();
+                b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
+            });
+
+            builder.Entity<Unit>(b =>
+            {
+                b.ToTable("Units", ConfigurationDbProperties.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(UnitConsts.MaxNameLength);
+                b.HasIndex(x => x.Name).IsUnique();
                 b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
             });
 

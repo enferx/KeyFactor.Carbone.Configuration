@@ -11,14 +11,17 @@
     "AreYouSureToDelete": "Are you sure you want to delete this item {0}?",
     "SuccessfullyDeleted": "Item correctly deleted...",
     "Menu:Products": "Products",
+    "Menu:Units": "Units",
+
     "Actions": "Actions",
     "Close": "Close",
     "Delete": "Delete",
     "Edit": "Edit",
+
     "NewProduct": "New product",
-    "Product_Number": "Number",
-    "Product_Name": "Name",
-    "Product_Description": "Description",
+    "ProductNumber": "Number",
+    "ProductName": "Name",
+    "ProductDescription": "Description",
     "CurrentCost": "Current cost",
     "StandardCost": "Standard cost",
     "QuantityOnHand": "Quantity on hand",
@@ -38,11 +41,23 @@
     "Enum:ProductStructure:0": "Product",
     "Enum:ProductStructure:1": "Product Family",
     "Enum:ProductStructure:2": "Product Bundle",
-    "Configuration:000001": "There is already an product with the same number: {0}",
+
+    "NewUnit": "New unit",
+    "UnitName": "Name",
+    "Unit": "Units",
+
+    "Configuration:000001": "There is already a product with the same number: {0}",
+    "Configuration:000002": "There is already an unit with the same name: {0}",
+
     "Permission:Configuration": "Configuration",
     "Permission:Products": "Products Management",
     "Permission:Products.Create": "Creating new products",
     "Permission:Products.Edit": "Editing the products",
-    "Permission:Products.Delete": "Deleting the products"
+    "Permission:Products.Delete": "Deleting the products",
+    "Permission:Units": "Units Management",
+    "Permission:Units.Create": "Creating new units",
+    "Permission:Units.Edit": "Editing the units",
+    "Permission:Units.Delete": "Deleting the units"
+
   }
 }

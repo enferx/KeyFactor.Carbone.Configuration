@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Uow;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -20,8 +18,8 @@ namespace KeyFactor.Carbone.Configuration.Products
         
         public ProductAppService(IProductRepository repository, ProductManager manager)
         {
-            _repository = repository ?? throw new ArgumentNullException("repository");
-            _manager = manager ?? throw new ArgumentNullException("manager");
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         }
 
         public async Task<ProductDto> GetAsync(Guid id)
@@ -88,7 +86,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
        
-        [Authorize(ConfigurationPermissions.Products.Update)]
+        [Authorize(ConfigurationPermissions.Products.Edit)]
         public async Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
         {
             var product = await _repository.GetAsync(id);
@@ -136,10 +134,9 @@ namespace KeyFactor.Carbone.Configuration.Products
                 ));
             }
             return errors;
-
         }
 
-        [Authorize(ConfigurationPermissions.Products.Update)]
+        [Authorize(ConfigurationPermissions.Products.Edit)]
         public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
         {
             var errors = Validate(input);

@@ -1,4 +1,5 @@
 ﻿using KeyFactor.Carbone.Configuration.EntityFrameworkCore;
+using KeyFactor.Carbone.Configuration.Units;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,23 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public class ProductRepository : CarboneRepository<ConfigurationDbContext, Product, Guid>,
-        IProductRepository
+    public class UnitRepository : CarboneRepository<ConfigurationDbContext, Unit, Guid>, IUnitRepository
     {
-        public ProductRepository(
-            IDbContextProvider<ConfigurationDbContext> dbContextProvider)
+        public UnitRepository(IDbContextProvider<ConfigurationDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-        }
-        public async Task<Product> FindByNumberAsync(string number)
-        {
-            return await DbSet.FirstOrDefaultAsync(product => product.Number == number);
+
         }
 
-        public async Task<List<Product>> GetListAsync(int skipCount, int maxResultCount, string sorting, string filter = null) => await DbSet
+        public async Task<Unit> FindByNameAsync(string name)
+        => await DbSet.FirstOrDefaultAsync(unit => unit.Name == name);
+        
+
+        public async Task<List<Unit>> GetListAsync(int skipCount, int maxResultCount, string sorting, string filter = null)
+            => await DbSet
                 .WhereIf(
                     !filter.IsNullOrWhiteSpace(),
-                    product => product.Number.Contains(filter)
+                    unit => unit.Name.Contains(filter)
                  )
                 .OrderBy(sorting)
                 .Skip(skipCount)

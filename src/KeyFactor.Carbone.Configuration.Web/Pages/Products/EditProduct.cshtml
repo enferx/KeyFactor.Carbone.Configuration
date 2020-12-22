@@ -16,5 +16,5 @@
     @await Html.PartialAsync("_Product", Model.Input);
     <abp-input asp-for="@Model.ValidFromDateHidden" />
     <abp-input asp-for="@Model.ValidToDateHidden" />
-
+    <abp-input asp-for="@Model.Input.ConcurrencyStamp" type="hidden" />
 </form>

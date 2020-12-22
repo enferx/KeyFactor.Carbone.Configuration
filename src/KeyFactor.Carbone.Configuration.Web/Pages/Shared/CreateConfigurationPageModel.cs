@@ -86,7 +86,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 input);
 
-        protected abstract Task OnGetAsync();
+        protected Task OnGetAsync() { return Task.CompletedTask; }
 
         protected abstract Task<IActionResult> OnCreateAsync();
     }

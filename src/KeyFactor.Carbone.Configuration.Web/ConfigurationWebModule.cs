@@ -59,8 +59,10 @@ namespace KeyFactor.Carbone.Configuration.Web
             {
                 options.Conventions.AuthorizePage("/Products/Index", ConfigurationPermissions.Products.Default);
                 options.Conventions.AuthorizePage("/Products/CreateProduct", ConfigurationPermissions.Products.Create);
-                options.Conventions.AuthorizePage("/Products/EditProduct", ConfigurationPermissions.Products.Update);
-
+                options.Conventions.AuthorizePage("/Products/EditProduct", ConfigurationPermissions.Products.Edit);
+                options.Conventions.AuthorizePage("/Units/Index", ConfigurationPermissions.Units.Default);
+                options.Conventions.AuthorizePage("/Units/CreateUnit", ConfigurationPermissions.Units.Create);
+                options.Conventions.AuthorizePage("/Units/EditUnit", ConfigurationPermissions.Units.Edit);
             });
             Configure<AbpExceptionLocalizationOptions>(options =>
             {

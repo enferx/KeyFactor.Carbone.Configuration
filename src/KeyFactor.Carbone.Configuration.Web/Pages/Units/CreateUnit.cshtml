@@ -1,0 +1,14 @@
+﻿@page
+@using KeyFactor.Carbone.Configuration.Localization
+@using Microsoft.Extensions.Localization
+@model KeyFactor.Carbone.Configuration.Web.Pages.Units.CreateUnitModel
+@inject IStringLocalizer<ConfigurationResource> L
+@{
+    Layout = "_Layout";
+}
+@section Scripts
+{
+}
+<form method="post" id="mainForm">
+    @await Html.PartialAsync("_Unit", Model.Input);
+</form>

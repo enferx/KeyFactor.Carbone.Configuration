@@ -21,7 +21,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         [DataType(DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
-        public CreateProductModel(IProductAppService productAppService) : base("", new CreateProductDto()) 
+        public CreateProductModel(IProductAppService productAppService) : base(string.Empty, new CreateProductDto()) 
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
@@ -37,11 +37,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             ViewData["GoBackUrl"] = "/Products";
             ViewData["AddNewUrl"] = "/Products/CreateProduct";
             ViewData["SaveUrl"] = "/Products/EditProduct";
-        }
-
-        protected override Task OnGetAsync()
-        {
-            return Task.CompletedTask;
         }
 
         protected override async Task<IActionResult> OnCreateAsync()

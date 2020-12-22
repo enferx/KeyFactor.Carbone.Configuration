@@ -10,7 +10,15 @@ namespace KeyFactor.Carbone.Configuration.Permissions
         {
             public const string Default = GroupName + ".Products";
             public const string Create = Default + ".Create";
-            public const string Update = Default + ".Edit";
+            public const string Edit = Default + ".Edit";
+            public const string Delete = Default + ".Delete";
+        }
+
+        public static class Units
+        {
+            public const string Default = GroupName + ".Units";
+            public const string Create = Default + ".Create";
+            public const string Edit = Default + ".Edit";
             public const string Delete = Default + ".Delete";
         }
 
