@@ -39,6 +39,10 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public DateTime? ValidToDate { get; set; }
 
+        public Guid UnitId { get; set; }
+
+        public string UnitName { get; set; }
+
         public string ConcurrencyStamp { get; set; }
     }
 }

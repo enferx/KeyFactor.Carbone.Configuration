@@ -30,6 +30,7 @@ namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
                 b.Property(x => x.Number).IsRequired().HasMaxLength(ProductConsts.MaxNumberLength);
                 b.HasIndex(x => x.Number).IsUnique();
                 b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
+                b.HasOne<Unit>().WithMany().HasForeignKey(x => x.UnitId).IsRequired();
             });
 
             builder.Entity<Unit>(b =>

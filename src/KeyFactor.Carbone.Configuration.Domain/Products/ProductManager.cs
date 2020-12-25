@@ -28,6 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             FieldServiceProductType fieldServiceProductType,
             ProductStructure productStructure,
             int decimalPlaces,
+            Guid unitId,
             [CanBeNull] string description = null,
             decimal? currentCost = null,
             decimal? standardCost = null,
@@ -63,7 +64,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                 taxable: taxable,
                 purchaseName: purchaseName,
                 validFromDate: validFromDate,
-                validToDate: validToDate
+                validToDate: validToDate,
+                unitId: unitId
             );
         }
 
@@ -80,6 +82,17 @@ namespace KeyFactor.Carbone.Configuration.Products
                 throw new ProductNumberAlreadyExistsException(newNumber);        
             }
             product.ChangeNumber(newNumber);
+        }
+
+
+        public void ChangeName(
+            [NotNull] Product product,
+            [NotNull] string newName)
+        {
+            Check.NotNull(product, nameof(product));
+            Check.NotNullOrWhiteSpace(newName, nameof(newName));
+
+            product.ChangeName(newName);
         }
     }
 }

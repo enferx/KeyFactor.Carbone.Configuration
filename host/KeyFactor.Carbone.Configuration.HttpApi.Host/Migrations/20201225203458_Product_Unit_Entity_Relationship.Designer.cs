@@ -4,15 +4,17 @@ using KeyFactor.Carbone.Configuration.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace KeyFactor.Carbone.Configuration.Migrations
 {
     [DbContext(typeof(ConfigurationHttpApiHostMigrationsDbContext))]
-    partial class ConfigurationHttpApiHostMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201225203458_Product_Unit_Entity_Relationship")]
+    partial class Product_Unit_Entity_Relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

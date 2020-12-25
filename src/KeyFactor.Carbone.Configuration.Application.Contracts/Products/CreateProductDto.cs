@@ -46,5 +46,8 @@ namespace KeyFactor.Carbone.Configuration.Products
         [GreaterThan(property: nameof(ValidToDate), propertyToCompare: nameof(ValidFromDate))]
         [DataType(DataType.Date)]
         public DateTime? ValidToDate { get; set; }
+
+        [Required]
+        public Guid UnitId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace KeyFactor.Carbone.Configuration.Products
     {
         public string Number { get; private set; }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         public string Description { get; set; }
 
@@ -40,6 +40,8 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public DateTime? ValidToDate { get; set; }
 
+        public Guid UnitId { get; set; }
+
         private Product() {}
 
         internal Product(Guid id,
@@ -56,7 +58,8 @@ namespace KeyFactor.Carbone.Configuration.Products
             bool taxable,
             [CanBeNull] string purchaseName,
             DateTime? validFromDate,
-            DateTime? validToDate)
+            DateTime? validToDate,
+            Guid unitId)
         {
             Id = id;
             SetName(name);
@@ -74,6 +77,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             ValidFromDate = validFromDate;
             ValidToDate = validToDate;
             TimeZoneId = TimeZoneInfo.Local.Id;
+            UnitId = unitId;
         }
 
         internal Product ChangeName([NotNull] string name)

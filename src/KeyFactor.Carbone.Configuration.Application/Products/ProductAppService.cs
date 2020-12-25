@@ -1,4 +1,5 @@
 ﻿using KeyFactor.Carbone.Configuration.Permissions;
+using KeyFactor.Carbone.Configuration.Units;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Entities;
+using System.Linq.Dynamic.Core;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -15,17 +18,30 @@ namespace KeyFactor.Carbone.Configuration.Products
     {
         private readonly IProductRepository _repository;
         private readonly ProductManager _manager;
-        
-        public ProductAppService(IProductRepository repository, ProductManager manager)
+        private readonly IUnitRepository _unitRepository;
+
+        public ProductAppService(IProductRepository repository, ProductManager manager, IUnitRepository unitRepository)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _manager = manager ?? throw new ArgumentNullException(nameof(manager));
+            _repository = Check.NotNull(repository, nameof(repository));
+            _manager = Check.NotNull(manager, nameof(manager));
+            _unitRepository = Check.NotNull(unitRepository, nameof(unitRepository));
         }
 
         public async Task<ProductDto> GetAsync(Guid id)
         {
-            var product = await _repository.GetAsync(id);
-            return ObjectMapper.Map<Product, ProductDto>(product);
+            var query = from product in _repository
+                        join unit in _unitRepository on product.UnitId equals unit.Id
+                        where product.Id == id
+                        select new { product, unit };
+
+            var queryResult = await AsyncExecuter.FirstOrDefaultAsync(query);
+            if (queryResult == null)
+            {
+                throw new EntityNotFoundException(typeof(Product), id);
+            }
+            var productDto = ObjectMapper.Map<Product, ProductDto>(queryResult.product);
+            productDto.UnitName = queryResult.unit.Name;
+            return productDto;
         }
 
         public async Task<ProductDto> FindByNumber(string number)
@@ -38,26 +54,45 @@ namespace KeyFactor.Carbone.Configuration.Products
         {
             if (input.Sorting.IsNullOrWhiteSpace())
             {
-                input.Sorting = nameof(Product.Number);
+                input.Sorting = "product.Number";
             }
 
-            var products = await _repository.GetListAsync(
-                input.SkipCount,
-                input.MaxResultCount,
-                input.Sorting,
-                input.Filter
-            );
+            // Create query with join.
+            var query = from product in _repository
+                        join unit in _unitRepository on product.UnitId equals unit.Id
+                        select new { product, unit };
+
+            // Filter, order and paging.
+            query = query
+                .WhereIf(
+                    !input.Filter.IsNullOrWhiteSpace(),
+                    item => item.product.Number.Contains(input.Filter)
+                 )
+                .OrderBy(input.Sorting)
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount);
+
+            //Execute the query and get a list
+            var queryResult = await AsyncExecuter.ToListAsync(query);
+
+            //Convert the query result to a list of ProductDto objects
+            var productsDto = queryResult.Select(x =>
+            {
+                var productDto = ObjectMapper.Map<Product, ProductDto>(x.product);
+                productDto.UnitName = x.unit.Name;
+                return productDto;
+            }).ToList();
 
             var totalCount = await AsyncExecuter.CountAsync(
-                _repository.WhereIf(
-                    !input.Filter.IsNullOrWhiteSpace(),
-                    product => product.Number.Contains(input.Filter)
-                )
+              _repository.WhereIf(
+                  !input.Filter.IsNullOrWhiteSpace(),
+                  product => product.Number.Contains(input.Filter)
+              )
             );
-
+           
             return new PagedResultDto<ProductDto>(
                 totalCount,
-                ObjectMapper.Map<List<Product>, List<ProductDto>>(products)
+                productsDto
             );
         }
 
@@ -79,7 +114,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                 taxable: input.Taxable,
                 purchaseName: input.PurchaseName,
                 validFromDate: input.ValidFromDate,
-                validToDate: input.ValidToDate
+                validToDate: input.ValidToDate,
+                unitId: input.UnitId
             );
 
             await _repository.InsertAsync(product);
@@ -94,6 +130,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             {
                 await _manager.ChangeNumberAsync(product, input.Number);
             }
+            _manager.ChangeName(product, input.Name);
             product.ConcurrencyStamp = input.ConcurrencyStamp;
             product.ConvertToCustomerAsset = input.ConvertToCustomerAsset;
             product.CurrentCost = input.CurrentCost;
@@ -101,7 +138,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.Description = input.Description;
             product.FieldServiceProductType = input.FieldServiceProductType;
             product.IsStockItem = input.IsStockItem;
-            product.Name = input.Name;
             product.ProductStructure = input.ProductStructure;
             product.PurchaseName = input.PurchaseName;
             product.QuantityOnHand = input.QuantityOnHand;
@@ -109,7 +145,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.Taxable = input.Taxable;
             product.ValidFromDate = input.ValidFromDate;
             product.ValidToDate = input.ValidToDate;
-
+            product.UnitId = input.UnitId;
             await _repository.UpdateAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }

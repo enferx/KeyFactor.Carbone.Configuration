@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace KeyFactor.Carbone.Configuration.Products
@@ -17,6 +19,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             : base(dbContextProvider)
         {
         }
+
         public async Task<Product> FindByNumberAsync(string number)
         {
             return await DbSet.FirstOrDefaultAsync(product => product.Number == number);
