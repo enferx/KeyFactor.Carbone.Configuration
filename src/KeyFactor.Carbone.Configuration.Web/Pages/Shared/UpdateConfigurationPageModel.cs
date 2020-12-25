@@ -24,7 +24,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         [BindProperty]
         public T2 Input { get; set; }
 
-        public UpdateConfigurationPageModel(string entityPath) : base(entityPath)
+        public UpdateConfigurationPageModel() : base("Input.")
         {
         }
 

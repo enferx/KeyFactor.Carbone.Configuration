@@ -10,5 +10,19 @@
 {
 }
 <form method="post" id="mainForm">
-    @await Html.PartialAsync("_Unit", Model.Input);
+    <abp-card-body>
+        <abp-row>
+            <abp-column size-md="_12">
+                <abp-tabs>
+                    <abp-tab title="Details">
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.Name" />
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                </abp-tabs>
+            </abp-column>
+        </abp-row>
+    </abp-card-body>
 </form>

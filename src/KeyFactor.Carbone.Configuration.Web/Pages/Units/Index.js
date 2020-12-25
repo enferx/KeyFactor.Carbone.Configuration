@@ -29,7 +29,7 @@
                                     },
                                     action: function (data) {
                                         keyFactor.carbone.configuration
-                                            .products.product
+                                            .units.unit
                                             .delete(data.record.id)
                                             .then(function () {
                                                 abp.notify.info(l('SuccessfullyDeleted'));

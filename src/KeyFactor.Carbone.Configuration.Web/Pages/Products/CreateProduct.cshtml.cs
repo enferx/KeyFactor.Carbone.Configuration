@@ -21,7 +21,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         [DataType(DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
-        public CreateProductModel(IProductAppService productAppService) : base(string.Empty, new CreateProductDto()) 
+        public CreateProductModel(IProductAppService productAppService) : base(new CreateProductDto()) 
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }

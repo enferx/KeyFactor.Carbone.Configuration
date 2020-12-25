@@ -10,9 +10,17 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
     {
         private readonly IUnitAppService _unitAppService;
 
-        public CreateUnitModel(IUnitAppService unitAppService) : base(entityPath:string.Empty, new CreateUnitDto())
+        public CreateUnitModel(IUnitAppService unitAppService) : base(new CreateUnitDto())
         {
             _unitAppService = Check.NotNull(unitAppService, nameof(unitAppService));
+        }
+
+        protected override void ConfigureViewData()
+        {
+            ViewData["Title"] = "Units";
+            ViewData["GoBackUrl"] = "/Units";
+            ViewData["AddNewUrl"] = "/Units/CreateUnit";
+            ViewData["SaveUrl"] = "/Units/EditUnit";
         }
 
         protected override async Task<IActionResult> OnCreateAsync()

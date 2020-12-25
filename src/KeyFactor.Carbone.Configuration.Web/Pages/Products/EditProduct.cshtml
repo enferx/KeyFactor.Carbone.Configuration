@@ -13,7 +13,90 @@
 }
 <form method="post" id="mainForm">
     <input type="hidden" asp-for="@Model.Id" />
-    @await Html.PartialAsync("_Product", Model.Input);
+    <abp-card-body>
+        <abp-row>
+            <abp-column size-md="_12">
+                <abp-tabs>
+                    <abp-tab title="Details">
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.Name" />
+                            </abp-column>
+                            <abp-column>
+                                <abp-input asp-for="@Model.Input.Number" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.ValidFromDate" />
+                            </abp-column>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.ValidToDate" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.DecimalPlaces" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_12">
+                                <div class="form-group">
+                                    <label>@L["Product_Description"].Value</label>
+                                    <textarea asp-for="@Model.Input.Description" class="form-control" rows="4"></textarea>
+                                </div>
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                    <abp-tab title="Field Service">
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-card>
+                                    <abp-card-header>
+                                        General
+                                    </abp-card-header>
+                                    <abp-card-body>
+                                        <abp-row>
+                                            <abp-column size-md="_12">
+                                                <abp-select asp-for="@Model.Input.FieldServiceProductType" />
+                                            </abp-column>
+                                        </abp-row>
+                                        <abp-row>
+                                            <abp-column size-md="_12">
+                                                <abp-input asp-for="@Model.Input.ConvertToCustomerAsset" />
+                                            </abp-column>
+                                        </abp-row>
+                                    </abp-card-body>
+                                </abp-card>
+                            </abp-column>
+                            <abp-column size-md="_6">
+                                <abp-card>
+                                    <abp-card-header>Accounting</abp-card-header>
+                                    <abp-card-body>
+                                        <abp-row>
+                                            <abp-column size-md="_12">
+                                                <abp-input asp-for="@Model.Input.Taxable" />
+                                            </abp-column>
+                                        </abp-row>
+                                        <abp-row>
+                                            <abp-column size-md="_12">
+                                                <abp-input asp-for="@Model.Input.CurrentCost" />
+                                            </abp-column>
+                                        </abp-row>
+                                        <abp-row>
+                                            <abp-column size-md="_12">
+                                                <abp-input asp-for="@Model.Input.StandardCost" />
+                                            </abp-column>
+                                        </abp-row>
+                                    </abp-card-body>
+                                </abp-card>
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                </abp-tabs>
+            </abp-column>
+        </abp-row>
+    </abp-card-body>
     <abp-input asp-for="@Model.ValidFromDateHidden" />
     <abp-input asp-for="@Model.ValidToDateHidden" />
     <abp-input asp-for="@Model.Input.ConcurrencyStamp" type="hidden" />

@@ -34,7 +34,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet]
-        [Route("{number}")]
+        [Route("FindByNumber/{number}")]
         public Task<ProductDto> FindByNumber(string number)
         {
             return _productAppService.FindByNumber(number);

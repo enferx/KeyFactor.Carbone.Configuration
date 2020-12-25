@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
 
-    if ($("#ValidFromDate").val() == "") {
-        $("#ValidFromDate").val($("#ValidFromDateHidden").val());
+    if ($("#Input_ValidFromDate").val() == "") {
+        $("#Input_ValidFromDate").val($("#ValidFromDateHidden").val());
     }
-    if ($("#ValidToDate").val() == "") {
-        $("#ValidToDate").val($("#ValidToDateHidden").val());
+    if ($("#Input_ValidToDate").val() == "") {
+        $("#Input_ValidToDate").val($("#ValidToDateHidden").val());
     }
 
     $('#mainForm').submit(function (event) {
-        $("#ValidFromDateHidden").val($("#ValidFromDate").val());
-        $("#ValidToDateHidden").val($("#ValidToDate").val());
+        $("#ValidFromDateHidden").val($("#Input_ValidFromDate").val());
+        $("#ValidToDateHidden").val($("#Input_ValidToDate").val());
         
     });
     

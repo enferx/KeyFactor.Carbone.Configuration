@@ -22,7 +22,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
         [DataType(DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
-        public EditProductModel(IProductAppService productAppService) : base("")
+        public EditProductModel(IProductAppService productAppService)
         {
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
@@ -37,8 +37,8 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 
         protected override async Task OnGetAsync()
         {
-            var bookDto = await _productAppService.GetAsync(Id);
-            Input = ObjectMapper.Map<ProductDto, UpdateProductDto>(bookDto);
+            var productDto = await _productAppService.GetAsync(Id);
+            Input = ObjectMapper.Map<ProductDto, UpdateProductDto>(productDto);
         }
 
         protected override void OnBeforePost()

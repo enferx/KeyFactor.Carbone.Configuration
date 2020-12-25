@@ -36,12 +36,12 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [HttpGet]
-        [Route("{name}")]
+        [Route("FindByName/{name}")]
         public Task<UnitDto> FindByName(string name)
         {
             return _unitAppService.FindByName(name);
         }
-        
+
         [HttpGet]
         [Route("{id}")]
         public Task<UnitDto> GetAsync(Guid id)

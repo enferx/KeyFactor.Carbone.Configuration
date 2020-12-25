@@ -98,7 +98,7 @@ namespace KeyFactor.Carbone.Configuration.Units
             {
                 errors.Add(new ValidationError
                 (
-                    message: L[$"{ConfigurationErrorCodes.ProductNumberAlreadyExists}", input.Name],
+                    message: L[$"{ConfigurationErrorCodes.UnitNameAlreadyExists}", input.Name],
                     memberNames: new List<string>() { "Name" }
                 ));
             }

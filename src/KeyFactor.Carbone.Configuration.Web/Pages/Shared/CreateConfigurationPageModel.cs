@@ -19,7 +19,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         [BindProperty]
         public T1 Input { get; set; }
 
-        public CreateConfigurationPageModel(string entityPath, T1 input) : base(entityPath)
+        public CreateConfigurationPageModel(T1 input) : base("Input.")
         {
             Input = input;
         }
