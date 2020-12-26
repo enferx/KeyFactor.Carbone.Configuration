@@ -8,7 +8,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace KeyFactor.Carbone.Configuration.Products
+namespace KeyFactor.Carbone.Configuration.Units
 {
     public class UnitRepository : CarboneRepository<ConfigurationDbContext, Unit, Guid>, IUnitRepository
     {
