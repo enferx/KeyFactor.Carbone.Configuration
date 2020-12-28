@@ -604,12 +604,12 @@ pre code {
 }
 
 .row {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    /*margin-right: -15px;
-    margin-left: -15px;*/
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .no-gutters {
@@ -4246,7 +4246,7 @@ input[type="button"].btn-block {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding-left: 0;
-  /*margin-bottom: 0;*/
+  margin-bottom: 0;
   list-style: none;
 }
 
@@ -5537,7 +5537,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   position: relative;
   display: block;
   padding: 0.75rem 1.25rem;
-  background-color: inherit;
+  background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 

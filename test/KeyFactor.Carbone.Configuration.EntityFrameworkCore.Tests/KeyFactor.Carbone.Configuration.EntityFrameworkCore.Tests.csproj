@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.6" />
     <ProjectReference Include="..\..\src\KeyFactor.Carbone.Configuration.EntityFrameworkCore\KeyFactor.Carbone.Configuration.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\KeyFactor.Carbone.Configuration.TestBase\KeyFactor.Carbone.Configuration.TestBase.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="3.2.0" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="4.0.2" />
   </ItemGroup>
 
 </Project>

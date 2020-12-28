@@ -1,6 +1,7 @@
 ﻿using KeyFactor.Carbone.Configuration.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -14,11 +15,9 @@ namespace KeyFactor.Carbone.Configuration.Infrastructure
 {
     public class CarboneExceptionFilter : AbpExceptionFilter
     {
-        public CarboneExceptionFilter(IExceptionToErrorInfoConverter errorInfoConverter, IHttpExceptionStatusCodeFinder statusCodeFinder, IJsonSerializer jsonSerializer):
-            base(errorInfoConverter, statusCodeFinder, jsonSerializer)
-        {
-
-        }
+        public CarboneExceptionFilter(IExceptionToErrorInfoConverter errorInfoConverter, IHttpExceptionStatusCodeFinder statusCodeFinder, IJsonSerializer jsonSerializer, IOptions<AbpExceptionHandlingOptions> exceptionHandlingOptions)
+         : base(errorInfoConverter, statusCodeFinder, jsonSerializer, exceptionHandlingOptions)
+        { }
 
         protected override bool ShouldHandleException(ExceptionContext context)
         {
