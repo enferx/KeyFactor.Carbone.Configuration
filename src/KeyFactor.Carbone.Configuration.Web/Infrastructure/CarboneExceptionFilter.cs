@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,10 @@ namespace KeyFactor.Carbone.Configuration.Web.Infrastructure
 {
     public class CarboneExceptionFilter : AbpExceptionFilter
     {
-        public CarboneExceptionFilter(IExceptionToErrorInfoConverter errorInfoConverter, IHttpExceptionStatusCodeFinder statusCodeFinder, IJsonSerializer jsonSerializer):
-            base(errorInfoConverter, statusCodeFinder, jsonSerializer)
-        {
-
-        }
-
+        public CarboneExceptionFilter(IExceptionToErrorInfoConverter errorInfoConverter, IHttpExceptionStatusCodeFinder statusCodeFinder, IJsonSerializer jsonSerializer, IOptions<AbpExceptionHandlingOptions> exceptionHandlingOptions)
+        :base(errorInfoConverter, statusCodeFinder, jsonSerializer, exceptionHandlingOptions)
+        {}
+        
         protected override bool ShouldHandleException(ExceptionContext context)
         {
             return base.ShouldHandleException(context);

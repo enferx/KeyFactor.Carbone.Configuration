@@ -115,7 +115,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 purchaseName: input.PurchaseName,
                 validFromDate: input.ValidFromDate,
                 validToDate: input.ValidToDate,
-                unitId: input.UnitId
+                unitId: new Guid("6C3BAC9C-7738-1FA1-BF04-39F9BD5295F9")
             );
 
             await _repository.InsertAsync(product);
@@ -145,7 +145,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.Taxable = input.Taxable;
             product.ValidFromDate = input.ValidFromDate;
             product.ValidToDate = input.ValidToDate;
-            product.UnitId = input.UnitId;
+            product.UnitId = new Guid("6C3BAC9C-7738-1FA1-BF04-39F9BD5295F9");
             await _repository.UpdateAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
