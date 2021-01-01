@@ -35,8 +35,8 @@ namespace KeyFactor.Carbone.Configuration.Web.Menus
             {
                 context.Menu.Items.Add(
                     new ApplicationMenuItem(
-                        "Configuration",
-                        l["Menu:Configuration"],
+                        "Units",
+                        l["Menu:Units"],
                         icon: "fa fa-book"
                     ).AddItem(
                         new ApplicationMenuItem(

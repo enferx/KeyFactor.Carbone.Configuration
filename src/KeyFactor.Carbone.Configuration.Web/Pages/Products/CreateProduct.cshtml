@@ -3,13 +3,19 @@
 @using Microsoft.Extensions.Localization
 @model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductModel
 @inject IStringLocalizer<ConfigurationResource> L
-@{ 
+@{
     Layout = "_Layout";
 }
 @section Scripts
 {
     <script type="text/javascript" src="~/Pages/Products/FormProduct.js"></script>
+    <style type="text/css">
+        .input-validation-error .select2-selection {
+            border-color: rgb(185, 74, 72) !important;
+        }
+    </style>
 }
+
 <form method="post" id="mainForm">
     <abp-card-body>
         <abp-row>
@@ -27,20 +33,31 @@
                         <abp-row>
                             <abp-column size-md="_6">
                                 <abp-input asp-for="@Model.Input.ValidFromDate" />
+                                <abp-input asp-for="@Model.ValidFromDateHidden" />
                             </abp-column>
                             <abp-column size-md="_6">
                                 <abp-input asp-for="@Model.Input.ValidToDate" />
+                                <abp-input asp-for="@Model.ValidToDateHidden" />
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_6">
                                 <abp-input asp-for="@Model.Input.DecimalPlaces" />
                             </abp-column>
+                            <abp-column size-md="_6">
+                                <div class="form-group">
+                                    <label>@L["ProductUnitName"].Value</label>
+                                    <select id="Input_UnitId_Select" name="Input_UnitId_Select" class="form-control"></select>
+                                    @Html.ValidationMessageFor(x => x.Input.UnitId,"", new { @class = "text-danger" })
+                                </div>
+                                <abp-input asp-for="@Model.Input.UnitId" type="hidden"></abp-input>
+
+                            </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_12">
                                 <div class="form-group">
-                                    <label>@L["Product_Description"].Value</label>
+                                    <label>@L["ProductDescription"].Value</label>
                                     <textarea asp-for="@Model.Input.Description" class="form-control" rows="4"></textarea>
                                 </div>
                             </abp-column>
@@ -95,6 +112,5 @@
             </abp-column>
         </abp-row>
     </abp-card-body>
-    <abp-input asp-for="@Model.ValidFromDateHidden" />
-    <abp-input asp-for="@Model.ValidToDateHidden" />
+    
 </form>

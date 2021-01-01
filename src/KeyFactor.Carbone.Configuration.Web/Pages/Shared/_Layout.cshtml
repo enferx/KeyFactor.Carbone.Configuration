@@ -10,11 +10,25 @@
 @section scripts
 {
     @RenderSection("scripts", false)
+    <script type="text/javascript">
+        function submitForm() {
+            var form = $("#mainForm");
+            var isValid = form.valid();
+            if (isValid) {
+                abp.ui.block({
+                    busy: true
+                });
+                form.submit();
+            } else {
+                $($("select.input-validation-error")[0]).parent().addClass("input-validation-error")
+            }
+        }
+    </script>
 }
 <!DOCTYPE html>
-
 <html>
 <head>
+    <link rel="stylesheet" href="/libs/select2/css/select2-extensions.css" />
     <meta name="viewport" content="width=device-width" />
     <title>@L[@ViewData["Title"].ToString()]</title>
 </head>
@@ -34,7 +48,7 @@
                                 onclick="window.location.href='@ViewData["AddNewUrl"]'" />
                     <abp-button id="SaveProductButton"
                                 icon="save"
-                                onclick="$('#mainForm').submit();" />
+                                onclick="submitForm()" />
                 </abp-column>
             </abp-row>
         </abp-card-header>

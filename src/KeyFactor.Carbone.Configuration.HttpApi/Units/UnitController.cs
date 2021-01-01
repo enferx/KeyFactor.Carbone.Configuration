@@ -11,7 +11,7 @@ namespace KeyFactor.Carbone.Configuration.Units
     [RemoteService]
     [Area("configuration")]
     [ControllerName("Unit")]
-    [Route("api/configuration/unit")]
+    [Route("api/configuration/units")]
 
     public class UnitController : ConfigurationController, IUnitAppService
     {
@@ -36,7 +36,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [HttpGet]
-        [Route("FindByName/{name}")]
+        [Route("Find/{name}")]
         public Task<UnitDto> FindByName(string name)
         {
             return _unitAppService.FindByName(name);
@@ -63,14 +63,14 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [HttpGet()]
-        [Route("validateCreate")]
+        [Route("validatecreate")]
         public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
         {
             return _unitAppService.ValidateCreateAsync(input);
         }
 
         [HttpGet()]
-        [Route("validateUpdate")]
+        [Route("validateupdate")]
         public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateUnitDto input)
         {
             return _unitAppService.ValidateUpdateAsync(id, input);

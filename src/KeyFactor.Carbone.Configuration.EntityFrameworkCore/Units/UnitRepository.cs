@@ -26,8 +26,7 @@ namespace KeyFactor.Carbone.Configuration.Units
             => await DbSet
                 .WhereIf(
                     !filter.IsNullOrWhiteSpace(),
-                    unit => unit.Name.Contains(filter)
-                 )
+                    unit => unit.Name.Contains(filter))
                 .OrderBy(sorting)
                 .Skip(skipCount)
                 .Take(maxResultCount)

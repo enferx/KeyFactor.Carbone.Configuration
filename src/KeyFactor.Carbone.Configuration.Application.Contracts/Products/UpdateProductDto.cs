@@ -49,7 +49,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public string ConcurrencyStamp { get; set; }
 
-        [Required]
+        [NotEmpty]
         public Guid UnitId { get; set; }
 
     }

@@ -41,6 +41,7 @@
     "Enum:ProductStructure:0": "Product",
     "Enum:ProductStructure:1": "Product Family",
     "Enum:ProductStructure:2": "Product Bundle",
+    "ProductUnitName": "Unit Name",
 
     "NewUnit": "New unit",
     "UnitName": "Name",

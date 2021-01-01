@@ -17,8 +17,9 @@ namespace KeyFactor.Carbone.Configuration.Products
     public class ProductAppService : ConfigurationAppService, IProductAppService
     {
         private readonly IProductRepository _repository;
-        private readonly ProductManager _manager;
         private readonly IUnitRepository _unitRepository;
+
+        private readonly ProductManager _manager;
 
         public ProductAppService(IProductRepository repository, ProductManager manager, IUnitRepository unitRepository)
         {
@@ -115,7 +116,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 purchaseName: input.PurchaseName,
                 validFromDate: input.ValidFromDate,
                 validToDate: input.ValidToDate,
-                unitId: new Guid("6C3BAC9C-7738-1FA1-BF04-39F9BD5295F9")
+                unitId: input.UnitId
             );
 
             await _repository.InsertAsync(product);
@@ -145,7 +146,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.Taxable = input.Taxable;
             product.ValidFromDate = input.ValidFromDate;
             product.ValidToDate = input.ValidToDate;
-            product.UnitId = new Guid("6C3BAC9C-7738-1FA1-BF04-39F9BD5295F9");
+            product.UnitId = input.UnitId;
             await _repository.UpdateAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }

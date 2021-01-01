@@ -48,6 +48,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public DateTime? ValidToDate { get; set; }
 
         [Required]
+        [NotEmpty]
         public Guid UnitId { get; set; }
     }
 }

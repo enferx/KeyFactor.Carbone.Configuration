@@ -1,6 +1,8 @@
 ﻿$(function () {
     var l = abp.localization.getResource('Configuration');
-
+    abp.ui.block({
+            busy: true
+        });
     var dataTable = $('#ProductsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
@@ -62,6 +64,11 @@
                         return l('Enum:FieldServiceProductType:' + data);
                     }
                 }
-            ]
+            ],
+            "initComplete": function (settings, json) {
+                abp.ui.unblock();
+            }
         }));
+
+    
 });

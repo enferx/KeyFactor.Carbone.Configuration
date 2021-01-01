@@ -10,7 +10,7 @@ namespace KeyFactor.Carbone.Configuration.Products
     [RemoteService]
     [Area("configuration")]
     [ControllerName("Product")]
-    [Route("api/configuration/product")]
+    [Route("api/configuration/products")]
     public class ProductController : ConfigurationController, IProductAppService
     {
         private readonly IProductAppService _productAppService;
@@ -34,7 +34,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet]
-        [Route("FindByNumber/{number}")]
+        [Route("Find/{number}")]
         public Task<ProductDto> FindByNumber(string number)
         {
             return _productAppService.FindByNumber(number);
@@ -61,14 +61,14 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet()]
-        [Route("validateCreate")]
+        [Route("validatecreate")]
         public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductDto input)
         {
             return _productAppService.ValidateCreateAsync(input);
         }
 
         [HttpGet()]
-        [Route("validateUpdate")]
+        [Route("validateupdate")]
         public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
         {
             return _productAppService.ValidateUpdateAsync(id, input);
