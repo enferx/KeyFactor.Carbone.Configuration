@@ -282,7 +282,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isHidden: input.IsHidden,
                 isRequired: input.IsRequired,
                 defaultValueDecimal: input.DefaultValueDecimal,
-                minValueDecimal: input.MinDecimalValue.,
+                minValueDecimal: input.MinDecimalValue,
                 maxValueDecimal: input.MaxDecimalValue,
                 productId: input.Productid
             );
@@ -348,5 +348,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             productProperty = await _repository.CreateProductProperty(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
+
     }
 }

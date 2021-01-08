@@ -28,7 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         Task<ProductPropertyDto> GetProductPropertyAsync(Guid id);
 
-        Task<CreateProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input);
+        Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input);
 
         Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input);
 
