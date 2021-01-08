@@ -109,9 +109,11 @@ namespace KeyFactor.Carbone.Configuration.Products
             return _productAppService.CreateStringProductPropertyAsync(input);
         }
 
+        [HttpPost()]
+        [Route("createproductproperty")]
         public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
         {
-            throw new NotImplementedException();
+            return _productAppService.CreateProductPropertyAsync(input);
         }
     }
 }
