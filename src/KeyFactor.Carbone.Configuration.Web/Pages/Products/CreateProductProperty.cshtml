@@ -1,14 +1,13 @@
 ﻿@page
 @using KeyFactor.Carbone.Configuration.Localization
 @using Microsoft.Extensions.Localization
-@model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductModel
+@model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductPropertyModel
 @inject IStringLocalizer<ConfigurationResource> L
 @{
     Layout = "_Layout";
 }
 @section Scripts
 {
-    <script type="text/javascript" src="~/Pages/Products/FormProduct.js"></script>
 }
 
 <form method="post" id="mainForm">
@@ -43,7 +42,7 @@
                                 <div class="form-group">
                                     <label>@L["ProductUnitName"].Value</label>
                                     <select id="Input_UnitId_Select" name="Input_UnitId_Select" class="form-control"></select>
-                                    @Html.ValidationMessageFor(x => x.Input.UnitId,"", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(x => x.Input.UnitId, "", new { @class = "text-danger" })
                                 </div>
                                 <abp-input asp-for="@Model.Input.UnitId" type="hidden"></abp-input>
                             </abp-column>

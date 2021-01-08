@@ -42,6 +42,16 @@ namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
                 b.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
             });
 
+            builder.Entity<ProductProperty>(b =>
+            {
+                b.ToTable("ProductProperties", ConfigurationDbProperties.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(ProductPropertyConsts.MaxNameLength);
+                b.Property(x => x.DefaultValueString).HasMaxLength(ProductPropertyConsts.MaxValueLength);
+                b.Property(x => x.Description).HasMaxLength(ProductPropertyConsts.MaxDescriptionLength);
+                b.HasOne(x => x.Product).WithMany(x => x.Properties).HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            });
+
             /* Configure all entities here. Example:
 
             builder.Entity<Question>(b =>

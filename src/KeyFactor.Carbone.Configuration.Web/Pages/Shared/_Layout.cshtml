@@ -20,7 +20,9 @@
                 });
                 form.submit();
             } else {
-                $($("select.input-validation-error")[0]).parent().addClass("input-validation-error")
+                _.forEach($("select.input-validation-error"), function (item) {
+                    $(item).parent().addClass("input-validation-error");
+                })
             }
         }
     </script>

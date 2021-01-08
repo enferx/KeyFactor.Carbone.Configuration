@@ -1,15 +1,9 @@
 ﻿using JetBrains.Annotations;
-using KeyFactor.Carbone.Configuration.Localization;
-using Microsoft.Extensions.Localization;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Services;
-using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -93,6 +87,139 @@ namespace KeyFactor.Carbone.Configuration.Products
             Check.NotNullOrWhiteSpace(newName, nameof(newName));
 
             product.ChangeName(newName);
+        }
+
+        public async Task<ProductProperty> CreateDecimalProductProperty
+        (
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            decimal? defaultValueDecimal,
+            decimal minValueDecimal,
+            decimal maxValueDecimal
+        )
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            var product = await _repository.GetAsync(productId);
+            if(product == null)
+            {
+                throw new EntityNotFoundException(typeof(Product), productId);
+            }
+            return new ProductProperty
+            (
+                id: GuidGenerator.Create(),
+                name: name,
+                description: description,
+                isRequired: isRequired,
+                isHidden: isHidden,
+                isReadOnly: isReadOnly,
+                product: product,
+                defaultValueDecimal: defaultValueDecimal,
+                minDecimalValue: minValueDecimal,
+                maxDecimalValue: maxValueDecimal
+            );
+        }
+
+        public async Task<ProductProperty> CreateDoubleProductProperty
+        (
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            double? defaultValueDouble,
+            double minValueDouble,
+            double maxValueDouble
+        )
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            var product = await _repository.GetAsync(productId);
+            if (product == null)
+            {
+                throw new EntityNotFoundException(typeof(Product), productId);
+            }
+            return new ProductProperty
+            (
+                id: GuidGenerator.Create(), 
+                name: name,
+                description: description,
+                isRequired: isRequired,
+                isHidden: isHidden,
+                isReadOnly: isReadOnly,
+                product: product,
+                defaultValueDouble: defaultValueDouble,
+                minDoubleValue: minValueDouble,
+                maxDoubleValue: maxValueDouble
+            );
+        }
+
+        public async Task<ProductProperty> CreateIntegerProductProperty
+        (
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            int? defaultValueInteger,
+            int minValueInteger,
+            int maxValueInteger
+        )
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            var product = await _repository.GetAsync(productId);
+            if (product == null)
+            {
+                throw new EntityNotFoundException(typeof(Product), productId);
+            }
+            return new ProductProperty
+            (
+                id: GuidGenerator.Create(), 
+                name: name,
+                description: description,
+                isRequired: isRequired,
+                isHidden: isHidden,
+                isReadOnly: isReadOnly,
+                product: product,
+                defaultValueDouble: defaultValueInteger,
+                minDoubleValue: minValueInteger,
+                maxDoubleValue: maxValueInteger
+            );
+        }
+
+        public async Task<ProductProperty> CreateStringProductProperty
+        (
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            string defaultValueString,
+            int maxLengthString)
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            var product = await _repository.GetAsync(productId);
+            if (product == null)
+            {
+                throw new EntityNotFoundException(typeof(Product), productId);
+            }
+            return new ProductProperty
+            (
+                id: GuidGenerator.Create(), 
+                name: name,
+                description: description,
+                isRequired: isRequired,
+                isHidden: isHidden,
+                isReadOnly: isReadOnly,
+                product: product,
+                defaultValueString: defaultValueString,
+                maxLengthString: maxLengthString
+            );
         }
     }
 }

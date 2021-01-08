@@ -34,5 +34,17 @@ namespace KeyFactor.Carbone.Configuration.Products
                 .Skip(skipCount)
                 .Take(maxResultCount)
                 .ToListAsync();
+
+        public async Task<ProductProperty> GetProductPropertyAsync(Guid id) =>  
+            await DbContext.ProductProperties.FirstOrDefaultAsync(property => property.Id == id);
+
+        public async Task<ProductProperty> CreateProductProperty(ProductProperty productProperty)
+        {
+            await DbContext.ProductProperties.AddAsync(productProperty);
+            await DbContext.SaveChangesAsync();
+            return productProperty;
+        }
+
+
     }
 }

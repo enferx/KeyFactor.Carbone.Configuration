@@ -1,5 +1,6 @@
 ﻿using KeyFactor.Carbone.Configuration.Shared.Validators;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KeyFactor.Carbone.Configuration.Products

@@ -10,7 +10,9 @@ using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public interface IProductAppService : IApplicationService, IValidateCreate<CreateProductDto>, IValidateUpdate<Guid, UpdateProductDto>
+    public interface IProductAppService : IApplicationService, 
+        IValidateCreate<CreateProductDto>, 
+        IValidateUpdate<Guid, UpdateProductDto>
     {
         Task<ProductDto> GetAsync(Guid id);
 
@@ -23,5 +25,18 @@ namespace KeyFactor.Carbone.Configuration.Products
         Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input);
 
         Task DeleteAsync(Guid id);
+
+        Task<ProductPropertyDto> GetProductPropertyAsync(Guid id);
+
+        Task<CreateProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input);
+
+        Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input);
+
+        Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input);
+
+        Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input);
+
+        Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input);
+
     }
 }

@@ -13,6 +13,8 @@ namespace KeyFactor.Carbone.Configuration.EntityFrameworkCore
 
         public DbSet<Unit> Units { get; set; }
 
+        public DbSet<ProductProperty> ProductProperties { get; set; }
+
         public ConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options) 
             : base(options)
         {

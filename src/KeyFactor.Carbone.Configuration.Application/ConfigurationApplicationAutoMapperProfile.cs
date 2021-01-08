@@ -14,6 +14,11 @@ namespace KeyFactor.Carbone.Configuration
             CreateMap<Unit, UnitDto>();
             CreateMap<CreateUnitDto, Unit>();
             CreateMap<UpdateUnitDto, Unit>();
+            CreateMap<ProductProperty, ProductPropertyDto>();
+            CreateMap<CreateDecimalProductPropertyDto, ProductProperty>();
+            CreateMap<CreateDoubleProductPropertyDto, ProductProperty>();
+            CreateMap<CreateIntegerProductPropertyDto, ProductProperty>();
+            CreateMap<CreateStringProductPropertyDto,ProductPropertyDto> ();
        }
     }
 }

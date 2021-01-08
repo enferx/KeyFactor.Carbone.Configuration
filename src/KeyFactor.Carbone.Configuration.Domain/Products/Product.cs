@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -41,6 +42,8 @@ namespace KeyFactor.Carbone.Configuration.Products
         public DateTime? ValidToDate { get; set; }
 
         public Guid UnitId { get; set; }
+
+        public ICollection<ProductProperty> Properties { get; set; }
 
         private Product() {}
 

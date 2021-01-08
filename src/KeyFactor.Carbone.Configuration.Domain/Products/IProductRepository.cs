@@ -16,5 +16,9 @@ namespace KeyFactor.Carbone.Configuration.Products
            string sorting,
            string filter = null
        );
+
+        Task<ProductProperty> GetProductPropertyAsync(Guid id);
+
+        Task<ProductProperty> CreateProductProperty(ProductProperty productProperty);
     }
 }

@@ -17,7 +17,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public ProductController(IProductAppService productAppService)
         {
-            _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
+            _productAppService = Check.NotNull(productAppService, nameof(productAppService));
         }
 
         [HttpPost]
@@ -53,6 +53,13 @@ namespace KeyFactor.Carbone.Configuration.Products
             return await _productAppService.GetListAsync(input);
         }
 
+        [HttpGet]
+        [Route("productproperty/{guid}")]
+        public Task<ProductPropertyDto> GetProductPropertyAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPut()]
         [Route("{id}")]
         public Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
@@ -61,17 +68,46 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet()]
-        [Route("validatecreate")]
+        [Route("validate/create")]
         public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductDto input)
         {
             return _productAppService.ValidateCreateAsync(input);
         }
-
+        
         [HttpGet()]
-        [Route("validateupdate")]
+        [Route("validate/update")]
         public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
         {
             return _productAppService.ValidateUpdateAsync(id, input);
         }
+
+        [HttpPost()]
+        [Route("createproductproperty/decimal")]
+        public Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input)
+        {
+            return _productAppService.CreateDecimalProductPropertyAsync(input);
+        }
+
+        [HttpPost()]
+        [Route("createproductproperty/double")]
+        public Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input)
+        {
+            return _productAppService.CreateDoubleProductPropertyAsync(input);
+        }
+
+        [HttpPost()]
+        [Route("createproductproperty/integer")]
+        public Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input)
+        {
+            return _productAppService.CreateIntegerProductPropertyAsync(input);
+        }
+
+        [HttpPost()]
+        [Route("createproductproperty/string")]
+        public Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input)
+        {
+            return _productAppService.CreateStringProductPropertyAsync(input);
+        }
+
     }
 }

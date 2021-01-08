@@ -12,7 +12,7 @@ using System.Linq.Dynamic.Core;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    [RemoteService(isEnabled:false, IsMetadataEnabled = false)]
+    [RemoteService(isEnabled: false, IsMetadataEnabled = false)]
     [Authorize(ConfigurationPermissions.Products.Default)]
     public class ProductAppService : ConfigurationAppService, IProductAppService
     {
@@ -90,7 +90,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                   product => product.Number.Contains(input.Filter)
               )
             );
-           
+
             return new PagedResultDto<ProductDto>(
                 totalCount,
                 productsDto
@@ -122,7 +122,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             await _repository.InsertAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
-       
+
         [Authorize(ConfigurationPermissions.Products.Edit)]
         public async Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
         {
@@ -187,6 +187,166 @@ namespace KeyFactor.Carbone.Configuration.Products
                 ));
             }
             return errors;
+        }
+
+        public async Task<ProductPropertyDto> GetProductPropertyAsync(Guid id)
+        {
+            var productProperty = await _repository.GetProductPropertyAsync(id);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+        }
+
+        public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductPropertyDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateProductPropertyDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
+        {
+            ProductProperty productProperty = null;
+            if(input.DataType == Datatype.Decimal)
+            {
+                productProperty = await _manager.CreateDecimalProductProperty
+                (
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueDecimal: input.DefaultValueDecimal,
+                    minValueDecimal: input.MinDecimalValue.Value,
+                    maxValueDecimal: input.MaxDecimalValue.Value,
+                    productId: input.Productid
+                );
+            }
+            else if(input.DataType == Datatype.Integer)
+            {
+                productProperty = await _manager.CreateIntegerProductProperty
+                (
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueInteger: input.DefaultValueInteger,
+                    minValueInteger: input.MinIntegerValue.Value,
+                    maxValueInteger: input.MaxIntegerValue.Value,
+                    productId: input.Productid
+                );
+            }
+            else if(input.DataType == Datatype.Double)
+            {
+                productProperty = await _manager.CreateDoubleProductProperty
+                (
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueDouble: input.DefaultValueDouble,
+                    minValueDouble: input.MinDoubleValue.Value,
+                    maxValueDouble: input.MaxDoubleValue.Value,
+                    productId: input.Productid
+                );
+            }
+            else
+            {
+                productProperty = await _manager.CreateStringProductProperty
+                (
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueString: input.DefaultValueString,
+                    maxLengthString: input.MaxLengthString.Value,
+                    productId: input.Productid
+                );
+            }
+            productProperty = await _repository.CreateProductProperty(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+        }
+
+        public async Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input)
+        {
+            var productProperty = await _manager.CreateDecimalProductProperty
+            (
+                name: input.Name,
+                description: input.Description,
+                isReadOnly: input.IsReadOnly,
+                isHidden: input.IsHidden,
+                isRequired: input.IsRequired,
+                defaultValueDecimal: input.DefaultValueDecimal,
+                minValueDecimal: input.MinDecimalValue.,
+                maxValueDecimal: input.MaxDecimalValue,
+                productId: input.Productid
+            );
+
+            productProperty = await _repository.CreateProductProperty(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+        }
+
+        public async Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input)
+        {
+            var productProperty = await _manager.CreateIntegerProductProperty
+            (
+                name: input.Name,
+                description: input.Description,
+                isReadOnly: input.IsReadOnly,
+                isHidden: input.IsHidden,
+                isRequired: input.IsRequired,
+                defaultValueInteger: input.DefaultValueInteger,
+                minValueInteger: input.MinIntegerValue,
+                maxValueInteger: input.MaxIntegerValue,
+                productId: input.Productid
+            );
+
+            productProperty = await _repository.CreateProductProperty(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+
+        }
+
+        public async Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input)
+        {
+            var productProperty = await _manager.CreateDoubleProductProperty
+            (
+                name: input.Name,
+                description: input.Description,
+                isReadOnly: input.IsReadOnly,
+                isHidden: input.IsHidden,
+                isRequired: input.IsRequired,
+                defaultValueDouble: input.DefaultValueDouble,
+                minValueDouble: input.MinDoubleValue,
+                maxValueDouble: input.MaxDoubleValue,
+                productId: input.Productid
+            );
+
+            productProperty = await _repository.CreateProductProperty(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+
+        }
+
+        public async Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input)
+        {
+            var productProperty = await _manager.CreateStringProductProperty
+            (
+                name: input.Name,
+                description: input.Description,
+                isReadOnly: input.IsReadOnly,
+                isHidden: input.IsHidden,
+                isRequired: input.IsRequired,
+                defaultValueString: input.DefaultValueString,
+                maxLengthString: input.MaxLengthString,
+                productId: input.Productid
+            );
+
+            productProperty = await _repository.CreateProductProperty(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
     }
 }

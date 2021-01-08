@@ -65,3 +65,4 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         }
     }
 }
+
