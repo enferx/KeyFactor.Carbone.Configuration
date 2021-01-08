@@ -32,9 +32,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             return RedirectToPage("/Products/Index");
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductPropertyDto input)
+        protected override Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductPropertyDto input)
         {
-            return await new List<ValidationError>();
+            throw new NotImplementedException();
         }
     }
 }
