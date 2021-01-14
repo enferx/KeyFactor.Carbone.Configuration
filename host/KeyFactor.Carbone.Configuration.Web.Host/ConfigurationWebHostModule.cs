@@ -51,6 +51,7 @@ using System.IdentityModel.Tokens.Jwt;
 using IdentityModel;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.Localization.ExceptionHandling;
+using Volo.Abp.FluentValidation;
 
 namespace KeyFactor.Carbone.Configuration
 {
@@ -70,7 +71,8 @@ namespace KeyFactor.Carbone.Configuration
         typeof(AbpTenantManagementWebModule),
         typeof(AbpTenantManagementHttpApiClientModule),
         typeof(AbpPermissionManagementHttpApiClientModule),
-        typeof(AbpAspNetCoreSerilogModule)
+        typeof(AbpAspNetCoreSerilogModule),
+        typeof(AbpFluentValidationModule)
         )]
     public class ConfigurationWebHostModule : AbpModule
     {

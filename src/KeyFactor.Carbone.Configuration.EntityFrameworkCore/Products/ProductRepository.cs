@@ -44,7 +44,5 @@ namespace KeyFactor.Carbone.Configuration.Products
             await DbContext.SaveChangesAsync();
             return productProperty;
         }
-
-
     }
 }

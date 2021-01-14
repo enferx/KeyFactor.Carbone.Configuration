@@ -44,5 +44,8 @@ namespace KeyFactor.Carbone.Configuration.Products
         public string UnitName { get; set; }
 
         public string ConcurrencyStamp { get; set; }
+
+        public IReadOnlyList<ProductPropertyDto> Properties { get; set; }
+
     }
 }

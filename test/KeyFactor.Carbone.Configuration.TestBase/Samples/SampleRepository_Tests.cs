@@ -17,11 +17,5 @@ namespace KeyFactor.Carbone.Configuration.Samples
         {
             //_sampleRepository = GetRequiredService<ISampleRepository>();
         }
-
-        [Fact]
-        public async Task Method1Async()
-        {
-
-        }
     }
 }

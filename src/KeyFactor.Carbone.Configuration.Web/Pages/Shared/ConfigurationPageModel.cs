@@ -29,7 +29,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             EntityPath = entityPath;
         }
 
-        protected virtual void ConfigureViewData()
+        protected virtual void ConfigureOnGet()
         {
 
         }

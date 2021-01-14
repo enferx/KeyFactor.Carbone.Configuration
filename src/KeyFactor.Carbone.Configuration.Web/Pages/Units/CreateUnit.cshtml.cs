@@ -15,7 +15,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             _unitAppService = Check.NotNull(unitAppService, nameof(unitAppService));
         }
 
-        protected override void ConfigureViewData()
+        protected override void ConfigureOnGet()
         {
             ViewData["Title"] = "Units";
             ViewData["GoBackUrl"] = "/Units";

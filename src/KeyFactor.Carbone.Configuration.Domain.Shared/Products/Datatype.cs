@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public enum Datatype
+    public enum DataType
     {
         Decimal,
         Double,

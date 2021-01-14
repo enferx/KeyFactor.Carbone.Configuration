@@ -41,11 +41,11 @@ namespace KeyFactor.Carbone.Configuration.Products
         [Range(0, 9)]
         public int DecimalPlaces { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidFromDate { get; set; }
 
         [GreaterThan(property: nameof(ValidToDate), propertyToCompare: nameof(ValidFromDate))]
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidToDate { get; set; }
 
         [Required]

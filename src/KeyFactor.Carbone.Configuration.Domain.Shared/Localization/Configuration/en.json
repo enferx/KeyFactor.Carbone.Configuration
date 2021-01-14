@@ -47,6 +47,11 @@
     "UnitName": "Name",
     "Unit": "Units",
 
+    "Enum:DataType:0": "Decimal",
+    "Enum:DataType:1": "Double",
+    "Enum:DataType:2": "String",
+    "Enum:DataType:3": "Integer",
+
     "Configuration:000001": "There is already a product with the same number: {0}",
     "Configuration:000002": "There is already an unit with the same name: {0}",
 

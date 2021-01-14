@@ -42,13 +42,13 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         public async Task OnGet()
         {
-            ConfigureViewData();
+            ConfigureOnGet();
             await OnGetAsync();
         }
 
         public async Task<IActionResult> OnPost()
         {
-            ConfigureViewData();
+            ConfigureOnGet();
             IActionResult result = null;
             if (ModelState.IsValid)
             {

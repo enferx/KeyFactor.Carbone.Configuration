@@ -7,7 +7,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 {
     public class ProductProperty : Entity<Guid>
     {
-        public Datatype DataType { get; set; }
+        public DataType DataType { get; set; }
 
         public string Name { get; set; }
 
@@ -56,7 +56,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         (
             Guid id,
             [NotNull] string name,
-            Datatype datatype,
+            DataType datatype,
             string description,
             bool isRequired,
             bool isHidden,
@@ -65,7 +65,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         )
         {
             Id = id;
-            Check.NotNull(name, nameof(name));
+            Name = Check.NotNull(name, nameof(name));
             DataType = datatype;
             Description = description;
             IsReadOnly = isReadOnly;
@@ -90,7 +90,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         (
             id: id,
             name: name,
-            datatype: Datatype.Integer,
+            datatype: DataType.Integer,
             description: description,
             isRequired: isRequired,
             isHidden: isHidden,
@@ -119,7 +119,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         (
             id: id,
             name: name,
-            datatype: Datatype.Decimal,
+            datatype: DataType.Decimal,
             description: description,
             isRequired: isRequired,
             isHidden: isHidden,
@@ -148,7 +148,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         (
             id: id,
             name: name,
-            datatype: Datatype.Double,
+            datatype: DataType.Double,
             description: description,
             isRequired: isRequired,
             isHidden: isHidden,
@@ -176,7 +176,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         (
             id: id,
             name: name,
-            datatype: Datatype.String,
+            datatype: DataType.String,
             description: description,
             isRequired: isRequired,
             isHidden: isHidden,

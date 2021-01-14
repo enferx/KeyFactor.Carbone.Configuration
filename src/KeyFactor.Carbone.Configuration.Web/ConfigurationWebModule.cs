@@ -8,6 +8,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.FluentValidation;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
@@ -18,7 +19,8 @@ namespace KeyFactor.Carbone.Configuration.Web
     [DependsOn(
         typeof(ConfigurationHttpApiModule),
         typeof(AbpAspNetCoreMvcUiThemeSharedModule),
-        typeof(AbpAutoMapperModule)
+        typeof(AbpAutoMapperModule),
+        typeof(AbpFluentValidationModule)
         )]
     public class ConfigurationWebModule : AbpModule
     {
@@ -29,7 +31,6 @@ namespace KeyFactor.Carbone.Configuration.Web
                 options.AddAssemblyResource(typeof(ConfigurationResource), typeof(ConfigurationWebModule).Assembly);
             });
 
-            
             PreConfigure<IMvcBuilder>(mvcBuilder =>
             {
                 mvcBuilder.AddApplicationPartIfNotExists(typeof(ConfigurationWebModule).Assembly);
@@ -47,7 +48,7 @@ namespace KeyFactor.Carbone.Configuration.Web
             {
                 options.FileSets.AddEmbedded<ConfigurationWebModule>();
             });
-
+            
             context.Services.AddAutoMapperObjectMapper<ConfigurationWebModule>();
 
             Configure<AbpAutoMapperOptions>(options =>
@@ -63,6 +64,9 @@ namespace KeyFactor.Carbone.Configuration.Web
                 options.Conventions.AuthorizePage("/Units/Index", ConfigurationPermissions.Units.Default);
                 options.Conventions.AuthorizePage("/Units/CreateUnit", ConfigurationPermissions.Units.Create);
                 options.Conventions.AuthorizePage("/Units/EditUnit", ConfigurationPermissions.Units.Edit);
+                options.Conventions.AuthorizePage("/Products/CreateProductProperty", ConfigurationPermissions.Products.Create);
+                options.Conventions.AuthorizePage("/Products/EditProductProperty", ConfigurationPermissions.Products.Edit);
+
             });
             Configure<AbpExceptionLocalizationOptions>(options =>
             {

@@ -129,8 +129,6 @@ namespace KeyFactor.Carbone.Configuration.IdentityServer
 
         private async Task CreateClientsAsync()
         {
-            const string commonSecret = "E5Xd4yMqjP5kjWFKrYgySBju6JVfCzMyFp7n2QmMrME=";
-
             var commonScopes = new[]
             {
                 "email",

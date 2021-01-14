@@ -7,7 +7,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 {
     public class ProductPropertyDto : EntityDto<Guid>
     {
-        public Datatype DataType { get; set; }
+        public DataType DataType { get; set; }
 
         public string Name { get; set; }
 

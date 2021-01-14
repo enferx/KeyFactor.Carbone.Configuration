@@ -1,5 +1,6 @@
 ﻿using KeyFactor.Carbone.Configuration.Shared.Validators;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KeyFactor.Carbone.Configuration.Products
@@ -40,17 +41,19 @@ namespace KeyFactor.Carbone.Configuration.Products
         [Range(0, 9)]
         public int DecimalPlaces { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidFromDate { get; set; }
 
         [GreaterThan(property: nameof(ValidToDate), propertyToCompare: nameof(ValidFromDate))]
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidToDate { get; set; }
 
         public string ConcurrencyStamp { get; set; }
 
         [NotEmpty]
         public Guid UnitId { get; set; }
+
+        public IReadOnlyList<ProductPropertyDto> Properties { get; set; }
 
     }
 }

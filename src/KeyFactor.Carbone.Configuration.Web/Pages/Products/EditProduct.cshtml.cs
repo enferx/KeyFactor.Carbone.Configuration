@@ -14,12 +14,12 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 
         [BindProperty]
         [HiddenInput]
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidFromDateHidden { get; set; }
 
         [BindProperty]
         [HiddenInput]
-        [DataType(DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
         public EditProductModel(IProductAppService productAppService)
@@ -27,7 +27,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
             _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
         }
 
-        protected override void ConfigureViewData()
+        protected override void ConfigureOnGet()
         {
             ViewData["Title"] = "Products";
             ViewData["GoBackUrl"] = "/Products";

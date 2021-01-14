@@ -12,18 +12,21 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
     public class CreateProductPropertyModel : CreateConfigurationPageModel<CreateProductPropertyDto>
     {
         private readonly IProductAppService _productAppService;
-
-        public CreateProductPropertyModel(IProductAppService productAppService) : base(new CreateProductPropertyDto())
+        private readonly CreateProductPropertyValidator _validator;
+        public CreateProductPropertyModel(IProductAppService productAppService, CreateProductPropertyValidator validator) : base(new CreateProductPropertyDto())
         {
             _productAppService = Check.NotNull(productAppService, nameof(productAppService));
+            _validator = validator;
         }
 
-        protected override void ConfigureViewData()
+        protected override void ConfigureOnGet()
         {
             ViewData["Title"] = "Products Properties";
             ViewData["GoBackUrl"] = "/Products";
             ViewData["AddNewUrl"] = "/Products/CreateProductProperty";
             ViewData["SaveUrl"] = "/Products/EditProductProperty";
+
+            Input.ProductId = Guid.Parse(Request.Query["ProductId"]);
         }
 
         protected override async Task<IActionResult> OnCreateAsync()
@@ -32,9 +35,24 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             return RedirectToPage("/Products/Index");
         }
 
-        protected override Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductPropertyDto input)
+        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductPropertyDto input)
         {
-            throw new NotImplementedException();
+            var errors = new List<ValidationError>();
+            var result = _validator.Validate(input);
+            if (result.IsValid)
+            {
+                return await Task.FromResult(errors);
+            }
+            else
+            {
+                return await Task.FromResult(result.Errors.Select(x =>
+                    new ValidationError
+                    (
+                        x.ErrorMessage,
+                        new List<string> { x.PropertyName })
+                    ).ToList()
+                );
+            }
         }
     }
 }

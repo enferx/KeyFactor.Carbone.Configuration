@@ -5,14 +5,17 @@
 @inject IStringLocalizer<ConfigurationResource> L
 @{
     Layout = "_Layout";
-
+    var properties = Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Input.Properties.ToArray()));
 }
 @section scripts
 {
     <script type="text/javascript" src="~/Pages/Products/FormProduct.js"></script>
+    <script type="text/javascript">
+        var properties = @properties;
+    </script>
 }
 <form method="post" id="mainForm">
-    <input type="hidden" asp-for="@Model.Id" />
+    <abp-input type="hidden" asp-for="@Model.Id" />
     <abp-card-body>
         <abp-row>
             <abp-column size-md="_12">
@@ -100,6 +103,20 @@
                                         </abp-row>
                                     </abp-card-body>
                                 </abp-card>
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                    <abp-tab title="Properties">
+                        <abp-row>
+                            <abp-column size-md="_12">
+                                <abp-button id="NewProductPropertyButton"
+                                            icon="plus"
+                                            onclick="window.location.href='/Products/CreateProductProperty?ProductId=@Model.Id'" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_12">
+                                <abp-table striped-rows="true" id="PropertiesTable"></abp-table>
                             </abp-column>
                         </abp-row>
                     </abp-tab>

@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp.Validation;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public class CreateProductPropertyDto : IValidatableObject
+    public class CreateProductPropertyDto
     {
         [Required]
-        public Datatype DataType { get; set; }
+        public DataType DataType { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
         [NotEmpty]
-        public Guid Productid { get; set; }
+        public Guid ProductId { get; set; }
 
         public string Description { get; set; }
 
@@ -51,47 +52,51 @@ namespace KeyFactor.Carbone.Configuration.Products
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var errors = new List<ValidationResult>();
-            if(DataType == Datatype.Decimal)
-            {
-                if (!MinDecimalValue.HasValue)
-                {
-                    errors.Add(new ValidationResult(
-                        errorMessage: "Required",
-                        memberNames: new string[] { nameof(MinDecimalValue) }
-                    ));
-                }
-                if (!MaxDecimalValue.HasValue)
-                {
-                    errors.Add(new ValidationResult(
-                        errorMessage: "Required",
-                        memberNames: new string[] { nameof(MaxDecimalValue) }
-                    ));
-                }
-                if(MinDecimalValue.HasValue && MaxDecimalValue.HasValue)
-                {
-                    if (MinDecimalValue.Value > MaxDecimalValue.Value)
-                    {
-                        errors.Add(new ValidationResult(
-                            errorMessage: "The numbers between min and max are incorrect.",
-                            memberNames: new string[] { nameof(MinDecimalValue), nameof(MaxDecimalValue) }
-                        ));
-                    }
-                    else if(DefaultValueDecimal.HasValue && (DefaultValueDecimal.Value < MinDecimalValue.Value || DefaultValueDecimal.Value > MaxDecimalValue.Value))
-                    {
-                        errors.Add(new ValidationResult(
-                            errorMessage: "The default value is outside range.",
-                            memberNames: new string[] { nameof(DefaultValueDecimal) }
-                        ));
-                    }
-                    if(IsRequired && !DefaultValueDecimal.HasValue)
-                    {
-                        errors.Add(new ValidationResult(
-                            errorMessage: "The default value is not specified and it is required.",
-                            memberNames: new string[] { nameof(DefaultValueDecimal) }
-                        ));
-                    }
-                }
-            }
+            //if(DataType == Datatype.Decimal)
+            //{
+            //    if (!MinDecimalValue.HasValue)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "Required",
+            //            memberNames: new string[] { nameof(MinDecimalValue) }
+            //        ));
+            //    }
+            //    if (!MaxDecimalValue.HasValue)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "Required",
+            //            memberNames: new string[] { nameof(MaxDecimalValue) }
+            //        ));
+            //    }
+            //    if (MinDecimalValue.HasValue && MaxDecimalValue.HasValue && MinDecimalValue.Value > MaxDecimalValue.Value)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "The minimun value can not be greater than the maximum value.",
+            //            memberNames: new string[] { nameof(MinDecimalValue), nameof(MaxDecimalValue) }
+            //        ));
+            //    }
+            //    if (DefaultValueDecimal.HasValue && DefaultValueDecimal.Value < MinDecimalValue.Value)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "The default value can not be less than the specified minimum value.",
+            //            memberNames: new string[] { nameof(DefaultValueDecimal) }
+            //        ));
+            //    }
+            //    if(DefaultValueDecimal.HasValue && DefaultValueDecimal.Value > MaxDecimalValue.Value)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "The default value can not be greater than the specified maximum value.",
+            //            memberNames: new string[] { nameof(DefaultValueDecimal) }
+            //        ));
+            //    }   
+            //    if(IsRequired && !DefaultValueDecimal.HasValue)
+            //    {
+            //        errors.Add(new ValidationResult(
+            //            errorMessage: "The default value is not specified and it is required.",
+            //            memberNames: new string[] { nameof(DefaultValueDecimal) }
+            //        ));
+            //    }
+            //}
             return errors;
         }
     }

@@ -8,8 +8,125 @@
 }
 @section Scripts
 {
+    <script>
+        var datatype = $('select[name="Input.DataType"]').val();
+        $("div[name='container_input_decimal']").hide();
+        $("div[name='container_input_double']").hide();
+        $("div[name='container_input_integer']").hide();
+        $("div[name='container_input_string']").hide();
+
+        $("div[name='container_input_" + datatype.toLowerCase() + "']").show();
+
+        $('select[name="Input.DataType"]').change(function () {
+            var datatype = $(this).val();
+
+            $("div[name='container_input_decimal'] input[type=text]").val(null);
+            $("div[name='container_input_double'] input[type=text]").val(null);
+            $("div[name='container_input_integer'] input[type=text]").val(null);
+            $("div[name='container_input_string'] input[type=text]").val(null);
+
+            $("div[name='container_input_decimal']").hide();
+            $("div[name='container_input_double']").hide();
+            $("div[name='container_input_integer']").hide();
+            $("div[name='container_input_string']").hide();
+
+            $("div[name='container_input_" + datatype.toLowerCase() + "']").show();
+        });
+    </script>
 }
 
 <form method="post" id="mainForm">
-  
+    <abp-card-body>
+        <abp-row>
+            <abp-column size-md="_12">
+                <abp-tabs>
+                    <abp-tab title="Details">
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.Name" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_12">
+                                <div class="form-group">
+                                    <label>@L["ProductDescription"].Value</label>
+                                    <textarea asp-for="@Model.Input.Description" class="form-control" rows="4"></textarea>
+                                </div>
+                            </abp-column>
+                        </abp-row>
+                        <abp-row>
+                            <abp-column size-md="_12">
+                                <abp-input asp-for="@Model.Input.IsRequired" />
+                                <abp-input asp-for="@Model.Input.IsHidden" />
+                                <abp-input asp-for="@Model.Input.IsReadOnly" />
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                    <abp-tab title="Data Type">
+                        <abp-row>
+                            <abp-column size-md="_6">
+                                <abp-select asp-for="@Model.Input.DataType" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_decimal">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MinDecimalValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_decimal">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MaxDecimalValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_decimal">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.DefaultValueDecimal" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_double">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MinDoubleValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_double">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MaxDoubleValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_double">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.DefaultValueDouble" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_integer">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MinIntegerValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_integer">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MaxIntegerValue" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_integer">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.DefaultValueInteger" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_string">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.MaxLengthString" />
+                            </abp-column>
+                        </abp-row>
+                        <abp-row name="container_input_string">
+                            <abp-column size-md="_6">
+                                <abp-input asp-for="@Model.Input.DefaultValueString" />
+                            </abp-column>
+                        </abp-row>
+                    </abp-tab>
+                </abp-tabs>
+            </abp-column>
+        </abp-row>
+    </abp-card-body>
+    <abp-input asp-for="@Model.Input.ProductId" type="hidden"/>
 </form>

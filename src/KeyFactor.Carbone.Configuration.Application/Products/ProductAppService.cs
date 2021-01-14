@@ -30,11 +30,10 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         public async Task<ProductDto> GetAsync(Guid id)
         {
-            var query = from product in _repository
+            var query = from product in _repository.WithDetails(x => x.Properties)
                         join unit in _unitRepository on product.UnitId equals unit.Id
                         where product.Id == id
                         select new { product, unit };
-
             var queryResult = await AsyncExecuter.FirstOrDefaultAsync(query);
             if (queryResult == null)
             {
@@ -195,9 +194,10 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
-        public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductPropertyDto input)
+        [Authorize(ConfigurationPermissions.Products.Create)]
+        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductPropertyDto input)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(new List<ValidationError>());
         }
 
         public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateProductPropertyDto input)
@@ -205,11 +205,11 @@ namespace KeyFactor.Carbone.Configuration.Products
             throw new NotImplementedException();
         }
 
-
+        [Authorize(ConfigurationPermissions.Products.Create)]
         public async Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
         {
-            ProductProperty productProperty = null;
-            if(input.DataType == Datatype.Decimal)
+            ProductProperty productProperty;
+            if (input.DataType == DataType.Decimal)
             {
                 productProperty = await _manager.CreateDecimalProductProperty
                 (
@@ -221,10 +221,10 @@ namespace KeyFactor.Carbone.Configuration.Products
                     defaultValueDecimal: input.DefaultValueDecimal,
                     minValueDecimal: input.MinDecimalValue.Value,
                     maxValueDecimal: input.MaxDecimalValue.Value,
-                    productId: input.Productid
+                    productId: input.ProductId
                 );
             }
-            else if(input.DataType == Datatype.Integer)
+            else if(input.DataType == DataType.Integer)
             {
                 productProperty = await _manager.CreateIntegerProductProperty
                 (
@@ -236,10 +236,10 @@ namespace KeyFactor.Carbone.Configuration.Products
                     defaultValueInteger: input.DefaultValueInteger,
                     minValueInteger: input.MinIntegerValue.Value,
                     maxValueInteger: input.MaxIntegerValue.Value,
-                    productId: input.Productid
+                    productId: input.ProductId
                 );
             }
-            else if(input.DataType == Datatype.Double)
+            else if(input.DataType == DataType.Double)
             {
                 productProperty = await _manager.CreateDoubleProductProperty
                 (
@@ -251,7 +251,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                     defaultValueDouble: input.DefaultValueDouble,
                     minValueDouble: input.MinDoubleValue.Value,
                     maxValueDouble: input.MaxDoubleValue.Value,
-                    productId: input.Productid
+                    productId: input.ProductId
                 );
             }
             else
@@ -265,13 +265,14 @@ namespace KeyFactor.Carbone.Configuration.Products
                     isRequired: input.IsRequired,
                     defaultValueString: input.DefaultValueString,
                     maxLengthString: input.MaxLengthString.Value,
-                    productId: input.Productid
+                    productId: input.ProductId
                 );
             }
             productProperty = await _repository.CreateProductProperty(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
+        [Authorize(ConfigurationPermissions.Products.Create)]
         public async Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input)
         {
             var productProperty = await _manager.CreateDecimalProductProperty
@@ -291,6 +292,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
+        [Authorize(ConfigurationPermissions.Products.Create)]
         public async Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input)
         {
             var productProperty = await _manager.CreateIntegerProductProperty
@@ -311,6 +313,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         }
 
+        [Authorize(ConfigurationPermissions.Products.Create)]
         public async Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input)
         {
             var productProperty = await _manager.CreateDoubleProductProperty
@@ -330,6 +333,8 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
 
         }
+
+        [Authorize(ConfigurationPermissions.Products.Create)]
 
         public async Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input)
         {
