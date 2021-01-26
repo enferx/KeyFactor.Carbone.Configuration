@@ -9,11 +9,11 @@ using Volo.Abp;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 {
-    public class CreateProductPropertyModel : CreateConfigurationPageModel<CreateProductPropertyDto>
+    public class EditProductPropertyModel : UpdateConfigurationPageModel<Guid, UpdateProductPropertyDto>
     {
         private readonly IProductAppService _productAppService;
         
-        public CreateProductPropertyModel(IProductAppService productAppService, CreateProductPropertyValidator validator) : base(new CreateProductPropertyDto(), validator)
+        public EditProductPropertyModel(IProductAppService productAppService, UpdateProductPropertyValidator validator) : base(validator)
         {
             _productAppService = Check.NotNull(productAppService, nameof(productAppService));
         }
@@ -25,13 +25,18 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             ViewData["AddNewUrl"] = "/Products/CreateProductProperty";
             ViewData["SaveUrl"] = "/Products/EditProductProperty";
 
-            Input.ProductId = Guid.Parse(Request.Query["ProductId"]);
         }
 
-        protected override async Task<IActionResult> OnCreateAsync()
+        protected override async Task OnGetAsync()
         {
-            await _productAppService.CreateProductPropertyAsync(Input);
-            return RedirectToPage("/Products/Index");
-        }    
+            var productProperty = await _productAppService.GetProductPropertyAsync(Id);
+            Input = ObjectMapper.Map<ProductPropertyDto, UpdateProductPropertyDto>(productProperty);
+        }
+
+        protected override async Task<IActionResult> OnUpdateAsync()
+        {
+            await _productAppService.UpdateProductPropertyAsync(Id, Input);
+            return this.RedirectToPage("/Products/Index");
+        }
     }
 }

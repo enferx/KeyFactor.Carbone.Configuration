@@ -1,7 +1,7 @@
 ﻿@page
 @using KeyFactor.Carbone.Configuration.Localization
 @using Microsoft.Extensions.Localization
-@model KeyFactor.Carbone.Configuration.Web.Pages.Products.CreateProductPropertyModel
+@model KeyFactor.Carbone.Configuration.Web.Pages.Products.EditProductPropertyModel
 @inject IStringLocalizer<ConfigurationResource> L
 @{
     Layout = "_Layout";
@@ -105,4 +105,5 @@
         </abp-row>
     </abp-card-body>
     <abp-input asp-for="@Model.Input.ProductId" type="hidden" />
+    <abp-input type="hidden" asp-for="@Model.Id" />
 </form>

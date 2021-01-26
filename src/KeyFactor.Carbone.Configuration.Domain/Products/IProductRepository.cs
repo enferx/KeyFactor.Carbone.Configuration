@@ -20,6 +20,8 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         Task<ProductProperty> GetProductPropertyAsync(Guid id);
 
-        Task<ProductProperty> CreateProductProperty(ProductProperty productProperty);
+        Task<ProductProperty> CreateProductPropertyAsync(ProductProperty productProperty);
+
+        Task<ProductProperty> UpdateProductPropertyAsync(ProductProperty productProperty);
     }
 }

@@ -9,6 +9,9 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using System.Linq.Dynamic.Core;
+using Microsoft.Extensions.Logging.Abstractions;
+using Volo.Abp.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
@@ -20,6 +23,8 @@ namespace KeyFactor.Carbone.Configuration.Products
         private readonly IUnitRepository _unitRepository;
 
         private readonly ProductManager _manager;
+
+        public CreateProductPropertyValidator CreateProductPropertyValidator { get; set; }
 
         public ProductAppService(IProductRepository repository, ProductManager manager, IUnitRepository unitRepository)
         {
@@ -166,7 +171,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 errors.Add(new ValidationError
                 (
                     message: L[$"{ConfigurationErrorCodes.ProductNumberAlreadyExists}", input.Number],
-                    memberNames: new List<string>() { "Number" }
+                    memberNames: new List<string>() { nameof(input.Number) }
                 ));
             }
             return errors;
@@ -182,7 +187,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 errors.Add(new ValidationError
                 (
                     message: L[$"{ConfigurationErrorCodes.ProductNumberAlreadyExists}", input.Number],
-                    memberNames: new List<string>() { "Number" }
+                    memberNames: new List<string>() { nameof(input.Number) }
                 ));
             }
             return errors;
@@ -192,17 +197,6 @@ namespace KeyFactor.Carbone.Configuration.Products
         {
             var productProperty = await _repository.GetProductPropertyAsync(id);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
-        }
-
-        [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductPropertyDto input)
-        {
-            return await Task.FromResult(new List<ValidationError>());
-        }
-
-        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateProductPropertyDto input)
-        {
-            throw new NotImplementedException();
         }
 
         [Authorize(ConfigurationPermissions.Products.Create)]
@@ -219,8 +213,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                     isHidden: input.IsHidden,
                     isRequired: input.IsRequired,
                     defaultValueDecimal: input.DefaultValueDecimal,
-                    minValueDecimal: input.MinDecimalValue.Value,
-                    maxValueDecimal: input.MaxDecimalValue.Value,
+                    minDecimalValue: input.MinDecimalValue.Value,
+                    maxDecimalValue: input.MaxDecimalValue.Value,
                     productId: input.ProductId
                 );
             }
@@ -234,8 +228,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                     isHidden: input.IsHidden,
                     isRequired: input.IsRequired,
                     defaultValueInteger: input.DefaultValueInteger,
-                    minValueInteger: input.MinIntegerValue.Value,
-                    maxValueInteger: input.MaxIntegerValue.Value,
+                    minIntegerValue: input.MinIntegerValue.Value,
+                    maxIntegerValue: input.MaxIntegerValue.Value,
                     productId: input.ProductId
                 );
             }
@@ -249,8 +243,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                     isHidden: input.IsHidden,
                     isRequired: input.IsRequired,
                     defaultValueDouble: input.DefaultValueDouble,
-                    minValueDouble: input.MinDoubleValue.Value,
-                    maxValueDouble: input.MaxDoubleValue.Value,
+                    minDoubleValue: input.MinDoubleValue.Value,
+                    maxDoubleValue: input.MaxDoubleValue.Value,
                     productId: input.ProductId
                 );
             }
@@ -268,7 +262,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                     productId: input.ProductId
                 );
             }
-            productProperty = await _repository.CreateProductProperty(productProperty);
+            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
@@ -283,12 +277,12 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isHidden: input.IsHidden,
                 isRequired: input.IsRequired,
                 defaultValueDecimal: input.DefaultValueDecimal,
-                minValueDecimal: input.MinDecimalValue,
-                maxValueDecimal: input.MaxDecimalValue,
+                minDecimalValue: input.MinDecimalValue,
+                maxDecimalValue: input.MaxDecimalValue,
                 productId: input.Productid
             );
 
-            productProperty = await _repository.CreateProductProperty(productProperty);
+            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
@@ -303,12 +297,12 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isHidden: input.IsHidden,
                 isRequired: input.IsRequired,
                 defaultValueInteger: input.DefaultValueInteger,
-                minValueInteger: input.MinIntegerValue,
-                maxValueInteger: input.MaxIntegerValue,
+                minIntegerValue: input.MinIntegerValue,
+                maxIntegerValue: input.MaxIntegerValue,
                 productId: input.Productid
             );
 
-            productProperty = await _repository.CreateProductProperty(productProperty);
+            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
 
         }
@@ -324,12 +318,12 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isHidden: input.IsHidden,
                 isRequired: input.IsRequired,
                 defaultValueDouble: input.DefaultValueDouble,
-                minValueDouble: input.MinDoubleValue,
-                maxValueDouble: input.MaxDoubleValue,
+                minDoubleValue: input.MinDoubleValue,
+                maxDoubleValue: input.MaxDoubleValue,
                 productId: input.Productid
             );
 
-            productProperty = await _repository.CreateProductProperty(productProperty);
+            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
 
         }
@@ -350,8 +344,81 @@ namespace KeyFactor.Carbone.Configuration.Products
                 productId: input.Productid
             );
 
-            productProperty = await _repository.CreateProductProperty(productProperty);
+            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+        }
+
+        [Authorize(ConfigurationPermissions.Products.Edit)]
+        public async Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
+        {
+            ProductProperty productProperty;
+            if (input.DataType == DataType.Decimal)
+            {
+                productProperty = await _manager.UpdateDecimalProductProperty
+                (
+                    id: id,
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueDecimal: input.DefaultValueDecimal,
+                    minValueDecimal: input.MinDecimalValue.Value,
+                    maxValueDecimal: input.MaxDecimalValue.Value,
+                    productId: input.ProductId
+                );
+                
+            }
+            else if (input.DataType == DataType.Integer)
+            {
+                productProperty = await _manager.UpdateIntegerProductProperty
+                (
+                    id: id,
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueInteger: input.DefaultValueInteger,
+                    minIntegerValue: input.MinIntegerValue.Value,
+                    maxIntegerValue: input.MaxIntegerValue.Value,
+                    productId: input.ProductId
+                );
+            }
+            else if (input.DataType == DataType.Double)
+            {
+                productProperty = await _manager.UpdateDoubleProductProperty
+                (
+                    id: id,
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueDouble: input.DefaultValueDouble,
+                    minDoubleValue: input.MinDoubleValue.Value,
+                    maxDoubbleValue: input.MaxDoubleValue.Value,
+                    productId: input.ProductId
+                );
+            }
+            else
+            {
+                productProperty = await _manager.UpdateStringProductProperty
+                (
+                    id: id,
+                    name: input.Name,
+                    description: input.Description,
+                    isReadOnly: input.IsReadOnly,
+                    isHidden: input.IsHidden,
+                    isRequired: input.IsRequired,
+                    defaultValueString: input.DefaultValueString,
+                    maxLengthString: input.MaxLengthString.Value,
+                    productId: input.ProductId
+                );
+            }
+            productProperty = await _repository.UpdateProductPropertyAsync(productProperty);
+            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
+
         }
 
     }

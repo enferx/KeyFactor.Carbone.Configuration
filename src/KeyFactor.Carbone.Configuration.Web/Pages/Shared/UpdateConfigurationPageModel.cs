@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using KeyFactor.Carbone.Configuration.Products;
 using Volo.Abp.Validation;
+using FluentValidation;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -24,8 +25,15 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         [BindProperty]
         public T2 Input { get; set; }
 
+        private readonly AbstractValidator<T2> _validator;
+
         public UpdateConfigurationPageModel() : base("Input.")
         {
+        }
+
+        public UpdateConfigurationPageModel(AbstractValidator<T2> validator) : base("Input.")
+        {
+            _validator = validator;
         }
 
         public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(T1 id, T2 input)
@@ -93,8 +101,30 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         {
         }
 
-        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 id, T2 input);
-       
+        protected virtual async Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 id, T2 input)
+        {
+            var errors = await Task.FromResult(new List<ValidationError>());
+            if (_validator == null)
+            {
+                return errors;
+            }
+            var result = _validator.Validate(input);
+            if (result.IsValid)
+            {
+                return errors;
+            }
+            else
+            {
+                return await Task.FromResult(result.Errors.Select(x =>
+                    new ValidationError
+                    (
+                        x.ErrorMessage,
+                        new List<string> { x.PropertyName })
+                    ).ToList()
+                );
+            }
+        }
+
         protected abstract Task OnGetAsync();
 
         protected abstract Task<IActionResult> OnUpdateAsync();

@@ -17,6 +17,7 @@ namespace KeyFactor.Carbone.Configuration.Web
             CreateMap<CreateProductPropertyDto, CreateDoubleProductPropertyDto>();
             CreateMap<CreateProductPropertyDto, CreateIntegerProductPropertyDto>();
             CreateMap<CreateProductPropertyDto, CreateStringProductPropertyDto>();
+            CreateMap<ProductPropertyDto, UpdateProductPropertyDto>();
 
         }
     }

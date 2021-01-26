@@ -38,9 +38,16 @@ namespace KeyFactor.Carbone.Configuration.Products
         public async Task<ProductProperty> GetProductPropertyAsync(Guid id) =>  
             await DbContext.ProductProperties.FirstOrDefaultAsync(property => property.Id == id);
 
-        public async Task<ProductProperty> CreateProductProperty(ProductProperty productProperty)
+        public async Task<ProductProperty> CreateProductPropertyAsync(ProductProperty productProperty)
         {
             await DbContext.ProductProperties.AddAsync(productProperty);
+            await DbContext.SaveChangesAsync();
+            return productProperty;
+        }
+
+        public async Task<ProductProperty> UpdateProductPropertyAsync(ProductProperty productProperty)
+        {
+            DbContext.ProductProperties.Update(productProperty);
             await DbContext.SaveChangesAsync();
             return productProperty;
         }

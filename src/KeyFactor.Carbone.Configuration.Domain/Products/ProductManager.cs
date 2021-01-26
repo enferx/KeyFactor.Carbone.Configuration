@@ -10,7 +10,7 @@ namespace KeyFactor.Carbone.Configuration.Products
     public class ProductManager : DomainService
     {
         private readonly IProductRepository _repository;
-        
+
         public ProductManager(IProductRepository repository)
         {
             _repository = repository;
@@ -35,7 +35,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
             Check.NotNullOrWhiteSpace(number, nameof(number));
-            
+
             var existingProduct = await _repository.FindByNumberAsync(number);
             if (existingProduct != null)
             {
@@ -73,7 +73,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             var existingProduct = await _repository.FindByNumberAsync(newNumber);
             if (existingProduct != null && existingProduct.Id != product.Id)
             {
-                throw new ProductNumberAlreadyExistsException(newNumber);        
+                throw new ProductNumberAlreadyExistsException(newNumber);
             }
             product.ChangeNumber(newNumber);
         }
@@ -98,13 +98,13 @@ namespace KeyFactor.Carbone.Configuration.Products
             bool isReadOnly,
             Guid productId,
             decimal? defaultValueDecimal,
-            decimal minValueDecimal,
-            decimal maxValueDecimal
+            decimal minDecimalValue,
+            decimal maxDecimalValue
         )
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
             var product = await _repository.GetAsync(productId);
-            if(product == null)
+            if (product == null)
             {
                 throw new EntityNotFoundException(typeof(Product), productId);
             }
@@ -118,8 +118,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isReadOnly: isReadOnly,
                 product: product,
                 defaultValueDecimal: defaultValueDecimal,
-                minDecimalValue: minValueDecimal,
-                maxDecimalValue: maxValueDecimal
+                minDecimalValue: minDecimalValue,
+                maxDecimalValue: maxDecimalValue
             );
         }
 
@@ -132,8 +132,8 @@ namespace KeyFactor.Carbone.Configuration.Products
             bool isReadOnly,
             Guid productId,
             double? defaultValueDouble,
-            double minValueDouble,
-            double maxValueDouble
+            double minDoubleValue,
+            double maxDoubleValue
         )
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
@@ -144,7 +144,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             }
             return new ProductProperty
             (
-                id: GuidGenerator.Create(), 
+                id: GuidGenerator.Create(),
                 name: name,
                 description: description,
                 isRequired: isRequired,
@@ -152,8 +152,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isReadOnly: isReadOnly,
                 product: product,
                 defaultValueDouble: defaultValueDouble,
-                minDoubleValue: minValueDouble,
-                maxDoubleValue: maxValueDouble
+                minDoubleValue: minDoubleValue,
+                maxDoubleValue: maxDoubleValue
             );
         }
 
@@ -166,8 +166,8 @@ namespace KeyFactor.Carbone.Configuration.Products
             bool isReadOnly,
             Guid productId,
             int? defaultValueInteger,
-            int minValueInteger,
-            int maxValueInteger
+            int minIntegerValue,
+            int maxIntegerValue
         )
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
@@ -178,7 +178,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             }
             return new ProductProperty
             (
-                id: GuidGenerator.Create(), 
+                id: GuidGenerator.Create(),
                 name: name,
                 description: description,
                 isRequired: isRequired,
@@ -186,8 +186,8 @@ namespace KeyFactor.Carbone.Configuration.Products
                 isReadOnly: isReadOnly,
                 product: product,
                 defaultValueDouble: defaultValueInteger,
-                minDoubleValue: minValueInteger,
-                maxDoubleValue: maxValueInteger
+                minDoubleValue: minIntegerValue,
+                maxDoubleValue: maxIntegerValue
             );
         }
 
@@ -210,7 +210,7 @@ namespace KeyFactor.Carbone.Configuration.Products
             }
             return new ProductProperty
             (
-                id: GuidGenerator.Create(), 
+                id: GuidGenerator.Create(),
                 name: name,
                 description: description,
                 isRequired: isRequired,
@@ -220,6 +220,161 @@ namespace KeyFactor.Carbone.Configuration.Products
                 defaultValueString: defaultValueString,
                 maxLengthString: maxLengthString
             );
+        }
+
+        public async Task<ProductProperty> UpdateDecimalProductProperty(
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            decimal? defaultValueDecimal,
+            decimal minValueDecimal,
+            decimal maxValueDecimal
+        )
+        {
+            var property = await _repository.GetProductPropertyAsync(id);
+            if (property == null)
+            {
+                throw new EntityNotFoundException(typeof(ProductProperty), id);
+            }
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            ProductProperty.CheckConditions(isRequired, defaultValueDecimal, minValueDecimal, maxValueDecimal);
+            ClearProductProperty(ref property);
+            property.ChangeName(name);
+            property.DataType = DataType.Decimal;
+            property.IsHidden = isHidden;
+            property.IsReadOnly = isReadOnly;
+            property.IsRequired = isRequired;
+            property.Description = description;
+            property.DefaultValueDecimal = defaultValueDecimal;
+            property.MaxDecimalValue = maxValueDecimal;
+            property.MinDecimalValue = minValueDecimal;
+            property.ProductId = productId;
+            return property;
+        }
+
+        public async Task<ProductProperty> UpdateDoubleProductProperty
+        (
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            double? defaultValueDouble,
+            double minDoubleValue,
+            double maxDoubbleValue
+        )
+        {
+            var property = await _repository.GetProductPropertyAsync(id);
+            if (property == null)
+            {
+                throw new EntityNotFoundException(typeof(ProductProperty), id);
+            }
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            ProductProperty.CheckConditions(isRequired, defaultValueDouble, minDoubleValue, maxDoubbleValue);
+            ClearProductProperty(ref property);
+            property.ChangeName(name);
+            property.DataType = DataType.Double;
+            property.IsHidden = isHidden;
+            property.IsReadOnly = isReadOnly;
+            property.IsRequired = isRequired;
+            property.Description = description;
+            property.DefaultValueDouble = defaultValueDouble;
+            property.MaxDoubleValue = maxDoubbleValue;
+            property.MinDoubleValue = minDoubleValue;
+            property.ProductId = productId;
+            return property;
+        }
+
+        public async Task<ProductProperty> UpdateIntegerProductProperty
+        (
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            int? defaultValueInteger,
+            int minIntegerValue,
+            int maxIntegerValue
+        )
+        {
+            var property = await _repository.GetProductPropertyAsync(id);
+            if (property == null)
+            {
+                throw new EntityNotFoundException(typeof(ProductProperty), id);
+            }
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            ProductProperty.CheckConditions(isRequired, defaultValueInteger, minIntegerValue, maxIntegerValue);
+            ClearProductProperty(ref property);
+            property.ChangeName(name);
+            property.DataType = DataType.Integer;
+            property.IsHidden = isHidden;
+            property.IsReadOnly = isReadOnly;
+            property.IsRequired = isRequired;
+            property.Description = description;
+            property.DefaultValueInteger = defaultValueInteger;
+            property.MaxIntegerValue = maxIntegerValue;
+            property.MinIntegerValue = minIntegerValue;
+            property.ProductId = productId;
+            return property;
+        }
+
+        public async Task<ProductProperty> UpdateStringProductProperty
+        (
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Guid productId,
+            string defaultValueString,
+            int maxLengthString)
+        {
+            var property = await _repository.GetProductPropertyAsync(id);
+            if (property == null)
+            {
+                throw new EntityNotFoundException(typeof(ProductProperty), id);
+            }
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            ProductProperty.CheckConditions(isRequired, defaultValueString, maxLengthString);
+            ClearProductProperty(ref property);
+            property.ChangeName(name);
+            property.DataType = DataType.Integer;
+            property.IsHidden = isHidden;
+            property.IsReadOnly = isReadOnly;
+            property.IsRequired = isRequired;
+            property.Description = description;
+            property.MaxLengthString = maxLengthString;
+            property.DefaultValueString = defaultValueString;
+            property.ProductId = productId;
+            return property;
+        }
+
+        private void ClearProductProperty(ref ProductProperty productProperty)
+        {
+            productProperty.DefaultValueDecimal = null;
+            productProperty.DefaultValueDouble = null;
+            productProperty.DefaultValueInteger = null;
+            productProperty.DefaultValueString = null;
+
+            productProperty.MaxDecimalValue = null;
+            productProperty.MaxDoubleValue = null;
+            productProperty.MaxIntegerValue = null;
+
+            productProperty.MinDecimalValue = null;
+            productProperty.MinDoubleValue = null;
+            productProperty.MinIntegerValue = null;
+
+            productProperty.MaxLengthString = null;
+            productProperty.DoublePrecission = null;
         }
     }
 }

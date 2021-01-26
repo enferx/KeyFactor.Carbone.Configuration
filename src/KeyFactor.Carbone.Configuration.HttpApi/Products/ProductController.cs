@@ -53,13 +53,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             return await _productAppService.GetListAsync(input);
         }
 
-        [HttpGet]
-        [Route("productproperty/{guid}")]
-        public Task<ProductPropertyDto> GetProductPropertyAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpPut()]
         [Route("{id}")]
         public Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
@@ -79,6 +72,13 @@ namespace KeyFactor.Carbone.Configuration.Products
         public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
         {
             return _productAppService.ValidateUpdateAsync(id, input);
+        }
+
+        [HttpGet]
+        [Route("productproperty/{id}")]
+        public Task<ProductPropertyDto> GetProductPropertyAsync(Guid id)
+        {
+            return _productAppService.GetProductPropertyAsync(id);
         }
 
         [HttpPost()]
@@ -110,10 +110,17 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpPost()]
-        [Route("createproductproperty")]
+        [Route("productproperty")]
         public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
         {
             return _productAppService.CreateProductPropertyAsync(input);
+        }
+
+        [HttpPut()]
+        [Route("productproperty/{id}")]
+        public Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
+        {
+            return _productAppService.UpdateProductPropertyAsync(id, input);
         }
     }
 }

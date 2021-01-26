@@ -42,5 +42,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public int? MaxIntegerValue { get; set; }
 
         public int? MinIntegerValue { get; set; }
+
+        public Guid ProductId { get; set; }
     }
 }

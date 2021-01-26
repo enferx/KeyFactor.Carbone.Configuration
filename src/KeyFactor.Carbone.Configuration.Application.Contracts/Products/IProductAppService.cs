@@ -38,5 +38,6 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input);
 
+        Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input);
     }
 }

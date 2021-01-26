@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Volo.Abp.Http.Client;
 using Volo.Abp.Validation;
+using FluentValidation;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages
 {
@@ -19,10 +20,19 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         [BindProperty]
         public T1 Input { get; set; }
 
+        private readonly AbstractValidator<T1> _validator;
+
         public CreateConfigurationPageModel(T1 input) : base("Input.")
         {
             Input = input;
         }
+
+        public CreateConfigurationPageModel(T1 input, AbstractValidator<T1> validator) : base("Input.")
+        {
+            Input = input;
+            _validator = validator;
+        }
+
 
         public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(T1 input)
         {
@@ -84,7 +94,30 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             return result ?? Page();
         }
 
-        protected abstract Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 input);
+
+        protected virtual async Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 input)
+        {
+            var errors = await Task.FromResult(new List<ValidationError>());
+            if (_validator == null)
+            {
+                return errors;
+            }
+            var result = _validator.Validate(input);
+            if (result.IsValid)
+            {
+                return errors;
+            }
+            else
+            {
+                return await Task.FromResult(result.Errors.Select(x =>
+                    new ValidationError
+                    (
+                        x.ErrorMessage,
+                        new List<string> { x.PropertyName })
+                    ).ToList()
+                );
+            }
+        }
 
         protected Task OnGetAsync() { return Task.CompletedTask; }
 
