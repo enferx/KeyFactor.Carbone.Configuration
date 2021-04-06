@@ -58,11 +58,10 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             await OnGetAsync();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<JsonResult> OnPost()
         {
             ConfigureOnGet();
             OnBeforePost();
-            IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
@@ -70,7 +69,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     var errors = await ValidateUpdateAsync(Id, Input);
                     if (ModelState.IsValid)
                     {
-                        result = await OnUpdateAsync();
+                        await OnUpdateAsync();
                     }
                 }
                 catch (AbpRemoteCallException ex)
@@ -94,7 +93,18 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     }
                 }
             }
-            return ModelState.IsValid ? result : Page();
+            return ModelState.IsValid ?
+                new JsonResult(new { Success = true }) :
+                new JsonResult(new {
+                    Success = false,
+                    Errors = ModelState
+                        .Where(x => x.Value.Errors.Any())
+                        .Select(y => new
+                        {
+                            key = y.Key,
+                            details = y.Value.Errors.Select(z => z.ErrorMessage)
+                        })
+                });
         }
 
         protected virtual void OnBeforePost()
@@ -127,7 +137,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         protected abstract Task OnGetAsync();
 
-        protected abstract Task<IActionResult> OnUpdateAsync();
+        protected abstract Task OnUpdateAsync();
 
     }
 }

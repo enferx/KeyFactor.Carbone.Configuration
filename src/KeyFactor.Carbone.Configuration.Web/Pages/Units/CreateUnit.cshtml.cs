@@ -23,10 +23,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             ViewData["SaveUrl"] = "/Units/EditUnit";
         }
 
-        protected override async Task<IActionResult> OnCreateAsync()
+        protected override async Task OnCreateAsync()
         {
             await _unitAppService.CreateAsync(Input);
-            return RedirectToPage("/Units/Index");
         }
 
         protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateUnitDto input)

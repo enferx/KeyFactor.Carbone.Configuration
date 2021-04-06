@@ -78,7 +78,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             product.ChangeNumber(newNumber);
         }
 
-
         public void ChangeName(
             [NotNull] Product product,
             [NotNull] string newName)

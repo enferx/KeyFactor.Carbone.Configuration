@@ -31,10 +31,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             Input = ObjectMapper.Map<UnitDto, UpdateUnitDto>(unitDto);
         }
 
-        protected override async Task<IActionResult> OnUpdateAsync()
+        protected override async Task OnUpdateAsync()
         {
             await _unitAppService.UpdateAsync(Id, Input);
-            return this.RedirectToPage("/Units/Index");
         }
 
         protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, UpdateUnitDto input)

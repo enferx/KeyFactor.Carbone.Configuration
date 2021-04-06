@@ -30,14 +30,8 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input);
 
-        Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input);
-
-        Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input);
-
-        Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input);
-
-        Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input);
-
         Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input);
+
+        Task DeleteProductPropertyAsync(Guid id);
     }
 }

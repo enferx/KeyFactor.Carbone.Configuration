@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿let loadUnits = function () {
     var l = abp.localization.getResource('Configuration');
 
     var dataTable = $('#UnitsTable').DataTable(
@@ -46,4 +46,8 @@
                 }
             ]
         }));
+};
+
+$(function () {
+    loadUnits();
 });

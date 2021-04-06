@@ -28,10 +28,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             Input.ProductId = Guid.Parse(Request.Query["ProductId"]);
         }
 
-        protected override async Task<IActionResult> OnCreateAsync()
+        protected override async Task OnCreateAsync()
         {
             await _productAppService.CreateProductPropertyAsync(Input);
-            return RedirectToPage("/Products/Index");
         }    
     }
 }

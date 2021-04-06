@@ -9,27 +9,9 @@
 }
 @section scripts
 {
+    <style type="text/css" src="~/Pages/Shared/_Layout.css"></style>
+    <script type="text/javascript" src="~/Pages/Shared/_Layout.js"></script>
     @RenderSection("scripts", false)
-    <script type="text/javascript">
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-        });
-
-        function submitForm() {
-            var form = $("#mainForm");
-            var isValid = form.valid();
-            if (isValid) {
-                abp.ui.block({
-                    busy: true
-                });
-                form.submit();
-            } else {
-                _.forEach($("select.input-validation-error"), function (item) {
-                    $(item).parent().addClass("input-validation-error");
-                })
-            }
-        }
-    </script>
 }
 <!DOCTYPE html>
 <html>

@@ -51,5 +51,15 @@ namespace KeyFactor.Carbone.Configuration.Products
             await DbContext.SaveChangesAsync();
             return productProperty;
         }
+
+        public async Task DeleteProductProperty(Guid id)
+        {
+            var toDelete = await GetProductPropertyAsync(id);
+            if(toDelete != null)
+            {
+                DbContext.Remove(toDelete);
+                await DbContext.SaveChangesAsync();
+            }
+        }
     }
 }

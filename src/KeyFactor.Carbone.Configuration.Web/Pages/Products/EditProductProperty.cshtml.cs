@@ -33,10 +33,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             Input = ObjectMapper.Map<ProductPropertyDto, UpdateProductPropertyDto>(productProperty);
         }
 
-        protected override async Task<IActionResult> OnUpdateAsync()
+        protected override async Task OnUpdateAsync()
         {
             await _productAppService.UpdateProductPropertyAsync(Id, Input);
-            return this.RedirectToPage("/Products/Index");
         }
     }
 }

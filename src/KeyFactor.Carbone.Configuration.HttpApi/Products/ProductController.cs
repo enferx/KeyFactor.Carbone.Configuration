@@ -82,34 +82,6 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpPost()]
-        [Route("createproductproperty/decimal")]
-        public Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input)
-        {
-            return _productAppService.CreateDecimalProductPropertyAsync(input);
-        }
-
-        [HttpPost()]
-        [Route("createproductproperty/double")]
-        public Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input)
-        {
-            return _productAppService.CreateDoubleProductPropertyAsync(input);
-        }
-
-        [HttpPost()]
-        [Route("createproductproperty/integer")]
-        public Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input)
-        {
-            return _productAppService.CreateIntegerProductPropertyAsync(input);
-        }
-
-        [HttpPost()]
-        [Route("createproductproperty/string")]
-        public Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input)
-        {
-            return _productAppService.CreateStringProductPropertyAsync(input);
-        }
-
-        [HttpPost()]
         [Route("productproperty")]
         public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
         {
@@ -121,6 +93,13 @@ namespace KeyFactor.Carbone.Configuration.Products
         public Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
         {
             return _productAppService.UpdateProductPropertyAsync(id, input);
+        }
+
+        [HttpDelete]
+        [Route("productproperty/{id}")]
+        public Task DeleteProductPropertyAsync(Guid id)
+        {
+            return _productAppService.DeleteProductPropertyAsync(id);
         }
     }
 }

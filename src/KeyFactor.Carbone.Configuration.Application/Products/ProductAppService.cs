@@ -266,88 +266,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
         }
 
-        [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<ProductPropertyDto> CreateDecimalProductPropertyAsync(CreateDecimalProductPropertyDto input)
-        {
-            var productProperty = await _manager.CreateDecimalProductProperty
-            (
-                name: input.Name,
-                description: input.Description,
-                isReadOnly: input.IsReadOnly,
-                isHidden: input.IsHidden,
-                isRequired: input.IsRequired,
-                defaultValueDecimal: input.DefaultValueDecimal,
-                minDecimalValue: input.MinDecimalValue,
-                maxDecimalValue: input.MaxDecimalValue,
-                productId: input.Productid
-            );
-
-            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
-            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
-        }
-
-        [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<ProductPropertyDto> CreateIntegerProductPropertyAsync(CreateIntegerProductPropertyDto input)
-        {
-            var productProperty = await _manager.CreateIntegerProductProperty
-            (
-                name: input.Name,
-                description: input.Description,
-                isReadOnly: input.IsReadOnly,
-                isHidden: input.IsHidden,
-                isRequired: input.IsRequired,
-                defaultValueInteger: input.DefaultValueInteger,
-                minIntegerValue: input.MinIntegerValue,
-                maxIntegerValue: input.MaxIntegerValue,
-                productId: input.Productid
-            );
-
-            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
-            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
-
-        }
-
-        [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<ProductPropertyDto> CreateDoubleProductPropertyAsync(CreateDoubleProductPropertyDto input)
-        {
-            var productProperty = await _manager.CreateDoubleProductProperty
-            (
-                name: input.Name,
-                description: input.Description,
-                isReadOnly: input.IsReadOnly,
-                isHidden: input.IsHidden,
-                isRequired: input.IsRequired,
-                defaultValueDouble: input.DefaultValueDouble,
-                minDoubleValue: input.MinDoubleValue,
-                maxDoubleValue: input.MaxDoubleValue,
-                productId: input.Productid
-            );
-
-            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
-            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
-
-        }
-
-        [Authorize(ConfigurationPermissions.Products.Create)]
-
-        public async Task<ProductPropertyDto> CreateStringProductPropertyAsync(CreateStringProductPropertyDto input)
-        {
-            var productProperty = await _manager.CreateStringProductProperty
-            (
-                name: input.Name,
-                description: input.Description,
-                isReadOnly: input.IsReadOnly,
-                isHidden: input.IsHidden,
-                isRequired: input.IsRequired,
-                defaultValueString: input.DefaultValueString,
-                maxLengthString: input.MaxLengthString,
-                productId: input.Productid
-            );
-
-            productProperty = await _repository.CreateProductPropertyAsync(productProperty);
-            return ObjectMapper.Map<ProductProperty, ProductPropertyDto>(productProperty);
-        }
-
         [Authorize(ConfigurationPermissions.Products.Edit)]
         public async Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
         {
@@ -421,5 +339,9 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         }
 
+        public async Task DeleteProductPropertyAsync(Guid id)
+        {
+            await _repository.DeleteProductProperty(id);
+        }
     }
 }

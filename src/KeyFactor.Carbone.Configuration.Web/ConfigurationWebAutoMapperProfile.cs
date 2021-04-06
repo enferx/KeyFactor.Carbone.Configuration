@@ -13,10 +13,6 @@ namespace KeyFactor.Carbone.Configuration.Web
             CreateMap<UnitDto, CreateUnitDto>();
             CreateMap<UnitDto, UpdateUnitDto>();
             CreateMap<ProductPropertyDto, CreateProductPropertyDto>();
-            CreateMap<CreateProductPropertyDto, CreateDecimalProductPropertyDto>();
-            CreateMap<CreateProductPropertyDto, CreateDoubleProductPropertyDto>();
-            CreateMap<CreateProductPropertyDto, CreateIntegerProductPropertyDto>();
-            CreateMap<CreateProductPropertyDto, CreateStringProductPropertyDto>();
             CreateMap<ProductPropertyDto, UpdateProductPropertyDto>();
 
         }

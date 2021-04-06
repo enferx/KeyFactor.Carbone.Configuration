@@ -33,7 +33,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             _validator = validator;
         }
 
-
         public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(T1 input)
         {
             var results = await OnValidateAsync(input);
@@ -56,10 +55,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             await OnGetAsync();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<JsonResult> OnPost()
         {
             ConfigureOnGet();
-            IActionResult result = null;
             if (ModelState.IsValid)
             {
                 try
@@ -67,7 +65,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     var errors = await ValidateCreateAsync(Input);
                     if (ModelState.IsValid)
                     {
-                        result = await OnCreateAsync();
+                        await OnCreateAsync();
                     }
                 }
                 catch (AbpRemoteCallException ex)
@@ -91,7 +89,19 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     }
                 }
             }
-            return result ?? Page();
+            return ModelState.IsValid ?
+                 new JsonResult(new { Success = true }) :
+                 new JsonResult(new
+                 {
+                     Success = false,
+                     Errors = ModelState
+                         .Where(x => x.Value.Errors.Any())
+                         .Select(y => new
+                         {
+                             key = y.Key,
+                             details = y.Value.Errors.Select(z => z.ErrorMessage)
+                         })
+                 });
         }
 
 
@@ -121,6 +131,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         protected Task OnGetAsync() { return Task.CompletedTask; }
 
-        protected abstract Task<IActionResult> OnCreateAsync();
+        protected abstract Task OnCreateAsync();
     }
 }

@@ -45,10 +45,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             ViewData["SaveUrl"] = "/Products/EditProduct";
         }
 
-        protected override async Task<IActionResult> OnCreateAsync()
+        protected override async Task OnCreateAsync()
         {
             await _productAppService.CreateAsync(Input);
-            return RedirectToPage("/Products/Index");
         }
 
         public async Task<IActionResult> OnGetSearchAsync(string term)

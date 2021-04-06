@@ -1,8 +1,8 @@
-﻿$(function () {
+﻿let loadProducts = function () {
     var l = abp.localization.getResource('Configuration');
     abp.ui.block({
-            busy: true
-        });
+        busy: true
+    });
     var dataTable = $('#ProductsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
@@ -69,6 +69,8 @@
                 abp.ui.unblock();
             }
         }));
+}
 
-    
+$(function () {
+    loadProducts();
 });

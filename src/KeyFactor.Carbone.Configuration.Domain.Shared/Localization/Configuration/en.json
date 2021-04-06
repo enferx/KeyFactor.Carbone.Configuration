@@ -47,6 +47,7 @@
     "UnitName": "Name",
     "Unit": "Units",
 
+    "NewProductProperty": "New product property",
     "Enum:DataType:0": "Decimal",
     "Enum:DataType:1": "Double",
     "Enum:DataType:2": "String",
@@ -63,7 +64,10 @@
     "Permission:Units": "Units Management",
     "Permission:Units.Create": "Creating new units",
     "Permission:Units.Edit": "Editing the units",
-    "Permission:Units.Delete": "Deleting the units"
+    "Permission:Units.Delete": "Deleting the units",
 
+    "Validation:Required": "The field is required",
+    "Validation:MinLessThanMaxValue": "The minimun value can not be greater than the maximum value",
+    "Validation:DefaultBetweenLimits": "The default value must be between the minimum and maximun value"
   }
 }

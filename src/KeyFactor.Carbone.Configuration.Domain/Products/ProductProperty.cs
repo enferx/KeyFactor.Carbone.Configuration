@@ -104,34 +104,6 @@ namespace KeyFactor.Carbone.Configuration.Products
             MaxIntegerValue = maxIntegerValue;
         }
 
-        public static void CheckConditions(bool isRequired, int? defaultValueInteger, int minIntegerValue, int maxIntegerValue)
-        {
-            if (minIntegerValue > maxIntegerValue)
-            {
-                throw new ProductPropertyOutOfRangeLimitsException
-                (
-                    minValue: minIntegerValue,
-                    maxValue: maxIntegerValue
-                );
-            }
-            if (isRequired && !defaultValueInteger.HasValue)
-            {
-                throw new ProductPropertyRequiredDefaultValueException(DataType.Integer);
-            }
-            if (defaultValueInteger.HasValue)
-            {
-                if (defaultValueInteger.Value < minIntegerValue || defaultValueInteger.Value > maxIntegerValue)
-                {
-                    throw new ProductPropertyDefaultValueOutOfRangeException
-                    (
-                        minValue: minIntegerValue,
-                        maxValue: maxIntegerValue,
-                        value: defaultValueInteger.Value
-                    );
-                }
-            }
-        }
-
         internal ProductProperty
         (
             Guid id,
@@ -162,6 +134,64 @@ namespace KeyFactor.Carbone.Configuration.Products
             MaxDecimalValue = maxDecimalValue;
         }
 
+        internal ProductProperty
+        (
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Product product,
+            double? defaultValueDouble,
+            double minDoubleValue,
+            double maxDoubleValue
+        ) : this
+        (
+            id: id,
+            name: name,
+            datatype: DataType.Double,
+            description: description,
+            isRequired: isRequired,
+            isHidden: isHidden,
+            isReadOnly: isReadOnly,
+            product: product
+        )
+        {
+            CheckConditions(isRequired, defaultValueDouble, minDoubleValue, maxDoubleValue);
+            DefaultValueDouble = defaultValueDouble;
+            MinDoubleValue = minDoubleValue;
+            MaxDoubleValue = maxDoubleValue;
+        }
+
+        internal ProductProperty
+        (
+            Guid id,
+            [NotNull] string name,
+            string description,
+            bool isRequired,
+            bool isHidden,
+            bool isReadOnly,
+            Product product,
+            string defaultValueString,
+            int maxLengthString
+        ) : this
+        (
+            id: id,
+            name: name,
+            datatype: DataType.String,
+            description: description,
+            isRequired: isRequired,
+            isHidden: isHidden,
+            isReadOnly: isReadOnly,
+            product: product
+        )
+        {
+            CheckConditions(isRequired, defaultValueString, maxLengthString);
+            DefaultValueString = defaultValueString;
+            MaxLengthString = maxLengthString;
+        }
+
         public static void CheckConditions(bool isRequired, decimal? defaultValueDecimal, decimal minDecimalValue, decimal maxDecimalValue)
         {
             if (minDecimalValue > maxDecimalValue)
@@ -188,36 +218,6 @@ namespace KeyFactor.Carbone.Configuration.Products
                     );
                 }
             }
-        }
-
-        internal ProductProperty
-        (
-            Guid id,    
-            [NotNull] string name,
-            string description,
-            bool isRequired,
-            bool isHidden,
-            bool isReadOnly,
-            Product product,
-            double? defaultValueDouble,
-            double minDoubleValue,
-            double maxDoubleValue
-        ) : this
-        (
-            id: id,
-            name: name,
-            datatype: DataType.Double,
-            description: description,
-            isRequired: isRequired,
-            isHidden: isHidden,
-            isReadOnly: isReadOnly,
-            product: product
-        )
-        {
-            CheckConditions(isRequired, defaultValueDouble, minDoubleValue, maxDoubleValue);
-            DefaultValueDouble = defaultValueDouble;
-            MinDoubleValue = minDoubleValue;
-            MaxDoubleValue = maxDoubleValue;
         }
 
         public static void CheckConditions(bool isRequired, double? defaultValueDouble, double minDoubleValue, double maxDoubleValue)
@@ -249,32 +249,32 @@ namespace KeyFactor.Carbone.Configuration.Products
             }
         }
 
-        internal ProductProperty
-        (
-            Guid id,
-            [NotNull] string name,
-            string description,
-            bool isRequired,
-            bool isHidden,
-            bool isReadOnly,
-            Product product,
-            string defaultValueString,
-            int maxLengthString
-        ) : this
-        (
-            id: id,
-            name: name,
-            datatype: DataType.String,
-            description: description,
-            isRequired: isRequired,
-            isHidden: isHidden,
-            isReadOnly: isReadOnly,
-            product: product
-        )
+        public static void CheckConditions(bool isRequired, int? defaultValueInteger, int minIntegerValue, int maxIntegerValue)
         {
-            CheckConditions(isRequired, defaultValueString, maxLengthString);
-            DefaultValueString = defaultValueString;
-            MaxLengthString = maxLengthString;
+            if (minIntegerValue > maxIntegerValue)
+            {
+                throw new ProductPropertyOutOfRangeLimitsException
+                (
+                    minValue: minIntegerValue,
+                    maxValue: maxIntegerValue
+                );
+            }
+            if (isRequired && !defaultValueInteger.HasValue)
+            {
+                throw new ProductPropertyRequiredDefaultValueException(DataType.Integer);
+            }
+            if (defaultValueInteger.HasValue)
+            {
+                if (defaultValueInteger.Value < minIntegerValue || defaultValueInteger.Value > maxIntegerValue)
+                {
+                    throw new ProductPropertyDefaultValueOutOfRangeException
+                    (
+                        minValue: minIntegerValue,
+                        maxValue: maxIntegerValue,
+                        value: defaultValueInteger.Value
+                    );
+                }
+            }
         }
 
         public static void CheckConditions(bool isRequired, string defaultValueString, int maxLengthString)
@@ -288,7 +288,7 @@ namespace KeyFactor.Carbone.Configuration.Products
                 throw new ProductPropertyMaxStringLengthException();
             }
         }
-
+        
         public ProductProperty ChangeName([NotNull] string name)
         {
             SetName(name);

@@ -46,10 +46,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
             return await _productAppService.ValidateUpdateAsync(Id, productDto);
         }
 
-        protected override async Task<IActionResult> OnUpdateAsync()
+        protected override async Task OnUpdateAsync()
         {
             await _productAppService.UpdateAsync(Id, Input);
-            return this.RedirectToPage("/Products/Index");
         }
     }
 }
