@@ -13,7 +13,10 @@ namespace KeyFactor.Carbone.Configuration.Web.Menus
             {
                 await ConfigureMainMenu(context);
             }
+        }
 
+        private async Task ConfigureMainMenu(MenuConfigurationContext context)
+        {
             var l = context.GetLocalizer<ConfigurationResource>();
             if (await context.IsGrantedAsync(ConfigurationPermissions.Products.Default))
             {
@@ -47,13 +50,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Menus
                     )
                 );
             }
-        }
-
-        private Task ConfigureMainMenu(MenuConfigurationContext context)
-        {
-            //Add main menu items.
-
-            return Task.CompletedTask;
         }
     }
 }

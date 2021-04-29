@@ -22,7 +22,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         {
             ViewData["Title"] = "Products Properties";
             ViewData["GoBackUrl"] = "/Products";
-            ViewData["AddNewUrl"] = "/Products/CreateProductProperty";
             ViewData["SaveUrl"] = "/Products/EditProductProperty";
 
             Input.ProductId = Guid.Parse(Request.Query["ProductId"]);

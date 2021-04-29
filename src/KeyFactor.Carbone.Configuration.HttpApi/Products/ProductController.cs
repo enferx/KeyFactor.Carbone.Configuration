@@ -34,7 +34,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet]
-        [Route("Find/{number}")]
+        [Route("number/{number}")]
         public Task<ProductDto> FindByNumber(string number)
         {
             return _productAppService.FindByNumber(number);
@@ -75,28 +75,28 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpGet]
-        [Route("productproperty/{id}")]
+        [Route("properties/{id}")]
         public Task<ProductPropertyDto> GetProductPropertyAsync(Guid id)
         {
             return _productAppService.GetProductPropertyAsync(id);
         }
 
         [HttpPost()]
-        [Route("productproperty")]
+        [Route("properties")]
         public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
         {
             return _productAppService.CreateProductPropertyAsync(input);
         }
 
         [HttpPut()]
-        [Route("productproperty/{id}")]
+        [Route("properties/{id}")]
         public Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
         {
             return _productAppService.UpdateProductPropertyAsync(id, input);
         }
 
         [HttpDelete]
-        [Route("productproperty/{id}")]
+        [Route("properties/{id}")]
         public Task DeleteProductPropertyAsync(Guid id)
         {
             return _productAppService.DeleteProductPropertyAsync(id);

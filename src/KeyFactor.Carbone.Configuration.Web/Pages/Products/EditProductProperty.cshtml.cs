@@ -20,11 +20,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 
         protected override void ConfigureOnGet()
         {
-            ViewData["Title"] = "Products Properties";
+            ViewData["Title"] = "Product Property";
             ViewData["GoBackUrl"] = "/Products";
-            ViewData["AddNewUrl"] = "/Products/CreateProductProperty";
             ViewData["SaveUrl"] = "/Products/EditProductProperty";
-
         }
 
         protected override async Task OnGetAsync()

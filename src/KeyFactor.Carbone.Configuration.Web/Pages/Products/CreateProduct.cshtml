@@ -43,7 +43,7 @@
                                 <div class="form-group">
                                     <label>@L["ProductUnitName"].Value</label>
                                     <select id="Input_UnitId_Select" name="Input_UnitId_Select" class="form-control"></select>
-                                    @Html.ValidationMessageFor(x => x.Input.UnitId,"", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(x => x.Input.UnitId, "", new { @class = "text-danger" })
                                 </div>
                                 <abp-input asp-for="@Model.Input.UnitId" type="hidden"></abp-input>
                             </abp-column>
@@ -101,7 +101,7 @@
                                 </abp-card>
                             </abp-column>
                         </abp-row>
-                    </abp-tab>  
+                    </abp-tab>
                 </abp-tabs>
             </abp-column>
         </abp-row>

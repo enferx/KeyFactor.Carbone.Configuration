@@ -31,9 +31,12 @@
                     <abp-button id="GoBackButton"
                                 icon="arrow-circle-left"
                                 onclick="window.location.href='@ViewData["GoBackUrl"]'" />
-                    <abp-button id="NewProductButton"
+                    @if(@ViewData["AddNewUrl"] != null)
+                    {
+                        <abp-button id="NewProductButton"
                                 icon="plus"
                                 onclick="window.location.href='@ViewData["AddNewUrl"]'" />
+                    }
                     <abp-button id="SaveProductButton"
                                 icon="save"
                                 onclick="submitForm()" />

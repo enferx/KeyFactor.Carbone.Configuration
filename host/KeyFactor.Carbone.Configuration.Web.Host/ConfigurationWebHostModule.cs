@@ -153,8 +153,6 @@ namespace KeyFactor.Carbone.Configuration
 
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            //AbpClaimTypes.UserId = JwtClaimTypes.Subject;
             context.Services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = "Cookies";
