@@ -102,6 +102,7 @@ namespace KeyFactor.Carbone.Configuration
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "Configuration";
+                    
                 });
 
             Configure<AbpDistributedCacheOptions>(options =>

@@ -7,7 +7,7 @@ namespace KeyFactor.Carbone.Configuration.Shared
 {
     public interface IValidateCreate<T>
     {
-        public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(T input);
+        public Task<List<ValidationError>> ValidateCreateAsync(T input);
 
     }
 }

@@ -33,20 +33,9 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             _validator = validator;
         }
 
-        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(T1 input)
+        public async Task<List<ValidationError>> ValidateCreateAsync(T1 input)
         {
-            var results = await OnValidateAsync(input);
-            if (results.Any())
-            {
-                foreach (var error in results)
-                {
-                    foreach (var member in error.MemberNames)
-                    {
-                        ModelState.AddModelError(EntityPath + member, error.Message);
-                    }
-                }
-            }
-            return results;
+           return await OnValidateAsync(input);
         }
 
         public async Task OnGet()
@@ -58,75 +47,47 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         public async Task<JsonResult> OnPost()
         {
             ConfigureOnGet();
-            if (ModelState.IsValid)
+            List<ValidationError> errors = new List<ValidationError>();
+            try
             {
-                try
+                errors = await ValidateCreateAsync(Input);
+                if (!errors.Any())
                 {
-                    var errors = await ValidateCreateAsync(Input);
-                    if (ModelState.IsValid)
-                    {
-                        await OnCreateAsync();
-                    }
-                }
-                catch (AbpRemoteCallException ex)
-                {
-                    foreach (var error in ex.Error.ValidationErrors)
-                    {
-                        foreach (var member in error.Members)
-                        {
-                            ModelState.AddModelError(member, ex.Message);
-                        }
-                    }
-                }
-                catch (AbpValidationException ex)
-                {
-                    foreach (var error in ex.ValidationErrors)
-                    {
-                        foreach (var member in error.MemberNames)
-                        {
-                            ModelState.AddModelError(member, error.ErrorMessage);
-                        }
-                    }
+                    await OnCreateAsync();
                 }
             }
-            return ModelState.IsValid ?
-                 new JsonResult(new { Success = true }) :
-                 new JsonResult(new
-                 {
-                     Success = false,
-                     Errors = ModelState
-                         .Where(x => x.Value.Errors.Any())
-                         .Select(y => new
-                         {
-                             key = y.Key,
-                             details = y.Value.Errors.Select(z => z.ErrorMessage)
-                         })
-                 });
+            catch (AbpRemoteCallException ex)
+            {
+                errors.AddRange(ex.Error.ValidationErrors
+                    .Select(error => 
+                        new ValidationError(message: ex.Message, memberNames: error.Members)
+                    ));
+            }
+            catch (AbpValidationException ex)
+            {
+                errors.AddRange(ex.ValidationErrors
+                   .Select(error =>
+                        new ValidationError(message: error.ErrorMessage, memberNames: error.MemberNames.ToArray())
+                   ));
+            }
+            return new JsonResult(new
+            {
+                Success = !errors.Any(),
+                Errors = errors
+            });
         }
 
 
-        protected virtual async Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 input)
+        protected virtual async Task<List<ValidationError>> OnValidateAsync(T1 input)
         {
-            var errors = await Task.FromResult(new List<ValidationError>());
-            if (_validator == null)
-            {
-                return errors;
-            }
-            var result = _validator.Validate(input);
-            if (result.IsValid)
-            {
-                return errors;
-            }
-            else
-            {
-                return await Task.FromResult(result.Errors.Select(x =>
-                    new ValidationError
-                    (
-                        x.ErrorMessage,
-                        new List<string> { x.PropertyName })
-                    ).ToList()
-                );
-            }
+            var result = _validator?.Validate(input);
+            return await Task.FromResult(result.Errors.Select(x =>
+                new ValidationError
+                (
+                    x.ErrorMessage,
+                    new List<string> { x.PropertyName })
+                ).ToList()
+            );
         }
 
         protected Task OnGetAsync() { return Task.CompletedTask; }

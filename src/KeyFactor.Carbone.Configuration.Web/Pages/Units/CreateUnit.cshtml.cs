@@ -28,7 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             await _unitAppService.CreateAsync(Input);
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateUnitDto input)
+        protected override async Task<List<ValidationError>> OnValidateAsync(CreateUnitDto input)
         {
             return await _unitAppService.ValidateCreateAsync(input);
         }

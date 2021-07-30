@@ -7,10 +7,8 @@ namespace KeyFactor.Carbone.Configuration.Products
 {
     public class UpdateProductPropertyDto
     {
-        [Required]
         public DataType DataType { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }

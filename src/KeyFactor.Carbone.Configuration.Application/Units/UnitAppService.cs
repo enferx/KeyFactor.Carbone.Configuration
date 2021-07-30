@@ -90,7 +90,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Create)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
+        public async Task<List<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNameAsync(input.Name);

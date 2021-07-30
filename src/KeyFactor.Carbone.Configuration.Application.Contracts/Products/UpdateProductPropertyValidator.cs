@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using KeyFactor.Carbone.Configuration.Localization;
 using Microsoft.Extensions.Localization;
+using System;
 using Volo.Abp.DependencyInjection;
 
 namespace KeyFactor.Carbone.Configuration.Products
@@ -12,6 +13,14 @@ namespace KeyFactor.Carbone.Configuration.Products
             var requiredMessage = localizer["Validation:Required"].Value;
             var lessThanMessage = localizer["Validation:MinLessThanMaxValue"].Value;
             var defaultBetweenLimits = localizer["Validation:DefaultBetweenLimits"].Value;
+
+            RuleFor(x => x.Name)
+              .NotEmpty()
+              .WithMessage(requiredMessage);
+
+            RuleFor(x => x.ProductId)
+                .NotEqual(Guid.Empty)
+                .WithMessage(requiredMessage);
 
             When(x => x.DataType == DataType.Decimal, () =>
             {

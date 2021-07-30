@@ -162,7 +162,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateProductDto input)
+        public async Task<List<ValidationError>> ValidateCreateAsync(CreateProductDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNumberAsync(input.Number);

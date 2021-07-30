@@ -45,6 +45,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\libs\jquery-validation\css\jquery.validate.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\libs\jquery-validation\css\jquery.validate.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Pages\**\*.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

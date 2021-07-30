@@ -12,8 +12,6 @@
 }
 
 <form method="post" id="mainForm">
-    <div asp-validation-summary="All"  class="text-danger"></div>
-
     <abp-card-body>
         <abp-row>
             <abp-column size-md="_12">
@@ -21,84 +19,85 @@
                     <abp-tab title="Details">
                         <abp-row>
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.Name" />
+                                <abp-input asp-for="@Model.Input.Name" 
+                                           label="@L["ProductProperty:Name"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_12">
-                                <div class="form-group">
-                                    <label>@L["ProductDescription"].Value</label>
+                                @*<div class="form-group">
+                                    <label>@L["ProductProperty:Description"].Value</label>
                                     <textarea asp-for="@Model.Input.Description" class="form-control" rows="4"></textarea>
-                                </div>
+                                </div>*@
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_12">
-                                <abp-input asp-for="@Model.Input.IsRequired" />
-                                <abp-input asp-for="@Model.Input.IsHidden" />
-                                <abp-input asp-for="@Model.Input.IsReadOnly" />
+                                <abp-input asp-for="@Model.Input.IsRequired" label="@L["ProductProperty:IsRequired"]" />
+                                <abp-input asp-for="@Model.Input.IsHidden" label="@L["ProductProperty:IsHidden"]" />
+                                <abp-input asp-for="@Model.Input.IsReadOnly" label="@L["ProductProperty:IsReadOnly"]" />
                             </abp-column>
                         </abp-row>
                     </abp-tab>
                     <abp-tab title="Data Type">
                         <abp-row>
                             <abp-column size-md="_6">
-                                <abp-select asp-for="@Model.Input.DataType" />
+                                <abp-select asp-for="@Model.Input.DataType" label="@L["ProductProperty:DataType"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_decimal">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MinDecimalValue" />
+                                <abp-input asp-for="@Model.Input.MinDecimalValue" label="@L["ProductProperty:MinDecimalValue"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_decimal">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MaxDecimalValue" />
+                                <abp-input asp-for="@Model.Input.MaxDecimalValue" label="@L["ProductProperty:MaxDecimalValue"]"/>
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_decimal">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.DefaultValueDecimal" />
+                                <abp-input asp-for="@Model.Input.DefaultValueDecimal" label="@L["ProductProperty:DefaultValueDecimal"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_double">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MinDoubleValue" />
+                                <abp-input asp-for="@Model.Input.MinDoubleValue" label="@L["ProductProperty:MinDoubleValue"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_double">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MaxDoubleValue" />
+                                <abp-input asp-for="@Model.Input.MaxDoubleValue" label="@L["ProductProperty:MaxDoubleValue"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_double">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.DefaultValueDouble" />
+                                <abp-input asp-for="@Model.Input.DefaultValueDouble" label="@L["ProductProperty:DefaultValueDouble"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_integer">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MinIntegerValue" />
+                                <abp-input asp-for="@Model.Input.MinIntegerValue" label="@L["ProductProperty:MinIntegerValue"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_integer">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MaxIntegerValue" />
+                                <abp-input asp-for="@Model.Input.MaxIntegerValue" label="@L["ProductProperty:MaxIntegerValue"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_integer">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.DefaultValueInteger" />
+                                <abp-input asp-for="@Model.Input.DefaultValueInteger" label="@L["ProductProperty:DefaultValueInteger"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_string">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.MaxLengthString" />
+                                <abp-input asp-for="@Model.Input.MaxLengthString" label="@L["ProductProperty:MaxLengthString"]" />
                             </abp-column>
                         </abp-row>
                         <abp-row name="container_input_string">
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.DefaultValueString" />
+                                <abp-input asp-for="@Model.Input.DefaultValueString" label="@L["ProductProperty:DefaultValueString"]" />
                             </abp-column>
                         </abp-row>
                     </abp-tab>

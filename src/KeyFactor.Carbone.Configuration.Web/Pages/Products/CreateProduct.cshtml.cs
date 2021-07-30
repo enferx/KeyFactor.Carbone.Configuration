@@ -32,7 +32,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(CreateProductDto productDto)
+        protected override async Task<List<ValidationError>> OnValidateAsync(CreateProductDto productDto)
         {
             return await _productAppService.ValidateCreateAsync(productDto);
         }

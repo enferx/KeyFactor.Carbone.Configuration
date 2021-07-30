@@ -64,7 +64,7 @@ namespace KeyFactor.Carbone.Configuration.Units
 
         [HttpGet()]
         [Route("validatecreate")]
-        public Task<IReadOnlyList<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
+        public Task<List<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
         {
             return _unitAppService.ValidateCreateAsync(input);
         }
