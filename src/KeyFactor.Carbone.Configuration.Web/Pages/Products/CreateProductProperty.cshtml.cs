@@ -9,11 +9,13 @@ using Volo.Abp;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 {
-    public class CreateProductPropertyModel : CreateConfigurationPageModel<CreateProductPropertyDto>
+    public class CreateProductPropertyModel : CreateConfigurationPageModel<CreateUpdateProductPropertyDto>
     {
         private readonly IProductAppService _productAppService;
         
-        public CreateProductPropertyModel(IProductAppService productAppService, CreateProductPropertyValidator validator) : base(new CreateProductPropertyDto(), validator)
+        public CreateProductPropertyModel(IProductAppService productAppService, 
+            CreateUpdateProductPropertyValidator validator) : 
+            base(new CreateUpdateProductPropertyDto(), validator)
         {
             _productAppService = Check.NotNull(productAppService, nameof(productAppService));
         }

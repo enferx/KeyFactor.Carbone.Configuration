@@ -21,7 +21,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [HttpPost]
-        public Task<ProductDto> CreateAsync(CreateProductDto input)
+        public Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
             return _productAppService.CreateAsync(input);
         }
@@ -55,21 +55,21 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         [HttpPut()]
         [Route("{id}")]
-        public Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
+        public Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             return _productAppService.UpdateAsync(id, input);
         }
 
         [HttpGet()]
         [Route("validate/create")]
-        public Task<List<ValidationError>> ValidateCreateAsync(CreateProductDto input)
+        public Task<List<ValidationError>> ValidateCreateAsync(CreateUpdateProductDto input)
         {
             return _productAppService.ValidateCreateAsync(input);
         }
         
         [HttpGet()]
         [Route("validate/update")]
-        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
+        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             return _productAppService.ValidateUpdateAsync(id, input);
         }
@@ -83,14 +83,14 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         [HttpPost()]
         [Route("properties")]
-        public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
+        public Task<ProductPropertyDto> CreateProductPropertyAsync(CreateUpdateProductPropertyDto input)
         {
             return _productAppService.CreateProductPropertyAsync(input);
         }
 
         [HttpPut()]
         [Route("properties/{id}")]
-        public Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
+        public Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, CreateUpdateProductPropertyDto input)
         {
             return _productAppService.UpdateProductPropertyAsync(id, input);
         }

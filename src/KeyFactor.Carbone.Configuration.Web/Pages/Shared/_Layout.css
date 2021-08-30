@@ -7,6 +7,10 @@ label.error {
     font-size: 0.75rem;
 }
 
-.row{
-    margin-top: 0.75em !important;
+.row {
+    margin-top: 0.50em !important;
+}
+
+span.error {
+    border: 1px solid red !important;
 }

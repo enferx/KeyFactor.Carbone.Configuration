@@ -9,7 +9,7 @@ using Volo.Abp;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
 {
-    public class EditUnitModel : UpdateConfigurationPageModel<Guid, UpdateUnitDto>
+    public class EditUnitModel : UpdateConfigurationPageModel<Guid, CreateUpdateUnitDto>
     {
         private readonly IUnitAppService _unitAppService;
         public EditUnitModel(IUnitAppService unitAppService)
@@ -28,7 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
         protected override async Task OnGetAsync()
         {
             var unitDto = await _unitAppService.GetAsync(Id);
-            Input = ObjectMapper.Map<UnitDto, UpdateUnitDto>(unitDto);
+            Input = ObjectMapper.Map<UnitDto, CreateUpdateUnitDto>(unitDto);
         }
 
         protected override async Task OnUpdateAsync()
@@ -36,7 +36,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             await _unitAppService.UpdateAsync(Id, Input);
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, UpdateUnitDto input)
+        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, CreateUpdateUnitDto input)
         {
             return await _unitAppService.ValidateUpdateAsync(id, input);
         }

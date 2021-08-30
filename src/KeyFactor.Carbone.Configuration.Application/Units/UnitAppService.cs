@@ -23,7 +23,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Create)]
-        public async Task<UnitDto> CreateAsync(CreateUnitDto input)
+        public async Task<UnitDto> CreateAsync(CreateUpdateUnitDto input)
         {
             var unit = await _manager.CreateAsync(name: input.Name);
             await _repository.InsertAsync(unit);
@@ -31,7 +31,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Edit)]
-        public async Task<UnitDto> UpdateAsync(Guid id, UpdateUnitDto input)
+        public async Task<UnitDto> UpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             var unit = await _repository.GetAsync(id);
             if (unit.Name != input.Name)
@@ -90,7 +90,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Create)]
-        public async Task<List<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
+        public async Task<List<ValidationError>> ValidateCreateAsync(CreateUpdateUnitDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNameAsync(input.Name);
@@ -106,7 +106,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Edit)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateUnitDto input)
+        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNameAsync(input.Name);

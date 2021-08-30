@@ -5,7 +5,7 @@
 @inject IStringLocalizer<ConfigurationResource> L
 @{
     Layout = "_Layout";
-    var properties = Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Input.Properties.ToArray()));
+    var properties = Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Properties.ToArray()));
 }
 @section scripts
 {

@@ -3,7 +3,24 @@
 });
 
 let form = $("#mainForm");
-let validator = form.validate();
+let validator = form.validate({
+    //ignore: [],
+    rules: {
+        //Rules
+    },
+    messages: {
+        //messages
+    },
+    errorPlacement: function (label, element) {
+        const select2 = $(element).parent().siblings('span').find('.select2-selection');
+        if (select2 && select2.length == 1) {
+            select2.addClass('error');
+        }
+        label.insertAfter(element);
+    },
+    wrapper: 'span'
+});
+
 
 function submitForm() {
     let isValid = form.valid();
@@ -40,12 +57,12 @@ function success() {
 
 function error(errors) {
     let l = abp.localization.getResource('Configuration');
-    let sub_ul = $('<ul/>');
-    $.each(errors, function (index, object) {
-        const fieldName = $($("label[for='Input_" + object.memberNames[0] + "']")[0]).text()
-        let sub_li = $('<li>').text(fieldName + ': ' + object.message);
-        sub_ul.append(sub_li);
-    });
-    $('#validationErrors').empty().append('<h6>' + l('Validation:SeeErrors') +'</h6>').append(sub_ul);
+    //let sub_ul = $('<ul/>');
+    //$.each(errors, function (index, object) {
+    //    const fieldName = $($("label[for='Input_" + object.memberNames[0] + "']")[0]).text()
+    //    let sub_li = $('<li>').text(fieldName + ': ' + object.message);
+    //    sub_ul.append(sub_li);
+    //});//.append(sub_ul);
+    $('#validationErrors').empty().append('<h6>' + l('Validation:SeeErrors') + '</h6>');
     $('#validationSummary').show();
 }

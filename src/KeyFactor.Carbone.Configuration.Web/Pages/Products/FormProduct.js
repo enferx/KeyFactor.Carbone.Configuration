@@ -1,11 +1,7 @@
 ﻿class Page {
     init() {
-        $("#Input_UnitId_Select").rules("add", {
-            required: true,
-            messages: {
-                required: "Required input"
-            }
-        });
+       
+      
         if ($("#Input_ValidFromDate").val() == "") {
             $("#Input_ValidFromDate").val($("#ValidFromDateHidden").val());
         }

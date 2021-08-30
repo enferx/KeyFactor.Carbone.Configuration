@@ -2,7 +2,7 @@
 
 namespace KeyFactor.Carbone.Configuration.Units
 {
-    public class UpdateUnitDto
+    public class CreateUpdateUnitDto
     {
         [Required]
         [StringLength(UnitConsts.MaxNameLength)]

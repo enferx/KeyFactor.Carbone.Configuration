@@ -8,13 +8,9 @@ namespace KeyFactor.Carbone.Configuration.Web
     {
         public ConfigurationWebAutoMapperProfile()
         {
-            CreateMap<ProductDto, CreateProductDto>();
-            CreateMap<ProductDto, UpdateProductDto>();
-            CreateMap<UnitDto, CreateUnitDto>();
-            CreateMap<UnitDto, UpdateUnitDto>();
-            CreateMap<ProductPropertyDto, CreateProductPropertyDto>();
-            CreateMap<ProductPropertyDto, UpdateProductPropertyDto>();
-
+            CreateMap<ProductDto, CreateUpdateProductDto>();
+            CreateMap<UnitDto, CreateUpdateUnitDto>();
+            CreateMap<ProductPropertyDto, CreateUpdateProductPropertyDto>();
         }
     }
 }

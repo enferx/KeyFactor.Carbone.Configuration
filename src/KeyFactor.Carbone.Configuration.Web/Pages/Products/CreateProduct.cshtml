@@ -19,39 +19,39 @@
                     <abp-tab title="Details">
                         <abp-row>
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.Name" />
+                                <abp-input asp-for="@Model.Input.Name" label="@L["Product:Name"]" />
                             </abp-column>
                             <abp-column>
-                                <abp-input asp-for="@Model.Input.Number" />
+                                <abp-input asp-for="@Model.Input.Number" label="@L["Product:Number"]"  />
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.ValidFromDate" />
+                                <abp-input asp-for="@Model.Input.ValidFromDate" label="@L["Product:ValidFromDate"]" />
                                 <abp-input asp-for="@Model.ValidFromDateHidden" />
                             </abp-column>
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.ValidToDate" />
+                                <abp-input asp-for="@Model.Input.ValidToDate" label="@L["Product:ValidToDate"]" />
                                 <abp-input asp-for="@Model.ValidToDateHidden" />
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_6">
-                                <abp-input asp-for="@Model.Input.DecimalPlaces" />
+                                <abp-input asp-for="@Model.Input.DecimalPlaces" label="@L["Product:DecimalPlaces"]" />
                             </abp-column>
                             <abp-column size-md="_6">
                                 <div class="form-group">
-                                    <label>@L["ProductUnitName"].Value</label>
+                                    <label>@L["Product:UnitName"].Value</label>
                                     <select id="Input_UnitId_Select" name="Input_UnitId_Select" class="form-control"></select>
-                                    @Html.ValidationMessageFor(x => x.Input.UnitId, "", new { @class = "text-danger" })
+                                    <abp-input asp-for="@Model.Input.UnitId" type="hidden"></abp-input>
                                 </div>
-                                <abp-input asp-for="@Model.Input.UnitId" type="hidden"></abp-input>
+                               
                             </abp-column>
                         </abp-row>
                         <abp-row>
                             <abp-column size-md="_12">
                                 <div class="form-group">
-                                    <label>@L["ProductDescription"].Value</label>
+                                    <label>@L["Product:Description"].Value</label>
                                     <textarea asp-for="@Model.Input.Description" class="form-control" rows="4"></textarea>
                                 </div>
                             </abp-column>
@@ -67,12 +67,12 @@
                                     <abp-card-body>
                                         <abp-row>
                                             <abp-column size-md="_12">
-                                                <abp-select asp-for="@Model.Input.FieldServiceProductType" />
+                                                <abp-select asp-for="@Model.Input.FieldServiceProductType" label="@L["Product:FieldServiceProductType"]" />
                                             </abp-column>
                                         </abp-row>
                                         <abp-row>
                                             <abp-column size-md="_12">
-                                                <abp-input asp-for="@Model.Input.ConvertToCustomerAsset" />
+                                                <abp-input asp-for="@Model.Input.ConvertToCustomerAsset"  label="@L["Product:ConvertToCustomerAsset"]" />
                                             </abp-column>
                                         </abp-row>
                                     </abp-card-body>
@@ -84,17 +84,17 @@
                                     <abp-card-body>
                                         <abp-row>
                                             <abp-column size-md="_12">
-                                                <abp-input asp-for="@Model.Input.Taxable" />
+                                                <abp-input asp-for="@Model.Input.Taxable" label="@L["Product:Taxable"]" />
                                             </abp-column>
                                         </abp-row>
                                         <abp-row>
                                             <abp-column size-md="_12">
-                                                <abp-input asp-for="@Model.Input.CurrentCost" />
+                                                <abp-input asp-for="@Model.Input.CurrentCost" label="@L["Product:CurrentCost"]" />
                                             </abp-column>
                                         </abp-row>
                                         <abp-row>
                                             <abp-column size-md="_12">
-                                                <abp-input asp-for="@Model.Input.StandardCost" />
+                                                <abp-input asp-for="@Model.Input.StandardCost" label="@L["Product:StandardCost"]" />
                                             </abp-column>
                                         </abp-row>
                                     </abp-card-body>

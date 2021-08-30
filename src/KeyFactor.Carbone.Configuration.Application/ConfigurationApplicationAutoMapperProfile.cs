@@ -9,11 +9,9 @@ namespace KeyFactor.Carbone.Configuration
         public ConfigurationApplicationAutoMapperProfile()
         {
             CreateMap<Product, ProductDto>();
-            CreateMap<CreateProductDto, Product>();
-            CreateMap<UpdateProductDto, Product>();
+            CreateMap<CreateUpdateProductDto, Product>();
             CreateMap<Unit, UnitDto>();
-            CreateMap<CreateUnitDto, Unit>();
-            CreateMap<UpdateUnitDto, Unit>();
+            CreateMap<CreateUpdateUnitDto, Unit>();
             CreateMap<ProductProperty, ProductPropertyDto>();
        }
     }

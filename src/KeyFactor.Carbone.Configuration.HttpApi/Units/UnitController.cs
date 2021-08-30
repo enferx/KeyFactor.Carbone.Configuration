@@ -23,7 +23,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }        
         
         [HttpPost]
-        public Task<UnitDto> CreateAsync(CreateUnitDto input)
+        public Task<UnitDto> CreateAsync(CreateUpdateUnitDto input)
         {
             return _unitAppService.CreateAsync(input);
         }
@@ -57,21 +57,21 @@ namespace KeyFactor.Carbone.Configuration.Units
 
         [HttpPut()]
         [Route("{id}")]
-        public Task<UnitDto> UpdateAsync(Guid id, UpdateUnitDto input)
+        public Task<UnitDto> UpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             return _unitAppService.UpdateAsync(id, input);
         }
 
         [HttpGet()]
         [Route("validatecreate")]
-        public Task<List<ValidationError>> ValidateCreateAsync(CreateUnitDto input)
+        public Task<List<ValidationError>> ValidateCreateAsync(CreateUpdateUnitDto input)
         {
             return _unitAppService.ValidateCreateAsync(input);
         }
 
         [HttpGet()]
         [Route("validateupdate")]
-        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateUnitDto input)
+        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             return _unitAppService.ValidateUpdateAsync(id, input);
         }

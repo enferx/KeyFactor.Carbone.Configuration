@@ -6,7 +6,7 @@ using Volo.Abp.Application.Services;
 
 namespace KeyFactor.Carbone.Configuration.Units
 {
-    public interface IUnitAppService : IApplicationService, IValidateCreate<CreateUnitDto>, IValidateUpdate<Guid, UpdateUnitDto>
+    public interface IUnitAppService : IApplicationService, IValidateCreate<CreateUpdateUnitDto>, IValidateUpdate<Guid, CreateUpdateUnitDto>
     {
         Task<UnitDto> GetAsync(Guid id);
 
@@ -14,9 +14,9 @@ namespace KeyFactor.Carbone.Configuration.Units
 
         Task<PagedResultDto<UnitDto>> GetListAsync(GetUnitListDto input);
 
-        Task<UnitDto> CreateAsync(CreateUnitDto input);
+        Task<UnitDto> CreateAsync(CreateUpdateUnitDto input);
 
-        Task<UnitDto> UpdateAsync(Guid id, UpdateUnitDto input);
+        Task<UnitDto> UpdateAsync(Guid id, CreateUpdateUnitDto input);
 
         Task DeleteAsync(Guid id);
     }

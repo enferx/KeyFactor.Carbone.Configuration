@@ -6,9 +6,9 @@ using Volo.Abp.DependencyInjection;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public class CreateProductPropertyValidator : AbstractValidator<CreateProductPropertyDto>, ITransientDependency
+    public class CreateUpdateProductPropertyValidator : AbstractValidator<CreateUpdateProductPropertyDto>, ITransientDependency
     {
-        public CreateProductPropertyValidator(IStringLocalizer<ConfigurationResource> localizer)
+        public CreateUpdateProductPropertyValidator(IStringLocalizer<ConfigurationResource> localizer)
         {
             var requiredMessage = localizer["Validation:Required"].Value;
             var lessThanMessage = localizer["Validation:MinLessThanMaxValue"].Value;

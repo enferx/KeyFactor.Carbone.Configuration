@@ -31,7 +31,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         [Fact]
         public async Task ShouldCreateAProduct()
         {
-            var product = await _productAppService.CreateAsync(new CreateProductDto
+            var product = await _productAppService.CreateAsync(new CreateUpdateProductDto
             {
                 Number = "PROD-112099",
                 Name = "Cinta aisladora",
@@ -46,7 +46,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public async Task ShouldUpdateAProduct()
         {
             var productDto = await _productAppService.FindByNumber("PROD-10010");
-            var product = _objectMapper.Map<ProductDto, UpdateProductDto>(productDto);
+            var product = _objectMapper.Map<ProductDto, CreateUpdateProductDto>(productDto);
             product.Description = "test description";
             var updatedProduct = await _productAppService.UpdateAsync(productDto.Id, product);
             updatedProduct.Description.ShouldBe("test description");
@@ -57,7 +57,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public async Task ShouldEvalProductAlreadyExistsExceptionOnUpdateProduct() 
         {
             var productDto = await _productAppService.FindByNumber("PROD-10010");
-            var product = _objectMapper.Map<ProductDto, UpdateProductDto>(productDto);
+            var product = _objectMapper.Map<ProductDto, CreateUpdateProductDto>(productDto);
             product.Number = "PROD-110010";
             Should.Throw<ProductNumberAlreadyExistsException>
             (
@@ -69,7 +69,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         public void ShouldEvalProductAlreadyExistsExceptionOnCreateProduct()
         {
             Should.Throw<ProductNumberAlreadyExistsException>(async () =>
-                await _productAppService.CreateAsync(new CreateProductDto
+                await _productAppService.CreateAsync(new CreateUpdateProductDto
                 {
                     Number = "PROD-110010",
                     Name = "Cinta aisladora",

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 {
-    public class CreateProductModel : CreateConfigurationPageModel<CreateProductDto>
+    public class CreateProductModel : CreateConfigurationPageModel<CreateUpdateProductDto>
     {
         private readonly IProductAppService _productAppService;
         private readonly IUnitAppService _unitAppService;
@@ -25,15 +25,23 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
-        public CreateProductModel(IProductAppService productAppService, IUnitAppService unitAppService) : base(new CreateProductDto()) 
+        public CreateProductModel(
+            IProductAppService productAppService, 
+            IUnitAppService unitAppService, 
+            CreateUpdateProductDtoValidator createProductDtoValidator) : 
+            base(new CreateUpdateProductDto(), createProductDtoValidator) 
         {
             _productAppService = Check.NotNull(productAppService, nameof(productAppService));
             _unitAppService = Check.NotNull(unitAppService, nameof(unitAppService));
-
         }
 
-        protected override async Task<List<ValidationError>> OnValidateAsync(CreateProductDto productDto)
+        protected override async Task<List<ValidationError>> OnValidateAsync(CreateUpdateProductDto productDto)
         {
+            var errors = await base.OnValidateAsync(productDto);
+            if(errors.Count > 0)
+            {
+                return errors;
+            }
             return await _productAppService.ValidateCreateAsync(productDto);
         }
 

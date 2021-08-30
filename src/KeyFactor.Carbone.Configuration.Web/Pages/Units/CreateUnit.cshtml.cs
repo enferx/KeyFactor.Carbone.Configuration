@@ -6,11 +6,11 @@ using Volo.Abp;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
 {
-    public class CreateUnitModel : CreateConfigurationPageModel<CreateUnitDto>
+    public class CreateUnitModel : CreateConfigurationPageModel<CreateUpdateUnitDto>
     {
         private readonly IUnitAppService _unitAppService;
 
-        public CreateUnitModel(IUnitAppService unitAppService) : base(new CreateUnitDto())
+        public CreateUnitModel(IUnitAppService unitAppService) : base(new CreateUpdateUnitDto())
         {
             _unitAppService = Check.NotNull(unitAppService, nameof(unitAppService));
         }
@@ -28,7 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             await _unitAppService.CreateAsync(Input);
         }
 
-        protected override async Task<List<ValidationError>> OnValidateAsync(CreateUnitDto input)
+        protected override async Task<List<ValidationError>> OnValidateAsync(CreateUpdateUnitDto input)
         {
             return await _unitAppService.ValidateCreateAsync(input);
         }

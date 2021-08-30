@@ -10,7 +10,7 @@ namespace KeyFactor.Carbone.Configuration
     {
         public ConfigurationApplicationTestAutoMapperProfile()
         {
-            CreateMap<ProductDto, UpdateProductDto>();
+            CreateMap<ProductDto, CreateUpdateProductDto>();
         }
 
     }

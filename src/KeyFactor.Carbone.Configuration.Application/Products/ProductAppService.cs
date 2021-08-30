@@ -24,7 +24,7 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         private readonly ProductManager _manager;
 
-        public CreateProductPropertyValidator CreateProductPropertyValidator { get; set; }
+        //public CreateUpdateProductPropertyDtoValidator CreateProductPropertyValidator { get; set; }
 
         public ProductAppService(IProductRepository repository, ProductManager manager, IUnitRepository unitRepository)
         {
@@ -102,7 +102,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<ProductDto> CreateAsync(CreateProductDto input)
+        public async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
             var product = await _manager.CreateAsync
             (
@@ -128,7 +128,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Edit)]
-        public async Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input)
+        public async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             var product = await _repository.GetAsync(id);
             if (product.Number != input.Number)
@@ -162,7 +162,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<List<ValidationError>> ValidateCreateAsync(CreateProductDto input)
+        public async Task<List<ValidationError>> ValidateCreateAsync(CreateUpdateProductDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNumberAsync(input.Number);
@@ -178,7 +178,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Edit)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, UpdateProductDto input)
+        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNumberAsync(input.Number);
@@ -200,7 +200,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Create)]
-        public async Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input)
+        public async Task<ProductPropertyDto> CreateProductPropertyAsync(CreateUpdateProductPropertyDto input)
         {
             ProductProperty productProperty;
             if (input.DataType == DataType.Decimal)
@@ -267,7 +267,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         }
 
         [Authorize(ConfigurationPermissions.Products.Edit)]
-        public async Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input)
+        public async Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, CreateUpdateProductPropertyDto input)
         {
             ProductProperty productProperty;
             if (input.DataType == DataType.Decimal)

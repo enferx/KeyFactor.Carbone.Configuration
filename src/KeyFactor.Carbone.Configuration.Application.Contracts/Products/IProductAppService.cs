@@ -11,8 +11,8 @@ using Volo.Abp.Validation;
 namespace KeyFactor.Carbone.Configuration.Products
 {
     public interface IProductAppService : IApplicationService, 
-        IValidateCreate<CreateProductDto>, 
-        IValidateUpdate<Guid, UpdateProductDto>
+        IValidateCreate<CreateUpdateProductDto>, 
+        IValidateUpdate<Guid, CreateUpdateProductDto>
     {
         Task<ProductDto> GetAsync(Guid id);
 
@@ -20,17 +20,17 @@ namespace KeyFactor.Carbone.Configuration.Products
 
         Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input);
 
-        Task<ProductDto> CreateAsync(CreateProductDto input);
+        Task<ProductDto> CreateAsync(CreateUpdateProductDto input);
 
-        Task<ProductDto> UpdateAsync(Guid id, UpdateProductDto input);
+        Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input);
 
         Task DeleteAsync(Guid id);
 
         Task<ProductPropertyDto> GetProductPropertyAsync(Guid id);
 
-        Task<ProductPropertyDto> CreateProductPropertyAsync(CreateProductPropertyDto input);
+        Task<ProductPropertyDto> CreateProductPropertyAsync(CreateUpdateProductPropertyDto input);
 
-        Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, UpdateProductPropertyDto input);
+        Task<ProductPropertyDto> UpdateProductPropertyAsync(Guid id, CreateUpdateProductPropertyDto input);
 
         Task DeleteProductPropertyAsync(Guid id);
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
 {
-    public class EditProductModel : UpdateConfigurationPageModel<Guid, UpdateProductDto>
+    public class EditProductModel : UpdateConfigurationPageModel<Guid, CreateUpdateProductDto>
     {
         
         private readonly IProductAppService _productAppService;
@@ -22,9 +22,11 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? ValidToDateHidden { get; set; }
 
-        public EditProductModel(IProductAppService productAppService)
+        public IReadOnlyList<ProductPropertyDto> Properties { get; set; }
+
+        public EditProductModel(IProductAppService productAppService, CreateUpdateProductDtoValidator validator) : base(validator) 
         {
-            _productAppService = productAppService ?? throw new ArgumentNullException("productAppService");
+            _productAppService = productAppService ?? throw new ArgumentNullException(nameof(productAppService));
         }
 
         protected override void ConfigureOnGet()
@@ -38,11 +40,17 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
         protected override async Task OnGetAsync()
         {
             var productDto = await _productAppService.GetAsync(Id);
-            Input = ObjectMapper.Map<ProductDto, UpdateProductDto>(productDto);
+            Input = ObjectMapper.Map<ProductDto, CreateUpdateProductDto>(productDto);
+            Properties = productDto.Properties;
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, UpdateProductDto productDto)
+        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, CreateUpdateProductDto productDto)
         {
+            var errors = await base.OnValidateAsync(id, productDto);
+            if (errors.Count > 0)
+            {
+                return errors;
+            }
             return await _productAppService.ValidateUpdateAsync(Id, productDto);
         }
 

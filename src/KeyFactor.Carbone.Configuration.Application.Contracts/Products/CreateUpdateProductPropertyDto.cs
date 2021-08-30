@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace KeyFactor.Carbone.Configuration.Products
 {
-    public class UpdateProductPropertyDto
+    public class CreateUpdateProductPropertyDto
     {
+        public string Name { get; set; }
+
         public DataType DataType { get; set; }
 
-        public string Name { get; set; }
+        public Guid ProductId { get; set; }
 
         public string Description { get; set; }
 
@@ -40,7 +39,5 @@ namespace KeyFactor.Carbone.Configuration.Products
         public int? MaxIntegerValue { get; set; }
 
         public int? MinIntegerValue { get; set; }
-
-        public Guid ProductId { get; set; }
     }
 }

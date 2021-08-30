@@ -9,11 +9,11 @@ using Volo.Abp;
 
 namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
 {
-    public class EditProductPropertyModel : UpdateConfigurationPageModel<Guid, UpdateProductPropertyDto>
+    public class EditProductPropertyModel : UpdateConfigurationPageModel<Guid, CreateUpdateProductPropertyDto>
     {
         private readonly IProductAppService _productAppService;
         
-        public EditProductPropertyModel(IProductAppService productAppService, UpdateProductPropertyValidator validator) : base(validator)
+        public EditProductPropertyModel(IProductAppService productAppService, CreateUpdateProductPropertyValidator validator) : base(validator)
         {
             _productAppService = Check.NotNull(productAppService, nameof(productAppService));
         }
@@ -28,7 +28,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
         protected override async Task OnGetAsync()
         {
             var productProperty = await _productAppService.GetProductPropertyAsync(Id);
-            Input = ObjectMapper.Map<ProductPropertyDto, UpdateProductPropertyDto>(productProperty);
+            Input = ObjectMapper.Map<ProductPropertyDto, CreateUpdateProductPropertyDto>(productProperty);
         }
 
         protected override async Task OnUpdateAsync()
