@@ -69,7 +69,7 @@ namespace KeyFactor.Carbone.Configuration.Products
         
         [HttpGet()]
         [Route("validate/update")]
-        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateProductDto input)
+        public Task<List<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             return _productAppService.ValidateUpdateAsync(id, input);
         }

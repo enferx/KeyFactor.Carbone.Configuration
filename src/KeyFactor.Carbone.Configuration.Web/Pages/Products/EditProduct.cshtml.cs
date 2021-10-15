@@ -44,7 +44,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Configuration.Products
             Properties = productDto.Properties;
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, CreateUpdateProductDto productDto)
+        protected override async Task<List<ValidationError>> OnValidateAsync(Guid id, CreateUpdateProductDto productDto)
         {
             var errors = await base.OnValidateAsync(id, productDto);
             if (errors.Count > 0)

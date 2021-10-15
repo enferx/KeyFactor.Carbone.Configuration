@@ -47,7 +47,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         public async Task<JsonResult> OnPost()
         {
             ConfigureOnGet();
-            List<ValidationError> errors = new List<ValidationError>();
+            var errors = new List<ValidationError>();
             try
             {
                 errors = await ValidateCreateAsync(Input);

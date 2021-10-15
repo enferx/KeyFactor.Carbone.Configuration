@@ -106,7 +106,7 @@ namespace KeyFactor.Carbone.Configuration.Units
         }
 
         [Authorize(ConfigurationPermissions.Units.Edit)]
-        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
+        public async Task<List<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             var errors = Validate(input);
             var existingProduct = await _repository.FindByNameAsync(input.Name);

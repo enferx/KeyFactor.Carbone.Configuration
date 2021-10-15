@@ -36,7 +36,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
             _validator = validator;
         }
 
-        public async Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(T1 id, T2 input)
+        public async Task<List<ValidationError>> ValidateUpdateAsync(T1 id, T2 input)
         {
             var results = await OnValidateAsync(Id, Input);
             if (results.Any())
@@ -62,11 +62,12 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
         {
             ConfigureOnGet();
             OnBeforePost();
+            var errors = new List<ValidationError>();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var errors = await ValidateUpdateAsync(Id, Input);
+                    errors = await ValidateUpdateAsync(Id, Input);
                     if (ModelState.IsValid)
                     {
                         await OnUpdateAsync();
@@ -93,25 +94,18 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
                     }
                 }
             }
-            return ModelState.IsValid ?
-                new JsonResult(new { Success = true }) :
-                new JsonResult(new {
-                    Success = false,
-                    Errors = ModelState
-                        .Where(x => x.Value.Errors.Any())
-                        .Select(y => new
-                        {
-                            key = y.Key,
-                            details = y.Value.Errors.Select(z => z.ErrorMessage)
-                        })
-                });
+            return new JsonResult(new
+            {
+                Success = !errors.Any(),
+                Errors = errors
+            });
         }
 
         protected virtual void OnBeforePost()
         {
         }
 
-        protected virtual async Task<IReadOnlyList<ValidationError>> OnValidateAsync(T1 id, T2 input)
+        protected virtual async Task<List<ValidationError>> OnValidateAsync(T1 id, T2 input)
         {
             var errors = await Task.FromResult(new List<ValidationError>());
             if (_validator == null)

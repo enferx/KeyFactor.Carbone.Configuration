@@ -31,6 +31,16 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Products
             Input = ObjectMapper.Map<ProductPropertyDto, CreateUpdateProductPropertyDto>(productProperty);
         }
 
+        protected override async Task<List<ValidationError>> OnValidateAsync(Guid id, CreateUpdateProductPropertyDto productDto)
+        {
+            var errors = await base.OnValidateAsync(id, productDto);
+            if (errors.Count > 0)
+            {
+                return errors;
+            }
+            return await Task.FromResult(new List<ValidationError>());
+        }
+
         protected override async Task OnUpdateAsync()
         {
             await _productAppService.UpdateProductPropertyAsync(Id, Input);

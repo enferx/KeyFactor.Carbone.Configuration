@@ -36,7 +36,7 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages.Units
             await _unitAppService.UpdateAsync(Id, Input);
         }
 
-        protected override async Task<IReadOnlyList<ValidationError>> OnValidateAsync(Guid id, CreateUpdateUnitDto input)
+        protected override async Task<List<ValidationError>> OnValidateAsync(Guid id, CreateUpdateUnitDto input)
         {
             return await _unitAppService.ValidateUpdateAsync(id, input);
         }

@@ -1,7 +1,5 @@
 ﻿class Page {
     init() {
-       
-      
         if ($("#Input_ValidFromDate").val() == "") {
             $("#Input_ValidFromDate").val($("#ValidFromDateHidden").val());
         }

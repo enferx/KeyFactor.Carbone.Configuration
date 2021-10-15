@@ -41,8 +41,10 @@ function submitForm() {
             if (!data.success) {
                 _.forEach(data.errors, function (x) {
                     let error = {};
-                    error['Input.'+x.memberNames[0]] = x.message;
-                    validator.showErrors(error);
+                    _.forEach(x.memberNames, function (y) {
+                        error['Input.' + y] = x.message;
+                        validator.showErrors(error);
+                    });
                 });
                 error(data.errors);
             } else {

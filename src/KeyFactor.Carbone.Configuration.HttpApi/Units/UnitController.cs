@@ -71,7 +71,7 @@ namespace KeyFactor.Carbone.Configuration.Units
 
         [HttpGet()]
         [Route("validateupdate")]
-        public Task<IReadOnlyList<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
+        public Task<List<ValidationError>> ValidateUpdateAsync(Guid id, CreateUpdateUnitDto input)
         {
             return _unitAppService.ValidateUpdateAsync(id, input);
         }

@@ -1,5 +1,6 @@
 ﻿let loadProducts = function () {
     var l = abp.localization.getResource('Configuration');
+
     abp.ui.block({
         busy: true
     });

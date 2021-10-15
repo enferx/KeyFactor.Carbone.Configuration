@@ -31,7 +31,6 @@ namespace KeyFactor.Carbone.Configuration.Web.Pages
 
         protected virtual void ConfigureOnGet()
         {
-
         }
     }
 }

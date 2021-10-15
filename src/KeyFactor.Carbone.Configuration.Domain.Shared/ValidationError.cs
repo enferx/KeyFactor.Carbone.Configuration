@@ -14,8 +14,8 @@ namespace KeyFactor.Carbone.Configuration
 
         public ValidationError(string message, IReadOnlyList<string> memberNames)
         {
-            Message = message ?? throw new ArgumentNullException("message");
-            MemberNames = memberNames ?? throw new ArgumentNullException("memberNames");
+            Message = message ?? throw new ArgumentNullException(nameof(message));
+            MemberNames = memberNames ?? throw new ArgumentNullException(nameof(memberNames));
         }
     }
 }
